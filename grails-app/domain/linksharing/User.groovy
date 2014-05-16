@@ -13,6 +13,7 @@ class User {
     String userName;
     String emailID;
 
+    static hasMany = [userSubscriptionDetails:UserSubscriptionDetails]
     static constraints = {
 
     }

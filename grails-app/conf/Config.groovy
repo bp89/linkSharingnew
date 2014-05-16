@@ -61,6 +61,14 @@ grails {
         // escapes all not-encoded output at final stage of outputting
         // filteringCodecForContentType.'text/html' = 'html'
     }
+
+    mail{
+        host:"smtp.gmail.com"
+        port:465
+        username="banti.prajapati@intelligrape.com"
+        password="J@ishr33r@m"
+        
+    }
 }
 
 

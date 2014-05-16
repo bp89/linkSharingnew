@@ -5,5 +5,6 @@ class TopicCategory {
     String categoryDescription
 
     static constraints = {
+
     }
 }

@@ -48,8 +48,9 @@ grails.project.dependency.resolution = {
 
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
-        // runtime 'mysql:mysql-connector-java:5.1.27'
+         runtime 'mysql:mysql-connector-java:5.1.27'
         // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
+
     }
 
     plugins {
@@ -78,5 +79,32 @@ grails.project.dependency.resolution = {
         //compile ":less-asset-pipeline:1.5.3"
         //compile ":coffee-asset-pipeline:1.5.0"
         //compile ":handlebars-asset-pipeline:1.3.0.1"
+        compile ":simple-captcha:0.9.9"
+        compile ":console:1.3"
+        compile ":mail:1.0.5"
+
     }
+
+
 }
+/*
+simpleCaptcha {
+    // font size used in CAPTCHA images
+    fontSize = 30
+    height = 200
+    width = 200
+
+// number of characters in CAPTCHA text length = 6
+
+// amount of space between the bottom of the CAPTCHA text and the bottom of the CAPTCHA image
+    bottomPadding = 16
+
+// distance between the diagonal lines used to obfuscate the text
+    lineSpacing = 10
+
+// the charcters shown in the CAPTCHA text must be one of the following
+    chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+// this param will be passed as the first argument to this java.awt.Font constructor // http://docs.oracle.com/javase/6/docs/api/java/awt/Font.html#Font(java.lang.String,%20int,%20int)
+    font = "Serif"
+}*/
