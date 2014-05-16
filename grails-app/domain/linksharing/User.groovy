@@ -14,5 +14,6 @@ class User {
     String emailID;
 
     static constraints = {
+
     }
 }
