@@ -1,13 +1,14 @@
 package linksharing
 
 import grails.plugin.simplecaptcha.SimpleCaptchaService
+import grails.transaction.Transactional
+import linksharing.resource.Topic
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class UserController {
-def SimpleCaptchaService simpleCaptchaService;
+    def SimpleCaptchaService simpleCaptchaService;
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -20,16 +21,48 @@ def SimpleCaptchaService simpleCaptchaService;
     }
 
 
+    def topics(){
+        render (controllerName:"topic",view:"dashboard")
+    }
+    def logout(){
+
+       /* Cookie loginCookie = null;
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null){
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("user")){
+                    loginCookie = cookie;
+                    break;
+                }
+            }
+        }
+        if(loginCookie != null){
+            loginCookie.setMaxAge(0);
+            response.addCookie(loginCookie);
+        }*/
+
+        if(session != null){
+            session.invalidate();
+        }
+    }
+
     def login(){
-     println ">>>>>>>>>>"+ params.userName
-        println ">>>>>>>>>>"+ params.password
         User user = User.createCriteria().get(){
             eq("userName",params.userName)
             eq("password",params.password)
         }
-        if(user){
-            session.setAttribute("loginID",userName);
 
+        if(user){
+            session.setAttribute("user",userName);
+            //setting session to expiry in 30 mins
+            session.setMaxInactiveInterval(30*60);
+
+            /*Cookie loginCookie = new Cookie("user",user);
+            //setting cookie to expiry in 30 mins
+            loginCookie.setMaxAge(30*60);
+            response.addCookie(loginCookie);
+            response.addCookie(loginCookie);
+            */
             render (view: "dashboard")
         }else{
             render (view: "loginFailure")

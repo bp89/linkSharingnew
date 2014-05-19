@@ -1,9 +1,9 @@
 package linksharing.resource
 
-
+import grails.transaction.Transactional
+import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class DocumentResourceController {
@@ -25,19 +25,31 @@ class DocumentResourceController {
 
     @Transactional
     def save(DocumentResource documentResourceInstance) {
+        String contentType = "";
+        String fileName = "";
+        int size = 0;
+
         if (documentResourceInstance == null) {
             notFound()
             return
         }
-        println ">>>>>>>>>>>>>>>>>>.."+ params.file
-        def mhsr = request.getFile('file')
-        if (!mhsr?.empty ) {
-            mhsr.transferTo(
-                    new File("/home/prajapati/Desktop/project/builddocs/ddfds")
-            )
+        CommonsMultipartFile uploadedFile = params.file
+
+        if(uploadedFile){
+            contentType =  uploadedFile.contentType
+            fileName = uploadedFile.originalFilename
+            size = uploadedFile.size
+            documentResourceInstance.fileType = contentType
+            documentResourceInstance.fileName=fileName;
+        }
+println "<<<<<<<<<<<<<<<<<<"+applicationContext.builddocs
+        def fileBytes = request.getFile('file')
+
+        if (!fileBytes?.empty ) {
+            fileBytes.transferTo(new File("/home/prajapati/Desktop/project/builddocs/"+ fileName))
         }
         //println params.file.name
-       // params.file
+        // params.file
 /*
 
         if (documentResourceInstance.hasErrors()) {
@@ -49,11 +61,11 @@ class DocumentResourceController {
         documentResourceInstance.save flush:true
 
         request.withFormat {
-        /*    form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'documentResource.label', default: 'DocumentResource'), documentResourceInstance.id])
-                redirect documentResourceInstance
-            }
-        */    '*' { respond documentResourceInstance, [status: CREATED] }
+            /*    form multipartForm {
+                    flash.message = message(code: 'default.created.message', args: [message(code: 'documentResource.label', default: 'DocumentResource'), documentResourceInstance.id])
+                    redirect documentResourceInstance
+                }
+            */    '*' { respond documentResourceInstance, [status: CREATED] }
         }
     }
 

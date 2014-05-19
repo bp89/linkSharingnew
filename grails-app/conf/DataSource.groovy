@@ -25,7 +25,7 @@ environments {
 
         dataSource {
 
-            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+            dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:mysql://localhost:3306/linkSharing"
             dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
             username = "root"
