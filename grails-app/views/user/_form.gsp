@@ -5,7 +5,7 @@
         <g:message code="user.firstName.label" default="First Name" />
         <span class="required-indicator">*</span>
     </label>
-    <g:textField name="firstName" required="" value="${userInstance?.firstName}"/>
+    <g:textField name="firstName" required="" value="${userInstance?.firstName}" placeholder="First Name"/>
 
 </div>
 
@@ -14,16 +14,32 @@
         <g:message code="user.lastName.label" default="Last Name" />
         <span class="required-indicator">*</span>
     </label>
-    <g:textField name="lastName" required="" value="${userInstance?.lastName}"/>
+    <g:textField name="lastName" required="" value="${userInstance?.lastName}" placeholder="Last Name"/>
+
+</div>
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'userName', 'error')} required">
+    <label for="userName">
+        <g:message code="user.userName.label" default="User ID" />
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="userName" required="" value="${userInstance?.userName}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'password', 'error')} required">
+    <label for="password">
+        <g:message code="user.password.label" default="Create a Password" />
+        <span class="required-indicator">*</span>
+    </label>
+    <g:passwordField name="password" required="" value="${userInstance?.password}"/>
 
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'password', 'error')} required">
     <label for="password">
-        <g:message code="user.password.label" default="Password" />
+        <g:message code="user.password.label" default="Confirm your password" />
         <span class="required-indicator">*</span>
     </label>
-    <g:textField name="password" required="" value="${userInstance?.password}"/>
+    <g:passwordField name="password" required="" value="${userInstance?.password}"/>
 
 </div>
 
@@ -41,9 +57,19 @@
         <g:message code="user.country.label" default="Country" />
         <span class="required-indicator">*</span>
     </label>
-    <g:textField name="country" required="" value="${userInstance?.country}"/>
+    <g:countrySelect name="country" required="" value="${userInstance?.country}" style="width:250px"/>
 
 </div>
+
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'state', 'error')} required">
+    <label for="state">
+        <g:message code="user.state.label" default="State" />
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="state" required="" value="${userInstance?.state}"/>
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'city', 'error')} required">
     <label for="city">
         <g:message code="user.city.label" default="City" />
@@ -52,7 +78,6 @@
     <g:textField name="city" required="" value="${userInstance?.city}"/>
 
 </div>
-
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'emailID', 'error')} required">
     <label for="emailID">
@@ -64,14 +89,7 @@
 </div>
 
 
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'state', 'error')} required">
-    <label for="state">
-        <g:message code="user.state.label" default="State" />
-        <span class="required-indicator">*</span>
-    </label>
-    <g:textField name="state" required="" value="${userInstance?.state}"/>
 
-</div>
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'streetAddress', 'error')} required">
     <label for="streetAddress">
@@ -82,14 +100,15 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'userName', 'error')} required">
-    <label for="userName">
-        <g:message code="user.userName.label" default="User Name" />
-        <span class="required-indicator">*</span>
-    </label>
-    <g:textField name="userName" required="" value="${userInstance?.userName}"/>
+
+<div class="fieldcontain required">
+    <label for="captcha">Prove you're not a Robot :</label>
+    <img  src="${createLink(controller: 'simpleCaptcha', action: 'captcha')}"/><br/>
+   <g:textField name="captcha"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'userName', 'error')} required">
-    <label for="captcha">Ensure us that you are human :</label> <g:textField name="captcha"/> <img src="${createLink(controller: 'simpleCaptcha', action: 'captcha')}"/>
+    <g:checkBox name="agree" required="" />
+    <label for="agree">I agree to the <g:link >Terms of Service</g:link> and <g:link>Privacy Policy</g:link> of Intelligrape.</label><br/>
+
 </div>

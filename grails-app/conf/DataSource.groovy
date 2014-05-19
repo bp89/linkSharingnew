@@ -3,6 +3,7 @@ dataSource {
     jmxExport = true
     //driverClassName = "org.h2.Driver"
     driverClassName = "com.mysql.jdbc.Driver"
+    loggingSql = true
 
 }
 hibernate {
@@ -23,6 +24,7 @@ environments {
         }*/
 
         dataSource {
+
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:mysql://localhost:3306/linkSharing"
             dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"

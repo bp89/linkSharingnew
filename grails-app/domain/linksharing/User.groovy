@@ -15,6 +15,16 @@ class User {
 
     static hasMany = [userSubscriptionDetails:UserSubscriptionDetails]
     static constraints = {
+        password([blank:false,nullable: false,unique: true])
+        emailID(email:true)
+        age([min: 18])
+        userName([size:3..20, unique: true])
+    }
+
+
+    static mapping = {
 
     }
+
+
 }

@@ -1,13 +1,13 @@
 package linksharing
 
-
+import grails.plugin.simplecaptcha.SimpleCaptchaService
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class UserController {
-
+def SimpleCaptchaService simpleCaptchaService;
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -15,6 +15,26 @@ class UserController {
         respond User.list(params), model:[userInstanceCount: User.count()]
     }
 
+    def dashboard(){
+        render (view:"dashboard")
+    }
+
+
+    def login(){
+     println ">>>>>>>>>>"+ params.userName
+        println ">>>>>>>>>>"+ params.password
+        User user = User.createCriteria().get(){
+            eq("userName",params.userName)
+            eq("password",params.password)
+        }
+        if(user){
+            session.setAttribute("loginID",userName);
+
+            render (view: "dashboard")
+        }else{
+            render (view: "loginFailure")
+        }
+    }
     def show(User userInstance) {
         respond userInstance
     }
@@ -29,8 +49,11 @@ class UserController {
             notFound()
             return
         }
+
+
+
         boolean captchaValid = simpleCaptchaService.validateCaptcha(params.captcha)
-        if (userInstance.hasErrors() || !captchaValid) {
+        if (userInstance.hasErrors() || !captchaValid ) {
             respond userInstance.errors, view:'create'
             return
         }

@@ -6,7 +6,8 @@ class Topic {
     String name
     String description
     String visibility
-    static hasMany = [userSubscriptionDetails:UserSubscriptionDetails,resources:Resource]
+    static hasMany = [resources:Resource]
     static constraints = {
+
     }
 }

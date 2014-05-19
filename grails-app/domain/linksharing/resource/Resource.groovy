@@ -6,6 +6,7 @@ abstract class Resource {
     String description
     //static hasMany = [linkResources:LinkResource,documentResources:DocumentResource]
     static  belongsTo = [topic:Topic]
+
     static constraints = {
     }
 
