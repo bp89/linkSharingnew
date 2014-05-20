@@ -3,7 +3,7 @@
 <head>
     %{--<meta name="layout" content="main"/>--}%
     <title>Welcome to Grails</title>
-
+    <g:javascript library="jquery" plugin="jquery"/>
     <style type="text/css" media="screen">
     html {
         background-color: #ddd;
@@ -127,10 +127,16 @@
         font-family: "monospace", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 
     }
+        #logout{
+            font-family: "Trebuchet MS", Verdana, Geneva, Arial, Helvetica, sans-serif;
+            font-size: medium;
+            color:#0000cc;
+        }
     </style>
 </head>
 <body>
 
+<span id="logout">${flash.logoutMessage}</span>
 
 <div id="status" role="complementary">
     <h1>Welcome to Link Sharing</h1>
@@ -193,5 +199,15 @@
         </ul>
     </div>
 </div>--}%
+<script type="text/javascript">
+
+   // $(document).ready(function(){
+        setTimeout(function() {
+            document.getElementById('logout').display=none;
+        }, 5000);
+
+    //});
+
+</script>
 </body>
 </html>

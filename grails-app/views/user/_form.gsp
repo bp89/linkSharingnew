@@ -35,11 +35,11 @@
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'password', 'error')} required">
-    <label for="password">
+    <label for="passwordConfirm">
         <g:message code="user.password.label" default="Confirm your password" />
         <span class="required-indicator">*</span>
     </label>
-    <g:passwordField name="password" required="" value="${userInstance?.password}"/>
+    <g:passwordField name="passwordConfirm" required="" value=""/>
 
 </div>
 
@@ -84,7 +84,7 @@
         <g:message code="user.emailID.label" default="Email ID" />
         <span class="required-indicator">*</span>
     </label>
-    <g:textField name="emailID" required="" value="${userInstance?.emailID}"/>
+    <g:textField name="emailID" class="required email" required="" value="${userInstance?.emailID}"/>
 
 </div>
 

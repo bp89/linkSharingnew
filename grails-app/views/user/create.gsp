@@ -5,6 +5,8 @@
     <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}" />
     <title><g:message code="default.create.label" args="[entityName]" /></title>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
+    <g:javascript library="jquery" plugin="jquery"/>
+    <g:javascript plugin="jquery-validation"/>
     <style type="text/css">
 
 
@@ -104,7 +106,17 @@
         <td>
             <div id="create-user" class="content scaffold-create" role="main">
                 %{--<h1><g:message code="default.create.label" args="[entityName]" /></h1>--}%
+
                 <h1>Create your Account </h1>
+
+                <g:hasErrors bean="${resourceInstance}">
+                    <ul class="errors" role="alert">
+                        <g:eachError bean="${resourceInstance}" var="error">
+                            <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+                        </g:eachError>
+                    </ul>
+                </g:hasErrors>
+
                 <g:if test="${flash.message}">
                     <div class="message" role="status">${flash.message}</div>
                 </g:if>
@@ -132,18 +144,18 @@
         </td>
     </tr>
 </table>
-%{--<script type="text/javascript">
-function validate(){
-    var form = document.getElementById('signUpForm');signUpForm
+<script type="text/javascript">
 
-    if(form.firstName.value == ''){
-        alert('Please enter ');
-        form.firstName.focus();
-        return false;
-    }
+$('#signUpForm').validate(){
+
 
 }
+    //addClassRules
+/*submit:function(form){
+}
+return false;*/
 
-</script>--}%
+</script>
+
 </body>
 </html>

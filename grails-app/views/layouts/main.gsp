@@ -26,6 +26,9 @@
         <a class="linkedhead" href="http://www.linkedin.com/profile/view?id=127104334&amp;trk=nav_responsive_tab_profile_pic" target="_blank"></a>
         <a class="googleHead" href="http://www.linkedin.com/profile/view?id=127104334&amp;trk=nav_responsive_tab_profile_pic" target="_blank"></a>
     </div>
+    <g:if test="${flash.skipLogout != 'skip'}">
+        <span style="position: relative"><g:link class="list" controller="user" action="logout">Logout</g:link></span>
+    </g:if>
     <div class="nav" role="navigation">
         <ul>
             <li><g:link class="home" controller="user" action="dashboard"><g:message code="default.home.label"/></g:link></li>

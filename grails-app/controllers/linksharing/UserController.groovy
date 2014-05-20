@@ -11,6 +11,13 @@ class UserController {
     def SimpleCaptchaService simpleCaptchaService;
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+
+
+    def invalidLogin(){
+
+        render (view:"invalidLogin")
+    }
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond User.list(params), model:[userInstanceCount: User.count()]
@@ -26,24 +33,33 @@ class UserController {
     }
     def logout(){
 
-       /* Cookie loginCookie = null;
-        Cookie[] cookies = request.getCookies();
-        if(cookies != null){
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals("user")){
-                    loginCookie = cookie;
-                    break;
-                }
-            }
-        }
-        if(loginCookie != null){
-            loginCookie.setMaxAge(0);
-            response.addCookie(loginCookie);
-        }*/
+        /* Cookie loginCookie = null;
+         Cookie[] cookies = request.getCookies();
+         if(cookies != null){
+             for(Cookie cookie : cookies){
+                 if(cookie.getName().equals("user")){
+                     loginCookie = cookie;
+                     break;
+                 }
+             }
+         }
+         if(loginCookie != null){
+             loginCookie.setMaxAge(0);
+             response.addCookie(loginCookie);
+         }*/
 
         if(session != null){
             session.invalidate();
         }
+
+        flash.put("logoutMessage","You have been logged out successfully.")
+
+
+
+
+        //render (controllerName:"main",view:"index")
+        redirect(uri: "")
+        //redirect "/index.gsp"
     }
 
     def login(){
@@ -53,7 +69,7 @@ class UserController {
         }
 
         if(user){
-            session.setAttribute("user",userName);
+            session.setAttribute("user",user.userName);
             //setting session to expiry in 30 mins
             session.setMaxInactiveInterval(30*60);
 
@@ -73,6 +89,8 @@ class UserController {
     }
 
     def create() {
+        // String requestURI = request.forwardURI
+        flash.put("skipLogout",'skip');
         respond new User(params)
     }
 
@@ -84,6 +102,7 @@ class UserController {
         }
 
 
+        println ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" +userInstance.errors
 
         boolean captchaValid = simpleCaptchaService.validateCaptcha(params.captcha)
         if (userInstance.hasErrors() || !captchaValid ) {
