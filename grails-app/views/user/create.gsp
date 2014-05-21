@@ -6,7 +6,8 @@
     <title><g:message code="default.create.label" args="[entityName]" /></title>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
     <g:javascript library="jquery" plugin="jquery"/>
-    <g:javascript plugin="jquery-validation"/>
+    <g:javascript plugin="jquery-validation-ui"/>
+    <script type="text/javascript" src="${resource(dir: "js", file: "jquery.validate.js")}"></script>
     <style type="text/css">
 
 
@@ -130,7 +131,7 @@
                 </g:hasErrors>
 
 
-                <g:form url="[resource:userInstance, action:'save']"  name="signUpForm">
+                <g:form url="[resource:userInstance, action:'save']"  name="signUpForm" id="signUpForm">
                     <fieldset class="form">
                         <g:render template="form"/>
                     </fieldset>
@@ -145,11 +146,19 @@
     </tr>
 </table>
 <script type="text/javascript">
+$(document).ready(function(){
+$('#signUpForm').validate({
 
-$('#signUpForm').validate(){
 
 
-}
+    rules : {
+            'userName': {
+            required: true
+        }
+    }
+});
+
+});
     //addClassRules
 /*submit:function(form){
 }

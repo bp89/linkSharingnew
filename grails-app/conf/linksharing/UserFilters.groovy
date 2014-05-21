@@ -6,16 +6,20 @@ import org.apache.commons.lang.StringUtils
 class UserFilters {
 
     def filters = {
-        all(controller:'*', action:'*') {
+
+         //all(controller: '*', action:'*') {
+       all( controller: '*', action:'create|invalidLogin', invert:true,uriExclude:'/linksharing/') {
             before = {
                 String userName = session.getAttribute("user");
                 //setting session to expiry in 30 mins
-                println ">>>>>>>>>>>>>>>>"+userName
-                if( UtilityService.isValidString(userName)){
-                    session.setMaxInactiveInterval(30*60);
+                if (UtilityService.isValidString(userName)) {
+                    session.setMaxInactiveInterval(30 * 60);
                     session.removeAttribute("user");
-                }else{
-                    redirect (controllerName:'user',action:'invalidLogin')
+                } else {
+                    if(!controllerName == 'simpleCaptcha' ){
+                        redirect(controller: 'user', action: 'invalidLogin')
+                    }
+                    return false;
                 }
             }
             after = { Map model ->

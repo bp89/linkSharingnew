@@ -39,15 +39,15 @@
 <g:layoutBody/>
 
 
-<div style="background-color: #E1A4A4;height: 50px;">
-    <div class="socialMedia">
-        <a class="fbhead" href="https://www.facebook.com/pages/SoftIVenture/267927196554975?ref=hl" target="_blank"></a>
-        <a class="tweethead" href="http://twitter.com/softiventure" target="_blank"></a>
-        <a class="linkedhead" href="http://www.linkedin.com/profile/view?id=127104334&amp;trk=nav_responsive_tab_profile_pic" target="_blank"></a>
-        <a class="googleHead" href="http://www.linkedin.com/profile/view?id=127104334&amp;trk=nav_responsive_tab_profile_pic" target="_blank"></a>
-    </div>
-</div>
+<div style="background-color: #b7a2ff;height: 42px;">
 
+</div>
+<div class="socialMedia">
+    <a class="fbhead" href="https://www.facebook.com/pages/SoftIVenture/267927196554975?ref=hl" target="_blank"></a>
+    <a class="tweethead" href="http://twitter.com/softiventure" target="_blank"></a>
+    <a class="linkedhead" href="http://www.linkedin.com/profile/view?id=127104334&amp;trk=nav_responsive_tab_profile_pic" target="_blank"></a>
+    <a class="googleHead" href="http://www.linkedin.com/profile/view?id=127104334&amp;trk=nav_responsive_tab_profile_pic" target="_blank"></a>
+</div>
 <div class="footer" role="contentinfo" style="text-align: center">
 
     <div>All rights reserved &copy;2003-2013 .&VerticalLine; An Intelligrape proprietry.<br/>Informatics Patent</div>

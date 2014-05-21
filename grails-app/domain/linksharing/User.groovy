@@ -1,5 +1,7 @@
 package linksharing
 
+import linksharing.resource.Topic
+
 class User {
 
     String firstName;
@@ -18,11 +20,10 @@ class User {
 
     static hasMany = [userSubscriptionDetails:UserSubscriptionDetails]
 
+    static  hasOne = [topic:Topic]
     static constraints = {
         password minSize: 8,maxSize: 16,blank:false,nullable: false,unique: true,validator:{ password, obj ->
             def password2 = obj.passwordConfirm
-            println ">>>>>>>>>>>>>>>>>"+password2
-            println ">>>>>>>>>>>>>>>>>"+password
             password2 == password ? true : ['invalid.matchingpasswords']
         }
         emailID(email:true)

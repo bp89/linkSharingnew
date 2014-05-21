@@ -8,7 +8,7 @@
         <g:message code="documentResource.topic.label" default="Topic" />
         <span class="required-indicator">*</span>
     </label>
-    <g:select id="topic" name="topic.id" from="${linksharing.resource.Topic.list()}" optionKey="id" required="" value="${documentResourceInstance?.topic?.id}" class="many-to-one"/>
+    <g:select id="topic" name="topic.id" from="${linksharing.resource.Topic.list().sort({l1,l2 -> l1.name<=>l2.name})}" optionKey="id" optionValue="name" required="" value="${documentResourceInstance?.topic?.id}" class="many-to-one"/>
 
 </div>
 
@@ -27,7 +27,7 @@
         <g:message code="documentResource.fileType.label" default="File Type" />
         <span class="required-indicator">*</span>
     </label>
-    <input type="file" name="file" required="" value="${documentResourceInstance?.fileType}"/>
+    <input type="file" name="file" required="" value="${documentResourceInstance?.fileType}" placeholder="Tell "/>
 </div>
 
 

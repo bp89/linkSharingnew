@@ -58,7 +58,6 @@
         <span class="required-indicator">*</span>
     </label>
     <g:countrySelect name="country" required="" value="${userInstance?.country}" style="width:250px"/>
-
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'state', 'error')} required">
@@ -75,8 +74,7 @@
         <g:message code="user.city.label" default="City" />
         <span class="required-indicator">*</span>
     </label>
-    <g:textField name="city" required="" value="${userInstance?.city}"/>
-
+    <g:textField name="city" required="" value="${userInstance?.city}" class="required"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'emailID', 'error')} required">
@@ -85,7 +83,6 @@
         <span class="required-indicator">*</span>
     </label>
     <g:textField name="emailID" class="required email" required="" value="${userInstance?.emailID}"/>
-
 </div>
 
 
@@ -97,7 +94,6 @@
         <span class="required-indicator">*</span>
     </label>
     <g:textField name="streetAddress" required="" value="${userInstance?.streetAddress}"/>
-
 </div>
 
 

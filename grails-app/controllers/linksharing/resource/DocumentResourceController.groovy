@@ -1,6 +1,7 @@
 package linksharing.resource
 
 import grails.transaction.Transactional
+import linksharing.UtilityService
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 import static org.springframework.http.HttpStatus.*
@@ -25,48 +26,27 @@ class DocumentResourceController {
 
     @Transactional
     def save(DocumentResource documentResourceInstance) {
-        String contentType = "";
-        String fileName = "";
-        int size = 0;
-
         if (documentResourceInstance == null) {
             notFound()
             return
         }
-        CommonsMultipartFile uploadedFile = params.file
 
-        if(uploadedFile){
-            contentType =  uploadedFile.contentType
-            fileName = uploadedFile.originalFilename
-            size = uploadedFile.size
-            documentResourceInstance.fileType = contentType
-            documentResourceInstance.fileName=fileName;
-        }
-println "<<<<<<<<<<<<<<<<<<"+applicationContext.builddocs
-        def fileBytes = request.getFile('file')
-
-        if (!fileBytes?.empty ) {
-            fileBytes.transferTo(new File("/home/prajapati/Desktop/project/builddocs/"+ fileName))
-        }
-        //println params.file.name
-        // params.file
-/*
+        UtilityService.uploadFile(params,request.getFile('file'))
 
         if (documentResourceInstance.hasErrors()) {
-            respond documentResourceInstance.errors, view:'create'
+            respond documentResourceInstance.errors, view:'edit'
             return
         }
-*/
-
         documentResourceInstance.save flush:true
 
         request.withFormat {
-            /*    form multipartForm {
-                    flash.message = message(code: 'default.created.message', args: [message(code: 'documentResource.label', default: 'DocumentResource'), documentResourceInstance.id])
-                    redirect documentResourceInstance
-                }
-            */    '*' { respond documentResourceInstance, [status: CREATED] }
+            form multipartForm {
+                redirect documentResourceInstance
+            }
+            '*'{ respond documentResourceInstance, [status: OK] }
+
         }
+
     }
 
     def edit(DocumentResource documentResourceInstance) {
@@ -79,6 +59,7 @@ println "<<<<<<<<<<<<<<<<<<"+applicationContext.builddocs
             notFound()
             return
         }
+        UtilityService.uploadFile(params,request.getFile('file'))
 
         if (documentResourceInstance.hasErrors()) {
             respond documentResourceInstance.errors, view:'edit'
@@ -89,10 +70,10 @@ println "<<<<<<<<<<<<<<<<<<"+applicationContext.builddocs
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'DocumentResource.label', default: 'DocumentResource'), documentResourceInstance.id])
+                flash.message = message(code: 'default.updated.message',args: [message(code: 'documentResource.label', default: 'DocumentResource'), documentResourceInstance.id])
                 redirect documentResourceInstance
             }
-            '*'{ respond documentResourceInstance, [status: OK] }
+            '*'{ respond documentResourceInstance, [status: CREATED] }
         }
     }
 
@@ -108,7 +89,7 @@ println "<<<<<<<<<<<<<<<<<<"+applicationContext.builddocs
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'DocumentResource.label', default: 'DocumentResource'), documentResourceInstance.id])
+                flash.message = message(code: 'default.deleted.message',args: [message(code: 'documentResource.label', default: 'DocumentResource'), documentResourceInstance.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }

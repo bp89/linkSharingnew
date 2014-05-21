@@ -55,7 +55,8 @@ body {
 }
 
 #grailsLogo {
-    background-color: #abbf78;
+    background-color: #41ff5b;
+
 }
 
 /* replace with .no-boxshadow body if you have modernizr available */
@@ -115,7 +116,7 @@ img {
 }
 
 .footer {
-    background: #abbf78;
+    background: #41ff5b;
     color: #000;
     clear: both;
     font-size: 0.8em;
@@ -245,11 +246,14 @@ fieldset,
 
 .fieldcontain .property-label {
     float: left;
+    font-family: "Trebuchet MS", Verdana, Geneva, Arial, Helvetica, sans-serif;
 }
 
 .fieldcontain .property-value {
     display: block;
     margin-left: 27%;
+    font-size: small;font-family: "monospace", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
+
 }
 
 label {
@@ -680,4 +684,43 @@ a.hover.googleHead {
 
 a.fbhead span,a.tweethead span,a.linkedhead span,a.googleHead span {
     display: none
+}
+
+
+/*=========================Standard Buttons==================================*/
+.button{
+    float: right;
+    font-family: "Trebuchet MS", Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: small;
+
+
+}
+.button a,button,input[type=submit]{
+    background-image: -moz-linear-gradient(center top, #F4F219, #f4f219);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #678), color-stop(1, #ddd));
+    background-image: linear-gradient(top, #a23,#14a);
+    -moz-box-shadow: 0 0 0.3em #ccc;;
+    -webkit-box-shadow: 0 0 0.3em #ccc;;
+    box-shadow: 0 0 0.3em #ccc;;
+    -moz-border-radius: 0.3em;
+    -webkit-border-radius: 0.3em;
+    border-radius: 0.3em;
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-decoration: none;
+    color: #000000;
+
+}
+.button button,input[type=submit]{
+    padding:1px;
+    font-weight: bold;
+    min-width: 60px;
+
+}
+.button a:hover,button:hover,input[type=submit]:hover{
+    background-image: -moz-linear-gradient(center top, #F4F219, #f49722);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #678), color-stop(1, #94dda4));
+    background-image: linear-gradient(top, #a23,#14a);
 }

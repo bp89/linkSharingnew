@@ -12,9 +12,7 @@
 </head>
 
 <body>
-{flash.put("logoutMessage","You have been logged out successfully.")}
-
 Your session has timed out.
-<a class="home" href="${createLink(uri: '/')}">Login</a>
+<a class="home" href="${createLink(uri: '')}">Login</a>
 </body>
 </html>

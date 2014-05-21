@@ -31,6 +31,7 @@ class TopicController {
         }
 
         if (topicInstance.hasErrors()) {
+            println topicInstance.errors
             respond topicInstance.errors, view:'create'
             return
         }
@@ -39,7 +40,7 @@ class TopicController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'topic.label', default: 'Topic'), topicInstance.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'topic.label', default: 'Topic'), topicInstance.name])
                 redirect topicInstance
             }
             '*' { respond topicInstance, [status: CREATED] }
@@ -66,7 +67,7 @@ class TopicController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Topic.label', default: 'Topic'), topicInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Topic.label', default: 'Topic'), topicInstance.name])
                 redirect topicInstance
             }
             '*'{ respond topicInstance, [status: OK] }
