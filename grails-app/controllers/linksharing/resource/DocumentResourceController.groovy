@@ -8,7 +8,8 @@ import static org.springframework.http.HttpStatus.*
 
 @Transactional(readOnly = true)
 class DocumentResourceController {
-
+UtilityService utilityService
+    //def grailsApplication
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -24,6 +25,16 @@ class DocumentResourceController {
         respond new DocumentResource(params)
     }
 
+    def download() {
+        String buildDir = grailsApplication.config.builddocs
+    println buildDir+"/" + params.id+"/" + params.fileName;
+        File file = new File(buildDir+ params.id+"/" + params.fileName)
+
+        response.setContentType(params.fileType)
+
+        response.setHeader('Content-Disposition', 'Filename='+params.fileName)
+        response.outputStream << file.newInputStream()
+    }
     @Transactional
     def save(DocumentResource documentResourceInstance) {
         if (documentResourceInstance == null) {
@@ -31,7 +42,9 @@ class DocumentResourceController {
             return
         }
 
-        UtilityService.uploadFile(params,request.getFile('file'))
+
+        utilityService.uploadFile(params,request.getFile('file'))
+        documentResourceInstance.properties=params
 
         if (documentResourceInstance.hasErrors()) {
             respond documentResourceInstance.errors, view:'edit'
@@ -60,6 +73,8 @@ class DocumentResourceController {
             return
         }
         UtilityService.uploadFile(params,request.getFile('file'))
+        documentResourceInstance.properties=params
+
 
         if (documentResourceInstance.hasErrors()) {
             respond documentResourceInstance.errors, view:'edit'
@@ -73,7 +88,7 @@ class DocumentResourceController {
                 flash.message = message(code: 'default.updated.message',args: [message(code: 'documentResource.label', default: 'DocumentResource'), documentResourceInstance.id])
                 redirect documentResourceInstance
             }
-            '*'{ respond documentResourceInstance, [status: CREATED] }
+            '*'{ respond documentResourceInstance, [status: OK] }
         }
     }
 

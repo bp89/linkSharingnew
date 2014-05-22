@@ -122,6 +122,16 @@
         background-color: rgb(77, 144, 254);
         background-image: -moz-linear-gradient(center top , rgb(77, 144, 254), rgb(71, 135, 237));
         height: 30px;
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    }
+    a.g-button-submit {
+        padding: 0px 2px 10px 5px;
+        vertical-align: bottom;
+        height: 30px;
+        line-height: 40px;
+        text-align: justify;
+        text-decoration: none;
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     }
     label{
         font-family: "monospace", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -160,7 +170,7 @@
             </li>
             <li>
                 <g:submitButton name="submit" value="Log in" class="g-button-submit" />
-                <g:link class="g-button-submit" controller="user" action="create">New User? Sign Up</g:link>
+                <g:link  class="g-button-submit" controller="user" action="create">New User? Sign Up</g:link>
             </li>
         </ul>
     </g:form>

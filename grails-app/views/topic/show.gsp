@@ -17,8 +17,6 @@
     <h1>
         <g:message code="default.show.label" args="[entityName]" />
     <span class="button">
-
-
         <g:link controller="documentResource" action="create">Add Document</g:link>
         <g:link controller="linkResource" action="create">Add Link</g:link>
     </span>

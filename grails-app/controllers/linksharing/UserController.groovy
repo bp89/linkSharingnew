@@ -1,5 +1,6 @@
 package linksharing
 
+import grails.plugin.mail.MailService
 import grails.plugin.simplecaptcha.SimpleCaptchaService
 import grails.transaction.Transactional
 import linksharing.resource.Topic
@@ -10,8 +11,19 @@ import static org.springframework.http.HttpStatus.*
 class UserController {
     def SimpleCaptchaService simpleCaptchaService;
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    def mailService
 
+    def forgotPassword(){
+        mailService.sendMail {
+            from "banti.prajapati@intelligrape.com"
+            to "banti.prajapati89@gmail.com"
+            subject "Hello"
+            body "This is a test"
+        }
 
+       // UtilityService.sendMail();
+        render (view:"forgotPassword");
+    }
 
     def invalidLogin(){
 
@@ -90,6 +102,7 @@ class UserController {
 
     def create() {
         // String requestURI = request.forwardURI
+        println ">>>>>>>>>>>>>>>>>>>>"+params.passwordConfirm
         flash.put("skipLogout",'skip');
         respond new User(params)
     }

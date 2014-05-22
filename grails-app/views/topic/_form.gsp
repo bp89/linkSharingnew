@@ -83,5 +83,10 @@
 
     </ul>
 </div>
-%{--<g:textField name="visibility" required="" value="${topicInstance?.visibility}"/>--}%
+<g:hiddenField name="owner.id" value="1"/>
+%{--<g:hiddenField name="userSubscriptionDetails.comments" value="Topic Owner"/>
+<g:hiddenField name="userSubscriptionDetails.seriousnessLevel" value="NA"/>
+
+<g:hiddenField name="userSubscriptionDetails.user.id" value="1"/>--}%
+
 

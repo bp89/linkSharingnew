@@ -1,12 +1,18 @@
 package linksharing
 
+import linksharing.resource.Topic
+
 class UserSubscriptionDetails {
 
-    String subscribedOn
+    Date subscribedOn
     String comments
     String seriousnessLevel
 
-    static belongsTo = [user:User]
+    static belongsTo = [user:User,topic:Topic]
     static constraints = {
+
+    }
+    static mapping = {
+//        subscribedOn
     }
 }

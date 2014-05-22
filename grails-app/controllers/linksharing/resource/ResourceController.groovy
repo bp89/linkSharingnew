@@ -12,6 +12,19 @@ class ResourceController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
+        request.setAttribute("resources",DocumentResource.list(params))
+        respond Resource.list(params), model:[resourceInstanceCount: Resource.count()]
+    }
+
+    def documents(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        request.setAttribute("resources",DocumentResource.list(params))
+        respond Resource.list(params), model:[resourceInstanceCount: Resource.count()]
+    }
+
+    def links(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        request.setAttribute("resources",LinkResource.list(params))
         respond Resource.list(params), model:[resourceInstanceCount: Resource.count()]
     }
 

@@ -6,6 +6,12 @@ class DocumentResource extends Resource{
 
 
     static constraints = {
+            fileName nullable: false,blank: false,minSize: 3,maxSize: 50
+            fileType blank: false
 
+
+    }
+    static mapping = {
+        fileType default:'application/octet'
     }
 }

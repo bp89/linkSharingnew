@@ -78,8 +78,6 @@
                 <ul>
 
                     <li>
-
-
                         <h1 style="font-weight: normal">One account is all you need</h1>
 
                         <h5 style="font-weight: normal">A single username and password gets you into all the resources available at Link share.</h5>

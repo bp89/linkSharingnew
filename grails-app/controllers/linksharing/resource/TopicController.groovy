@@ -1,6 +1,8 @@
 package linksharing.resource
 
-
+import com.linksharing.SeriousnessLevel
+import linksharing.User
+import linksharing.UserSubscriptionDetails
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -25,6 +27,18 @@ class TopicController {
 
     @Transactional
     def save(Topic topicInstance) {
+
+        UserSubscriptionDetails userSubscriptionDetails = new UserSubscriptionDetails();
+        // topicInstance.properties=params
+        User user=User.get("1");
+        userSubscriptionDetails.comments = 'abc';
+        userSubscriptionDetails.user=user;
+        userSubscriptionDetails.seriousnessLevel=SeriousnessLevel.MEDIUM.ordinal();
+        userSubscriptionDetails.subscribedOn=new Date();
+        topicInstance.addToUserSubscriptionDetails(userSubscriptionDetails)
+        println "valdation is------------------"+topicInstance.validate()
+        println "eroor is-------------"+topicInstance.errors.allErrors;
+        topicInstance.save(flush: true)
         if (topicInstance == null) {
             notFound()
             return

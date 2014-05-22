@@ -29,10 +29,12 @@
     <g:if test="${flash.skipLogout != 'skip'}">
         <span style="position: relative"><g:link class="list" controller="user" action="logout">Logout</g:link></span>
     </g:if>
-    <div class="nav" role="navigation">
+    <div class="nav" role="navigation" >
         <ul>
             <li><g:link class="home" controller="user" action="dashboard"><g:message code="default.home.label"/></g:link></li>
             <li><g:link class="list" controller="topic" action="index">Topics</g:link></li>
+            <li><g:link class="list" controller="documentResource" action="index">Documents</g:link></li>
+            <li><g:link class="list" controller="linkResource" action="index">Links</g:link></li>
         </ul>
     </div>
 </div>

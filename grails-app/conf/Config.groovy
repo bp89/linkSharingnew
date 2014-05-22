@@ -67,7 +67,10 @@ grails {
         port:465
         username="banti.prajapati@intelligrape.com"
         password="J@ishr33r@m"
-        
+        props = ["mail.transport.protocol":"smtps",
+                "mail.smtps.host":"smtp.gmail.com",
+                "mail.smtps.port":"465",
+                "mail.smtps.auth":"true"]
     }
 }
 
@@ -100,6 +103,7 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
+        builddocs="/home/prajapati/Desktop/project/builddocs/"
     }
     production {
         grails.logging.jul.usebridge = false

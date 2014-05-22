@@ -10,7 +10,12 @@
 <body>
 
 <div id="list-documentResource" class="content scaffold-list" role="main">
-    <h1><g:message code="default.list.label" args="['Document']" /></h1>
+    <h1>
+        <g:message code="default.list.label" args="['Document']" />
+        <span class="button">
+            <g:link controller="documentResource" action="create">Add Document</g:link>
+        </span>
+    </h1>
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
@@ -33,7 +38,7 @@
                 <td>${fieldValue(bean: documentResourceInstance, field: "fileType")}</td>
                 <td><g:link action="show" id="${documentResourceInstance.id}">${fieldValue(bean: documentResourceInstance, field: "description")}</g:link></td>
                 <td>${fieldValue(bean: documentResourceInstance, field: "topic.name")}</td>
-                <td> <g:link controller="documentResource" action="view">View</g:link>  / <g:link controller="documentResource" action="download">Download</g:link> </td>
+                <td> <g:link controller="documentResource" action="view">View</g:link>  / <g:link controller="documentResource" action="download" params="['id':documentResourceInstance.topic.id,'fileName':documentResourceInstance.fileName,'fileType':documentResourceInstance.fileType]">Download</g:link> </td>
             </tr>
         </g:each>
         </tbody>

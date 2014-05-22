@@ -5,6 +5,7 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'documentResource.label', default: 'DocumentResource')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
+
 	</head>
 	<body>
 

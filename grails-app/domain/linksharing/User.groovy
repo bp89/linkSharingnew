@@ -18,14 +18,19 @@ class User {
 
     static transients = ['passwordConfirm']
 
-    static hasMany = [userSubscriptionDetails:UserSubscriptionDetails]
+    static hasMany = [userSubscriptionDetails:UserSubscriptionDetails,topics:Topic]
 
-    static  hasOne = [topic:Topic]
+    //static  belongsTo = [topic:Topic]
+
+
     static constraints = {
-        password minSize: 8,maxSize: 16,blank:false,nullable: false,unique: true,validator:{ password, obj ->
+        password   minSize: 8,maxSize: 16,blank:false,nullable: false,validator:{ password, obj ->
             def password2 = obj.passwordConfirm
+            println password
+            println password2
             password2 == password ? true : ['invalid.matchingpasswords']
         }
+        passwordConfirm bindable:true
         emailID(email:true)
         age([min: 18])
         userName([size:3..20, unique: true])
