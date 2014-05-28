@@ -55,7 +55,7 @@ body {
 }
 
 #grailsLogo {
-    background-color: #41ff5b;
+    background-color: #f5d3ff;
 
 }
 
@@ -116,7 +116,7 @@ img {
 }
 
 .footer {
-    background: #41ff5b;
+    background: #f5d3ff;
     color: #000;
     clear: both;
     font-size: 0.8em;
@@ -146,7 +146,7 @@ img {
 /* NAVIGATION MENU */
 
 .nav {
-    background-color: #d8ef9c;
+    background-color: #f5d3ff;
         padding: 0em 0.5em;
     -moz-box-shadow: 0 0 3px 1px #faffaf;
     -webkit-box-shadow: 0 0 3px 1px #aaaaaa;
@@ -183,7 +183,7 @@ img {
 }
 
 .nav a:focus, .nav a:hover {
-    background-color: #ffcc6f;
+    background-color: #f5d3ff;
     color: #ffffff;
     outline: none;
     text-shadow: 1px 1px 1px rgba(46, 16, 123, 0.80);
@@ -435,7 +435,8 @@ input:invalid:focus, select:invalid:focus, textarea:invalid:focus {
 /* TABLES */
 
 table {
-    border-top: 1px solid #DFDFDF;
+    border: 1px solid #d5ffb2;
+    /*border-top: 1px solid #DFDFDF;*/
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 1em;
@@ -443,6 +444,7 @@ table {
 
 tr {
     border: 0;
+    padding: 0px 1px 0px 1px;
 }
 
 tr>td:first-child, tr>th:first-child {
@@ -459,17 +461,21 @@ td, th {
     text-align: left;
     vertical-align: top;
 }
-
+td{
+    font-weight: normal;
+    font-size: small;
+}
 th {
     background-color: #efefef;
     background-image: -moz-linear-gradient(top, #ffffff, #eaeaea);
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(1, #eaeaea));
     filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#ffffff', EndColorStr = '#eaeaea');
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#eaeaea')";
-    color: #666666;
+    color: #242424;
     font-weight: bold;
     line-height: 1.7em;
-    padding: 0.2em 0.6em;
+    padding: 0em 0.6em;
+
 }
 
 thead th {
@@ -504,13 +510,18 @@ th.desc a {
 }
 
 .odd {
-    background: #f7f7f7;
+    background: #dee3f7;
 }
 
+.odd:hover{
+    background: #c5b2e1;
+}
 .even {
     background: #ffffff;
 }
-
+.even:hover{
+    background: #c5b2e1;
+}
 /*th:hover, tr:hover {
     background: #E1F2B6;
 }*/
@@ -723,4 +734,19 @@ a.fbhead span,a.tweethead span,a.linkedhead span,a.googleHead span {
     background-image: -moz-linear-gradient(center top, #F4F219, #f49722);
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #678), color-stop(1, #94dda4));
     background-image: linear-gradient(top, #a23,#14a);
+}
+
+
+
+
+.actions{
+
+}
+
+.actions:hover{
+    padding: 7px 0px 1px 2px;
+    background-image: -moz-linear-gradient(center top, #f4d3e9, #f4291c);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #678), color-stop(1, #94dda4));
+    background-image: linear-gradient(top, #a23,#14a);
+
 }

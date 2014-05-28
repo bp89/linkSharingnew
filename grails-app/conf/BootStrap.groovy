@@ -1,12 +1,16 @@
+import com.linksharing.HttpRequestMetaClassEnhancer
 import linksharing.User
 
 class BootStrap {
     def grailsApplication
 
     def init = { servletContext ->
-        servletContext.setAttribute("builddocs", "/home/prajapati/Desktop/project/builddocs/")
-
+def mailService
         try{
+
+            HttpRequestMetaClassEnhancer.enhanceRequest()
+
+
             User defaultUser = new User();
             defaultUser.firstName = 'admin'
             defaultUser.lastName = 'admin'
@@ -21,9 +25,12 @@ class BootStrap {
             defaultUser.streetAddress = "Marine Drive"
             defaultUser.save flush:  true
 
-            println defaultUser.errors.allErrors
+
+
+
         }catch (Exception e){
             e.printStackTrace();
+            println defaultUser.errors.allErrors
         }
     }
     def destroy = {

@@ -15,6 +15,7 @@
           <root url="file://$MODULE_DIR$/target/work/plugins/jquery-validation-ui-1.4.9/grails-app/views" relative="/" />
           <root url="file://$MODULE_DIR$/target/work/plugins/constraints-0.6.0/web-app" relative="/" />
           <root url="file://$MODULE_DIR$/target/work/plugins/jquery-validation-1.9/web-app" relative="/" />
+          <root url="file://$MODULE_DIR$/target/work/plugins/jquery-ui-1.10.3/web-app" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -63,6 +64,9 @@
       <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/jquery-1.11.0.2/src/groovy" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/jquery-1.11.0.2/grails-app/services" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/jquery-1.11.0.2/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/target/work/plugins/jquery-ui-1.10.3">
+      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/jquery-ui-1.10.3/grails-app/taglib" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/target/work/plugins/jquery-validation-1.9">
       <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/jquery-validation-1.9/grails-app/i18n" isTestSource="false" />

@@ -62,7 +62,19 @@
 
 				</li>
 				</g:if>
-			
+				<g:if test="${documentResourceInstance?.topic}">
+				<li class="fieldcontain">
+					<span id="topic-label" class="property-label"><g:message code="documentResource.topic.label" default="Download" /></span>
+
+						<span class="property-value" aria-labelledby="topic-label">
+                            <g:link controller="documentResource" action="download" params="['id':documentResourceInstance.topic.id,'fileName':documentResourceInstance.fileName,'fileType':documentResourceInstance.fileType]">
+                                <img src="${resource(dir: "images",file: "1396477307_download.png")}" height="20px" width="20px" title="Download"/>
+                            </g:link>
+						</span>
+
+				</li>
+				</g:if>
+
 			</ol>
 			<g:form url="[resource:documentResourceInstance, action:'delete']" method="DELETE">
 				<fieldset class="button" style="float: left">

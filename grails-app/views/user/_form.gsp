@@ -6,7 +6,6 @@
         <span class="required-indicator">*</span>
     </label>
     <g:textField name="firstName" required="" value="${userInstance?.firstName}" placeholder="First Name"/>
-
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'lastName', 'error')} required">

@@ -30,23 +30,39 @@
             <g:sortableColumn property="description" title="${message(code: 'linkResource.description.label', default: 'Description')}" />
 
             <th><g:message code="linkResource.topic.label" default="Topic" /></th>
+            <th>Actions</th>
 
         </tr>
         </thead>
         <tbody>
-        <g:each in="${linkResourceInstanceList}" status="i" var="linkResourceInstance">
-            <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-
-                <td>${fieldValue(bean: linkResourceInstance, field: "title")}</td>
-                <td>${fieldValue(bean: linkResourceInstance, field: "link")}</td>
-                <td><g:link action="show" id="${linkResourceInstance.id}">${fieldValue(bean: linkResourceInstance, field: "description")}</g:link></td>
-
-                <td>${fieldValue(bean: linkResourceInstance, field: "topic.name")}</td>
-
-
-
+        <g:if test="${linkResourceInstanceList ==null || linkResourceInstanceList.size() == 0}">
+            <tr>
+                <td colspan="6">No records found.</td>
             </tr>
-        </g:each>
+        </g:if>
+        <g:else>
+            <g:each in="${linkResourceInstanceList}" status="i" var="linkResourceInstance">
+                <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+
+                    <td>${fieldValue(bean: linkResourceInstance, field: "title")}</td>
+                    <td><a target="_blank" href="${fieldValue(bean: linkResourceInstance, field: "link")}"/>${fieldValue(bean: linkResourceInstance, field: "link")}</a></td>
+                    <td style="text-overflow: ellipsis"><g:link action="show" id="${linkResourceInstance.id}">${fieldValue(bean: linkResourceInstance, field: "description").toString()}</g:link></td>
+
+                    <td>${fieldValue(bean: linkResourceInstance, field: "topic.name")}</td>
+                    <td>
+                        <g:link controller="linkResource" action="show" params="['id':linkResourceInstance.id]">
+                            <img src="${resource(dir: "images",file: "view-512.png")}" height="20px" width="20px" title="View"/>
+                        </g:link>
+                        <g:link controller="linkResource" action="edit" params="['id':linkResourceInstance.id]">
+                            <img src="${resource(dir: "images",file: "pencil1.png")}" height="20px" width="20px" title="Edit"/>
+                        </g:link>
+                        <g:link controller="linkResource" action="delete" params="['id':linkResourceInstance.id]">
+                            <img src="${resource(dir: "images",file: "-trash.png")}" height="20px" width="20px" title="Delete"/>
+                        </g:link>
+                    </td>
+                </tr>
+            </g:each>
+        </g:else>
         </tbody>
     </table>
     <div class="pagination">

@@ -20,6 +20,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
+
 			<g:uploadForm url="[resource:documentResourceInstance, action:'save']" >
 				<fieldset class="form">
 					<g:render template="form"/>
@@ -28,6 +29,7 @@
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 				</fieldset>
 			</g:uploadForm>
+
 		</div>
 	</body>
 </html>

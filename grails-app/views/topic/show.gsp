@@ -1,5 +1,5 @@
 
-<%@ page import="linksharing.resource.Topic" %>
+<%@ page import="linksharing.resource.LinkResource; linksharing.resource.DocumentResource; linksharing.resource.Topic" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,10 +16,10 @@
 <div id="show-topic" class="content scaffold-show" role="main">
     <h1>
         <g:message code="default.show.label" args="[entityName]" />
-    <span class="button">
-        <g:link controller="documentResource" action="create">Add Document</g:link>
-        <g:link controller="linkResource" action="create">Add Link</g:link>
-    </span>
+        <span class="button">
+            <g:link controller="documentResource" action="create">Add Document</g:link>
+            <g:link controller="linkResource" action="create">Add Link</g:link>
+        </span>
     </h1>
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
@@ -57,11 +57,25 @@
 
         <g:if test="${topicInstance?.resources}">
             <li class="fieldcontain">
-                <span id="resources-label" class="property-label"><g:message code="topic.resources.label" default="Resources" /></span>
+                <span id="resources-label" class="property-label" ><g:message code="topic.resources.label" default="Resources" /></span>
 
-                <g:each in="${topicInstance.resources}" var="r">
-                    <span class="property-value" aria-labelledby="resources-label"><g:link controller="linkResource" action="show" id="${r.id}">${r?.title.encodeAsHTML()}</g:link></span>
-                </g:each>
+                <span class="property-value" aria-labelledby="visibility-label" >
+                    <g:link title="Document Resources " controller="documentResource" action="index" params="['topicId':topicInstance.id]">
+                        ${topicInstance?.findResources(DocumentResource)}</g:link>
+                    Document(s)
+                </span>
+
+                <span class="property-value" aria-labelledby="visibility-label">
+                    <g:link title="Link Resources " controller="linkResource" action="index" params="['topicId':topicInstance.id]" >
+                        ${topicInstance?.findResources(LinkResource)}</g:link>
+                    Link(s)
+                </span>
+                %{-- <g:each in="${topicInstance.resources}" var="r">
+                     <span class="property-value" aria-labelledby="resources-label">
+                         --}%%{--<g:link controller="linkResource" action="show" id="${r.id}">${r?.title.encodeAsHTML()}</g:link>--}%%{--
+
+                     </span>
+                 </g:each>--}%
 
             </li>
         </g:if>

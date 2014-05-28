@@ -1,20 +1,64 @@
 package linksharing.resource
 
 import grails.transaction.Transactional
+import linksharing.User
 import linksharing.UtilityService
-import org.springframework.web.multipart.commons.CommonsMultipartFile
+
+import javax.management.Query
 
 import static org.springframework.http.HttpStatus.*
 
-@Transactional(readOnly = true)
 class DocumentResourceController {
-UtilityService utilityService
+    UtilityService utilityService
+    def  mailService
     //def grailsApplication
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+
+    def markAsReadUnread(){
+        String userID = session.getAttribute('userID');
+        println "====userID====="+userID
+        String  resourceID = params.id;
+        // def query = " from ResourceSettings as  rs WHERE  rs.user.id =:userID and rs.resource.id=:resourceID";
+
+        //def resourceSettings = ResourceSettings.executeQuery(query,['userID':1l,'resourceID':Long.parseLong(params.id)])
+
+        ResourceSettings resourceSettings = ResourceSettings.createCriteria().get {
+            //eq("user.id",Long.parseLong(userID))
+            eq("user.id",Long.parseLong("1"))
+            eq("resource.id",Long.parseLong(resourceID))
+        }
+        println ">>>>>>>>>>"+resourceSettings
+
+        if(resourceSettings== null || resourceSettings.readStatus==null){
+            User user = User.get("1");
+            Resource resource = Resource.get(resourceID)
+            ResourceSettings rs = new ResourceSettings();
+            rs.readStatus = 'read'
+            user.addToResourceSettings(rs)
+            resource.addToResourceSettings(rs)
+            rs.save()
+            render "read"
+        }else{
+            if(resourceSettings.readStatus=='read'){
+                resourceSettings.readStatus = 'unread';
+            }else{
+                resourceSettings.readStatus = 'read';
+            }
+            resourceSettings.save(flush: true)
+            render resourceSettings.readStatus
+        }
+    }
+
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond DocumentResource.list(params), model:[documentResourceInstanceCount: DocumentResource.count()]
+        List<DocumentResource> listOfResources= DocumentResource.createCriteria().list {
+            if(utilityService.isValidString(params.topicId)){
+                eq("topic.id",Long.parseLong(params.topicId))
+            }
+            //To-Do
+        }
+
+        respond listOfResources, model:[documentResourceInstanceCount: DocumentResource.count()]
     }
 
     def show(DocumentResource documentResourceInstance) {
@@ -27,7 +71,7 @@ UtilityService utilityService
 
     def download() {
         String buildDir = grailsApplication.config.builddocs
-    println buildDir+"/" + params.id+"/" + params.fileName;
+        println buildDir+"/" + params.id+"/" + params.fileName;
         File file = new File(buildDir+ params.id+"/" + params.fileName)
 
         response.setContentType(params.fileType)
@@ -35,7 +79,7 @@ UtilityService utilityService
         response.setHeader('Content-Disposition', 'Filename='+params.fileName)
         response.outputStream << file.newInputStream()
     }
-    @Transactional
+
     def save(DocumentResource documentResourceInstance) {
         if (documentResourceInstance == null) {
             notFound()
@@ -44,19 +88,29 @@ UtilityService utilityService
 
 
         utilityService.uploadFile(params,request.getFile('file'))
+        String  userId = session.getAttribute("userID")
+
+        User user =User.get(Long.parseLong(userId))
+        user.addToResources(documentResourceInstance)
+
         documentResourceInstance.properties=params
+
+        println documentResourceInstance.errors;
 
         if (documentResourceInstance.hasErrors()) {
             respond documentResourceInstance.errors, view:'edit'
             return
         }
+
         documentResourceInstance.save flush:true
+
 
         request.withFormat {
             form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'documentResource.label', default: 'Document Resource'), documentResourceInstance.id])
                 redirect documentResourceInstance
             }
-            '*'{ respond documentResourceInstance, [status: OK] }
+            '*'{ respond documentResourceInstance, [status: CREATED] }
 
         }
 
@@ -66,13 +120,12 @@ UtilityService utilityService
         respond documentResourceInstance
     }
 
-    @Transactional
     def update(DocumentResource documentResourceInstance) {
         if (documentResourceInstance == null) {
             notFound()
             return
         }
-        UtilityService.uploadFile(params,request.getFile('file'))
+        utilityService.uploadFile(params,request.getFile('file'))
         documentResourceInstance.properties=params
 
 
@@ -85,23 +138,19 @@ UtilityService utilityService
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message',args: [message(code: 'documentResource.label', default: 'DocumentResource'), documentResourceInstance.id])
+                flash.message = message(code: 'default.updated.message',args: [message(code: 'documentResource.label', default: 'Document Resource'), documentResourceInstance.id])
                 redirect documentResourceInstance
             }
             '*'{ respond documentResourceInstance, [status: OK] }
         }
     }
 
-    @Transactional
     def delete(DocumentResource documentResourceInstance) {
-
         if (documentResourceInstance == null) {
             notFound()
             return
         }
-
         documentResourceInstance.delete flush:true
-
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message',args: [message(code: 'documentResource.label', default: 'DocumentResource'), documentResourceInstance.id])

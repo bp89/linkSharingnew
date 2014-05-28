@@ -21,7 +21,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:documentResourceInstance, action:'update']" method="PUT" >
+			<g:uploadForm controller="documentResource" action="update" method="POST" >
 				<g:hiddenField name="version" value="${documentResourceInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>
@@ -29,7 +29,7 @@
 				<fieldset class="button" style="float: left">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
 				</fieldset>
-			</g:form>
+			</g:uploadForm>
 		</div>
 	</body>
 </html>

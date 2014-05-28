@@ -1,11 +1,10 @@
 package linksharing.resource
 
-
+import linksharing.User
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
 class LinkResourceController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -23,12 +22,19 @@ class LinkResourceController {
         respond new LinkResource(params)
     }
 
-    @Transactional
     def save(LinkResource linkResourceInstance) {
         if (linkResourceInstance == null) {
             notFound()
             return
         }
+
+        String  userId = session.getAttribute("userID")
+
+        User user =User.get(Long.parseLong(userId))
+
+        println user.id
+
+        user.addToResources(linkResourceInstance)
 
         if (linkResourceInstance.hasErrors()) {
             respond linkResourceInstance.errors, view:'create'

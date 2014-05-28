@@ -3,6 +3,7 @@ package linksharing
 import grails.plugin.mail.MailService
 import grails.plugin.simplecaptcha.SimpleCaptchaService
 import grails.transaction.Transactional
+import linksharing.resource.Resource
 import linksharing.resource.Topic
 
 import static org.springframework.http.HttpStatus.*
@@ -12,18 +13,33 @@ class UserController {
     def SimpleCaptchaService simpleCaptchaService;
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     def mailService
+    def utilityService
 
     def forgotPassword(){
-        mailService.sendMail {
+/*
+
+        String emailId = params.emailID;
+        User user = User.createCriteria().get {
+            eq("emailID",emailId)
+        }
+        String confirmCode= user.lastName+user.lastName +UUID.randomUUID().toString()
+
+
+        */
+/*mailService.sendMail {
             from "banti.prajapati@intelligrape.com"
             to "banti.prajapati89@gmail.com"
             subject "Hello"
             body "This is a test"
-        }
+        }*//*
 
-       // UtilityService.sendMail();
+
+
+        utilityService.sendMail('banti.prajapati@intelligrape.com',new String [emailId],null,null,utilityService.getForgotPasswordHTML(user,confirmCode),true)
+*/
         render (view:"forgotPassword");
     }
+
 
     def invalidLogin(){
 
@@ -36,6 +52,33 @@ class UserController {
     }
 
     def dashboard(){
+        String userID = session.getAttribute("userID")
+
+        List subscribedTopics = Topic.createCriteria().list {
+            eq("owner.id",Long.parseLong(userID));
+        }
+
+        request.setAttribute("subscribedTopics",subscribedTopics)
+
+        List unreadItems = Resource.createCriteria().list {
+
+            //eq("resourceSettings.readStatus",'unread')
+            //eq("topic.userSubscriptionDetails.user.id",Long.parseLong(userID))
+
+        }
+
+        request.setAttribute("unreadItems",unreadItems)
+
+
+        List top15Topics = Topic.createCriteria().list(max: 15) {
+
+            eq("visibility",'public')
+            //eq("resourceSettings.readStatus",'unread')
+            //eq("topic.userSubscriptionDetails.user.id",Long.parseLong(userID))
+
+        }
+        request.setAttribute("top15Topics",top15Topics)
+
         render (view:"dashboard")
     }
 
@@ -66,9 +109,6 @@ class UserController {
 
         flash.put("logoutMessage","You have been logged out successfully.")
 
-
-
-
         //render (controllerName:"main",view:"index")
         redirect(uri: "")
         //redirect "/index.gsp"
@@ -81,7 +121,7 @@ class UserController {
         }
 
         if(user){
-            session.setAttribute("user",user.userName);
+            session.setAttribute("userID",user.id);
             //setting session to expiry in 30 mins
             session.setMaxInactiveInterval(30*60);
 
@@ -161,24 +201,24 @@ class UserController {
         }
     }
 
-    @Transactional
-    def delete(User userInstance) {
+    /* @Transactional
+     def delete(User userInstance) {
 
-        if (userInstance == null) {
-            notFound()
-            return
-        }
+         if (userInstance == null) {
+             notFound()
+             return
+         }
 
-        userInstance.delete flush:true
+         userInstance.delete flush:true
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'User.label', default: 'User'), userInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
+         request.withFormat {
+             form multipartForm {
+                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'User.label', default: 'User'), userInstance.id])
+                 redirect action:"index", method:"GET"
+             }
+             '*'{ render status: NO_CONTENT }
+         }
+     }*/
 
     protected void notFound() {
         request.withFormat {
@@ -188,5 +228,10 @@ class UserController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+
+    def resetPassword(){
+        println "Random number is :"+params.confirmCode
     }
 }

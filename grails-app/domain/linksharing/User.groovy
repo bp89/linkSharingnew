@@ -1,5 +1,7 @@
 package linksharing
 
+import linksharing.resource.Resource
+import linksharing.resource.ResourceSettings
 import linksharing.resource.Topic
 
 class User {
@@ -8,17 +10,19 @@ class User {
     String lastName;
     String password;
     String passwordConfirm;
-    int age;
+    int age
+
     String country;
     String city;
     String state;
     String streetAddress;
     String userName;
     String emailID;
+    String secretKeyToResetPassword;
 
     static transients = ['passwordConfirm']
 
-    static hasMany = [userSubscriptionDetails:UserSubscriptionDetails,topics:Topic]
+    static hasMany = [userSubscriptionDetails:UserSubscriptionDetails,topics:Topic,resourceSettings:ResourceSettings,resources:Resource]
 
     //static  belongsTo = [topic:Topic]
 
@@ -26,8 +30,6 @@ class User {
     static constraints = {
         password   minSize: 8,maxSize: 16,blank:false,nullable: false,validator:{ password, obj ->
             def password2 = obj.passwordConfirm
-            println password
-            println password2
             password2 == password ? true : ['invalid.matchingpasswords']
         }
         passwordConfirm bindable:true
@@ -41,7 +43,7 @@ class User {
 
 
     static mapping = {
-
+        secretKeyToResetPassword type: 'text'
     }
 
 

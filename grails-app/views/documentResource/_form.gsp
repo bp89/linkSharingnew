@@ -30,7 +30,7 @@
         <span class="required-indicator">*</span>
     </label>
 
-    <input type="file" name="file" required="" value="${documentResourceInstance?.fileName}" placeholder="Tell " class="upload" style="background-color: #transparent;color: transparent;width: 132px;font-family: "monospace", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif"/>${documentResourceInstance?.fileName}
+    <input type="file" name="file" required="" value="${documentResourceInstance?.fileName}"  class="upload" style="background-color: #transparent;color: transparent;width: 132px;font-family: "monospace", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif"/>${documentResourceInstance?.fileName}
 </div>
 
 

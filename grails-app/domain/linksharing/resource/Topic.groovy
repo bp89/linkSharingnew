@@ -17,13 +17,17 @@ class Topic {
                 if(!(visibility=='Private' || visibility=='Public')){
                     return ['invalid.visibility']
                 }
-
             }
             description minSize: 150, maxSize: 500
     }
     static mapping = {
-
         description type:'text'
 
     }
+    def findResources(Class className){//it should be there user default otherwise
+        return resources.count {
+            it.instanceOf( className )
+        }
+    }
+
 }

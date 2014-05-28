@@ -16,19 +16,19 @@ grails.project.groupId = appName // change this to alter the default package nam
 // The ACCEPT header will not be used for content negotiation for user agents containing the following strings (defaults to the 4 major rendering engines)
 grails.mime.disable.accept.header.userAgents = ['Gecko', 'WebKit', 'Presto', 'Trident']
 grails.mime.types = [ // the first one is the default format
-    all:           '*/*', // 'all' maps to '*' or the first available format in withFormat
-    atom:          'application/atom+xml',
-    css:           'text/css',
-    csv:           'text/csv',
-    form:          'application/x-www-form-urlencoded',
-    html:          ['text/html','application/xhtml+xml'],
-    js:            'text/javascript',
-    json:          ['application/json', 'text/json'],
-    multipartForm: 'multipart/form-data',
-    rss:           'application/rss+xml',
-    text:          'text/plain',
-    hal:           ['application/hal+json','application/hal+xml'],
-    xml:           ['text/xml', 'application/xml']
+        all:           '*/*', // 'all' maps to '*' or the first available format in withFormat
+        atom:          'application/atom+xml',
+        css:           'text/css',
+        csv:           'text/csv',
+        form:          'application/x-www-form-urlencoded',
+        html:          ['text/html','application/xhtml+xml'],
+        js:            'text/javascript',
+        json:          ['application/json', 'text/json'],
+        multipartForm: 'multipart/form-data',
+        rss:           'application/rss+xml',
+        text:          'text/plain',
+        hal:           ['application/hal+json','application/hal+xml'],
+        xml:           ['text/xml', 'application/xml']
 ]
 
 // URL Mapping Cache Max Size, defaults to 5000
@@ -62,7 +62,7 @@ grails {
         // filteringCodecForContentType.'text/html' = 'html'
     }
 
-    mail{
+    /*mail{
         host:"smtp.gmail.com"
         port:465
         username="banti.prajapati@intelligrape.com"
@@ -71,6 +71,16 @@ grails {
                 "mail.smtps.host":"smtp.gmail.com",
                 "mail.smtps.port":"465",
                 "mail.smtps.auth":"true"]
+    }*/
+    mail {
+        host = "smtp.gmail.com"
+        port = 465
+        username = "banti.prajapati@intelligrape.com"
+        password = "J@ishr33r@m"
+        props = ["mail.smtp.auth":"true",
+                "mail.smtp.socketFactory.port":"465",
+                "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+                "mail.smtp.socketFactory.fallback":"false"]
     }
 }
 
@@ -104,10 +114,11 @@ environments {
     development {
         grails.logging.jul.usebridge = true
         builddocs="/home/prajapati/Desktop/project/builddocs/"
+        grails.serverURL = 'http://bp.pagekite.me/linksharing'
     }
     production {
         grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
+            // TODO: grails.serverURL = "http://www.changeme.com"
     }
 }
 
@@ -120,92 +131,92 @@ log4j = {
     //}
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
-           'org.codehaus.groovy.grails.web.pages',          // GSP
-           'org.codehaus.groovy.grails.web.sitemesh',       // layouts
-           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-           'org.codehaus.groovy.grails.web.mapping',        // URL mapping
-           'org.codehaus.groovy.grails.commons',            // core / classloading
-           'org.codehaus.groovy.grails.plugins',            // plugins
-           'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
-           'org.springframework',
-           'org.hibernate',
-           'net.sf.ehcache.hibernate'
+            'org.codehaus.groovy.grails.web.pages',          // GSP
+            'org.codehaus.groovy.grails.web.sitemesh',       // layouts
+            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+            'org.codehaus.groovy.grails.web.mapping',        // URL mapping
+            'org.codehaus.groovy.grails.commons',            // core / classloading
+            'org.codehaus.groovy.grails.plugins',            // plugins
+            'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
+            'org.springframework',
+            'org.hibernate',
+            'net.sf.ehcache.hibernate'
 }
 
 // Added by the JQuery Validation UI plugin:
 jqueryValidationUi {
-	errorClass = 'error'
-	validClass = 'valid'
-	onsubmit = true
-	renderErrorsOnTop = false
-	
-	qTip {
-		packed = true
-	  classes = 'ui-tooltip-red ui-tooltip-shadow ui-tooltip-rounded'  
-	}
-	
-	/*
-	  Grails constraints to JQuery Validation rules mapping for client side validation.
-	  Constraint not found in the ConstraintsMap will trigger remote AJAX validation.
-	*/
-	StringConstraintsMap = [
-		blank:'required', // inverse: blank=false, required=true
-		creditCard:'creditcard',
-		email:'email',
-		inList:'inList',
-		minSize:'minlength',
-		maxSize:'maxlength',
-		size:'rangelength',
-		matches:'matches',
-		notEqual:'notEqual',
-		url:'url',
-		nullable:'required',
-		unique:'unique',
-		validator:'validator'
-	]
-	
-	// Long, Integer, Short, Float, Double, BigInteger, BigDecimal
-	NumberConstraintsMap = [
-		min:'min',
-		max:'max',
-		range:'range',
-		notEqual:'notEqual',
-		nullable:'required',
-		inList:'inList',
-		unique:'unique',
-		validator:'validator'
-	]
-	
-	CollectionConstraintsMap = [
-		minSize:'minlength',
-		maxSize:'maxlength',
-		size:'rangelength',
-		nullable:'required',
-		validator:'validator'
-	]
-	
-	DateConstraintsMap = [
-		min:'minDate',
-		max:'maxDate',
-		range:'rangeDate',
-		notEqual:'notEqual',
-		nullable:'required',
-		inList:'inList',
-		unique:'unique',
-		validator:'validator'
-	]
-	
-	ObjectConstraintsMap = [
-		nullable:'required',
-		validator:'validator'
-	]
-	
-	CustomConstraintsMap = [
-		phone:'true', // International phone number validation
-		phoneUS:'true',
-		alphanumeric:'true',
-		letterswithbasicpunc:'true',
-    lettersonly:'true'
-	]	
+    errorClass = 'error'
+    validClass = 'valid'
+    onsubmit = true
+    renderErrorsOnTop = false
+
+    qTip {
+        packed = true
+        classes = 'ui-tooltip-red ui-tooltip-shadow ui-tooltip-rounded'
+    }
+
+    /*
+      Grails constraints to JQuery Validation rules mapping for client side validation.
+      Constraint not found in the ConstraintsMap will trigger remote AJAX validation.
+    */
+    StringConstraintsMap = [
+            blank:'required', // inverse: blank=false, required=true
+            creditCard:'creditcard',
+            email:'email',
+            inList:'inList',
+            minSize:'minlength',
+            maxSize:'maxlength',
+            size:'rangelength',
+            matches:'matches',
+            notEqual:'notEqual',
+            url:'url',
+            nullable:'required',
+            unique:'unique',
+            validator:'validator'
+    ]
+
+    // Long, Integer, Short, Float, Double, BigInteger, BigDecimal
+    NumberConstraintsMap = [
+            min:'min',
+            max:'max',
+            range:'range',
+            notEqual:'notEqual',
+            nullable:'required',
+            inList:'inList',
+            unique:'unique',
+            validator:'validator'
+    ]
+
+    CollectionConstraintsMap = [
+            minSize:'minlength',
+            maxSize:'maxlength',
+            size:'rangelength',
+            nullable:'required',
+            validator:'validator'
+    ]
+
+    DateConstraintsMap = [
+            min:'minDate',
+            max:'maxDate',
+            range:'rangeDate',
+            notEqual:'notEqual',
+            nullable:'required',
+            inList:'inList',
+            unique:'unique',
+            validator:'validator'
+    ]
+
+    ObjectConstraintsMap = [
+            nullable:'required',
+            validator:'validator'
+    ]
+
+    CustomConstraintsMap = [
+            phone:'true', // International phone number validation
+            phoneUS:'true',
+            alphanumeric:'true',
+            letterswithbasicpunc:'true',
+            lettersonly:'true'
+    ]
 }
 
