@@ -1,5 +1,6 @@
 package linksharing
 
+import com.linksharing.ForgotPasswordCO
 import grails.plugin.mail.MailService
 import grails.transaction.Transactional
 import linksharing.resource.Topic
@@ -80,11 +81,11 @@ class UtilityService {
             invite.save(flush: true)
             println "Errors==========================" << invite.errors.allErrors
         }
-        this.sendMail(user.emailID, mailIds,null,null,subject,html.toString(),true)
+        this.sendMail(user.emailID, Arrays.asList(mailIds),null,null,subject,html.toString(),true)
     }
 
 
-    def sendMail(String sender,String []sendTo,String []mailCC,String []mailBcc,String mailSubject,String textOrHTML,boolean isHTML){
+    def sendMail(String sender,List<String> sendTo,List<String> mailCC,List<String> mailBcc,String mailSubject,String textOrHTML,boolean isHTML){
         mailService.sendMail {
             from sender
             to sendTo
@@ -120,10 +121,45 @@ class UtilityService {
         StringBuilder html= new StringBuilder();
         html.append("<html>")
                 .append("<body>")
-                .append("<a href='").append(webUtils.getCurrentRequest().siteUrl).append("/resetPassword?confirmCode=").append(randomNumber).append("'>Subscribe to ").append(topic.name).append("</a>")
+                .append("To reset your password follow steps mentioned below:")
+                .append("<ol>")
+                .append("<li>")
+                .append("<a href='").append(siteUrl).append("/user/resetPassword?confirmCode=").append(randomNumber).append("'>Click here to Reset your password ").append("</a>.")
+                .append("</li>")
+                .append("<li>")
+                .append("Enter your new Password.")
+                .append("</li>")
+                .append("<li>")
+                .append("Enter Confirmation password.")
+                .append("</li>")
+                .append("<li>")
+                .append("You are done.Try logging in with new details.")
+                .append("</li>")
+                .append("</ol>")
                 .append("</body")
                 .append("</html>")
         return html
 
+    }
+
+    User getUserOnEmailID(String emailID){
+        return  User.createCriteria().get {
+            eq("emailID",emailID)
+        }
+    }
+
+    def triggerForgotPasswordMail(User user,ForgotPasswordCO forgotPasswordCO,String confirmCode){
+        String subject = "Reset your password now."
+        sendMail('support@intelligrape.com', [forgotPasswordCO.emailID],null,null,subject,getForgotPasswordHTML(user,confirmCode).toString(),true)
+    }
+
+    def getCurrentUser(){
+        def webUtils = WebUtils.retrieveGrailsWebRequest()
+        String userID= webUtils.getCurrentRequest().getSession().getAttribute("userID");
+        if(isValidString(userID)){
+            return User.get(Long.parseLong(userID));
+        }else{
+            return null;
+        }
     }
 }

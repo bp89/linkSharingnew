@@ -15,27 +15,39 @@
 
 
 <body style="background: #ffffff">
-<div id="create-documentResource" class="content scaffold-create" role="main">
+<div id="create-forgotResource" class="content scaffold-create" role="main">
+    <g:if test="${flash.message}">
+        <div class="message" role="status">${flash.message}</div>
+    </g:if>
+
+    <g:hasErrors bean="${forgotPasswordCO}">
+        <ul class="errors" role="alert">
+            <g:eachError bean="${forgotPasswordCO}" var="error">
+                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+            </g:eachError>
+        </ul>
+    </g:hasErrors>
+
     <span style="text-align: center"> <b>Forgot your password?</b></span>
-    <g:form>
+    <g:form controller="user" action="sendResetMail">
 
         <fieldset class="form">
             Enter Your registered :
-            <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'emailID', 'error')} required">
+            <div class="fieldcontain ${hasErrors(bean: forgotPasswordCO, field: 'emailID', 'error')} required">
                 <label for="emailID">
                     <g:message code="user.firstName.label" default="Email Id" />
                     <span class="required-indicator">*</span>
                 </label>
-                <g:textField name="emailID" required="" value="" placeholder="Enter your registered email ID." style="width: 400px;height: 30px"/>
+                <g:textField name="emailID"  value="" placeholder="Enter your registered email ID." style="width: 400px;height: 30px"/>
 
             </div>
             <br/>Or
-            <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'userName', 'error')} required">
-                <label for="emailID">
+            <div class="fieldcontain ${hasErrors(bean: forgotPasswordCO, field: 'userName', 'error')} required">
+                <label for="userName">
                     <g:message code="user.firstName.label" default="User ID" />
                     <span class="required-indicator">*</span>
                 </label>
-                <g:textField name="emailID" required="" value="" placeholder="Enter your registered user ID." style="width: 400px;height: 30px"/>
+                <g:textField name="userName" value="" placeholder="Enter your registered user ID." style="width: 400px;height: 30px"/>
             </div>
         </fieldset>
 

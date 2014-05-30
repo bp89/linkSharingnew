@@ -54,8 +54,8 @@ class DocumentResourceController {
         List<DocumentResource> listOfResources= DocumentResource.createCriteria().list {
             if(utilityService.isValidString(params.topicId)){
                 eq("topic.id",Long.parseLong(params.topicId))
+                groupProperty('')
             }
-            //To-Do
         }
 
         respond listOfResources, model:[documentResourceInstanceCount: DocumentResource.count()]

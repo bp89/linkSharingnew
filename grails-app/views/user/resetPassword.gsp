@@ -17,10 +17,16 @@
     <fieldset class="form">
 
 
-
+        <g:hasErrors bean="${documentResourceInstance}">
+            <ul class="errors" role="alert">
+                <g:eachError bean="${documentResourceInstance}" var="error">
+                    <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+                </g:eachError>
+            </ul>
+        </g:hasErrors>
         <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'password', 'error')} required">
             <label for="password">
-                <g:message code="user.password.label" default="Create a Password" />
+                <g:message code="user.password.label" default="Create a New Password" />
                 <span class="required-indicator">*</span>
             </label>
             <g:passwordField name="password" required="" value="${userInstance?.password}"/>
@@ -29,7 +35,7 @@
 
         <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'password', 'error')} required">
             <label for="passwordConfirm">
-                <g:message code="user.password.label" default="Confirm your password" />
+                <g:message code="user.password.label" default="Confirm your new password" />
                 <span class="required-indicator">*</span>
             </label>
             <g:passwordField name="passwordConfirm" required="" value=""/>

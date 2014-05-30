@@ -22,6 +22,7 @@ html {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    border-radius: .2em;
 }
 
 html.no-cssgradients {
@@ -34,7 +35,9 @@ html.no-cssgradients {
 
 html * {
     margin: 0;
+
 }
+
 
 body {
     background-color: #cca;
@@ -43,14 +46,14 @@ body {
     background-image: linear-gradient(top, #aaa, #ddd);
     color: #333333;
     margin: 0 auto;
-    max-width: 960px;
-    overflow-x: hidden; /* prevents box-shadow causing a horizontal scrollbar in firefox when viewport < 960px wide */
+    max-width: 99%;
+    overflow-x: inherit; /* prevents box-shadow causing a horizontal scrollbar in firefox when viewport < 960px wide */
     -moz-box-shadow: 0 0 0.3em #ccc;;
     -webkit-box-shadow: 0 0 0.3em #ccc;;
     box-shadow: 0 0 0.3em #ccc;;
     -moz-border-radius: 0.3em;
     -webkit-border-radius: 0.3em;
-    border-radius: 0.3em;
+    border-radius: .5em;
 
 }
 

@@ -22,7 +22,8 @@
     <r:layoutResources />
 </head>
 <body>
-<div id="grailsLogo" role="banner"><img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails" height="70px"/><span style="text-transform: full-width;font-weight:bolder;font-family: "monospace",  sans-serif;">Link Sharing</span>
+<div id="grailsLogo" role="banner" style="position: relative;width: 100%">
+    <img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails" height="70px"/><span style="text-transform: full-width;font-weight:bolder;font-family: "monospace",  sans-serif;">Link Sharing</span>
 %{-- <div class="socialMedia">
     <a class="fbhead" href="https://www.facebook.com/pages/SoftIVenture/267927196554975?ref=hl" target="_blank"></a>
     <a class="tweethead" href="http://twitter.com/softiventure" target="_blank"></a>
@@ -31,9 +32,13 @@
 </div>--}%
     <g:if test="${flash.skipLogout != 'skip'}">
         <span style="float:right;">
+            <g:link class="list" controller="user" action="administration">
+                Administration
+            </g:link>
             <g:link class="list" controller="user" action="logout">
                 Logout
             </g:link>
+
         </span>
     </g:if>
     <div class="nav" role="navigation" >
@@ -47,7 +52,7 @@
         </ul>
     </div>
 </div>
-<g:layoutBody/>
+<g:layoutBody />
 
 
 <div style="background-color: #b7a2ff;height: 42px;">

@@ -6,9 +6,11 @@
 
 4. User can create a new topic and he will be automatically subscribed to it. The topic can be private or public.
 %{--Done--}%
+
 5. User can subscribe to an existing public topic. 
 
 6. User can specify his/her seriousness to a particular topic. 
+%{--Done--}%
 
 7. Subscribed users can send invites to a public or private topic. 
 
@@ -29,7 +31,8 @@
 11. The user should be able to mark a resource as read/unread. 
 %{--Done--}%
 
-12. Only a Creator of a resource or admin can delete a resource. 
+12. Only a Creator of a resource or admin can delete a resource.
+
 
 13. Only a Creator of a topic or admin can delete a topic. Its resources should also be deleted irrespective of the ownership status or resources. 
 
@@ -44,4 +47,9 @@
 
 2. List of top 15 unread items 
 
-3. Top 15 public topics on basis of number of subscribers. 
+3. Top 15 public topics on basis of number of subscribers.
+
+
+
+GRANT SELECT, INSERT,UPDATE, DELETE, INDEX, ALTER, CREATE, LOCK TABLES,CREATE TEMPORARY TABLES, DROP, REFERENCES ON bugzilla.*
+TO bugzilla@localhost IDENTIFIED BY 'Bugs4All';

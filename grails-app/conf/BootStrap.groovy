@@ -5,28 +5,28 @@ class BootStrap {
     def grailsApplication
 
     def init = { servletContext ->
-def mailService
+        def mailService
+        User defaultUser = null;
         try{
 
             HttpRequestMetaClassEnhancer.enhanceRequest()
-
-
-            User defaultUser = new User();
-            defaultUser.firstName = 'admin'
-            defaultUser.lastName = 'admin'
-            defaultUser.userName = 'admin'
-            defaultUser.age = 23
-            defaultUser.city = 'Reston'
-            defaultUser.country = 'USA'
-            defaultUser.emailID = 'banti.prajapati@intelligrape.com'
-            defaultUser.password = 'J@ishr33r@m'
-            defaultUser.passwordConfirm = 'J@ishr33r@m'
-            defaultUser.state='Virginia'
-            defaultUser.streetAddress = "Marine Drive"
-            defaultUser.save flush:  true
-
-
-
+            if(!User.findByUserName('admin')){//Fail-Safe insertion
+                defaultUser = new User();
+                defaultUser.firstName = 'admin'
+                defaultUser.lastName = 'admin'
+                defaultUser.userName = 'admin'
+                defaultUser.age = 23
+                defaultUser.city = 'Reston'
+                defaultUser.country = 'USA'
+                defaultUser.emailID = 'banti.prajapati@intelligrape.com'
+                defaultUser.password = 'J@ishr33r@m'
+                defaultUser.passwordConfirm = 'J@ishr33r@m'
+                defaultUser.state='Virginia'
+                defaultUser.streetAddress = "Marine Drive"
+                defaultUser.save flush:  true
+            }
+            //INSERT INTO `linkSharing`.`secret_question` (`id`, `version`, `question`) VALUES ('1', '1', 'What is your favourite Sport?');
+            //INSERT INTO `linkSharing`.`secret_question` (`id`, `version`, `question`) VALUES ('2', '2', 'What is the name of you first school Teacher?');
 
         }catch (Exception e){
             e.printStackTrace();

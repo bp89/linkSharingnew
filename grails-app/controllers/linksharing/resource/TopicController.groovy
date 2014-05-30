@@ -3,14 +3,37 @@ package linksharing.resource
 import com.linksharing.SeriousnessLevel
 import linksharing.User
 import linksharing.UserSubscriptionDetails
+import linksharing.UtilityService
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
 class TopicController {
-
+    UtilityService utilityService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+
+    def updateSeriousnessLevel(){
+
+        String seriousnessLevel = params.seriousnessLevel;
+        Topic topic =  Topic.get(Long.parseLong(params.topicId));
+
+        User user = utilityService.getCurrentUser();
+
+        UserSubscriptionDetails usd = UserSubscriptionDetails.createCriteria().get {
+            eq('user',user)
+            eq('topic',topic)
+        }
+
+        if(usd == null ){
+            render "Not Subscribed"
+        }else{
+            String query = " update UserSubscriptionDetails usd set seriousnessLevel=:seriousnessLevel where usd.user.id=:id and usd.topic.id=:topicID";
+            Topic.executeUpdate(query,[seriousnessLevel:seriousnessLevel,id:user.id,topicID:topic.id])
+            render 'done'
+        }
+    }
+
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)

@@ -13,6 +13,6 @@ class UserSubscriptionDetails {
 
     }
     static mapping = {
-//        subscribedOn
+        seriousnessLevel default:''
     }
 }

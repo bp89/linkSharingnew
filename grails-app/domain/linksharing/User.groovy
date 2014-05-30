@@ -19,12 +19,13 @@ class User {
     String userName;
     String emailID;
     String secretKeyToResetPassword;
+    String answer
 
     static transients = ['passwordConfirm']
 
     static hasMany = [userSubscriptionDetails:UserSubscriptionDetails,topics:Topic,resourceSettings:ResourceSettings,resources:Resource]
 
-    //static  belongsTo = [topic:Topic]
+    static  belongsTo = [secretQuestion:SecretQuestion]
 
 
     static constraints = {
@@ -32,6 +33,7 @@ class User {
             def password2 = obj.passwordConfirm
             password2 == password ? true : ['invalid.matchingpasswords']
         }
+        answer nullable: true
         passwordConfirm bindable:true
         emailID(email:true)
         age([min: 18])
@@ -39,6 +41,9 @@ class User {
         /*userName validator: {userName ->
             userName.matches(" ^[0-9a-zA-Z,.-]+?[0-9a-zA-Z]+?[0-9a-zA-Z,.-]*$")
         }*/
+        answer nullable: true
+        secretKeyToResetPassword nullable: true
+        secretQuestion nullable: true
     }
 
 

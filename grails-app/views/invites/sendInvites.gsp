@@ -43,7 +43,7 @@
         </div>
         <div>
         <label for="sendInvite">Send Invites</label>
-            <g:textField name="sendInvite" id="sendInvite" value="" placeholder="Enter Email Ids." style="width:800px;height: 40px"/>
+            <g:textField name="sendInvite" id="sendInvite" value="" placeholder="Enter Email Ids." style="width:800px;height: 30px"/>
         </div>
     </fieldset>
     <fieldset class="button" style="float: left">

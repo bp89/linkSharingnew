@@ -1,5 +1,7 @@
 package linksharing
 
+import com.linksharing.ForgotPasswordCO
+import com.linksharing.SecretQuestionCO
 import grails.plugin.mail.MailService
 import grails.plugin.simplecaptcha.SimpleCaptchaService
 import grails.transaction.Transactional
@@ -8,7 +10,7 @@ import linksharing.resource.Topic
 
 import static org.springframework.http.HttpStatus.*
 
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 class UserController {
     def SimpleCaptchaService simpleCaptchaService;
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -16,33 +18,29 @@ class UserController {
     def utilityService
 
     def forgotPassword(){
-/*
-
-        String emailId = params.emailID;
-        User user = User.createCriteria().get {
-            eq("emailID",emailId)
-        }
-        String confirmCode= user.lastName+user.lastName +UUID.randomUUID().toString()
-
-
-        */
-/*mailService.sendMail {
-            from "banti.prajapati@intelligrape.com"
-            to "banti.prajapati89@gmail.com"
-            subject "Hello"
-            body "This is a test"
-        }*//*
-
-
-
-        utilityService.sendMail('banti.prajapati@intelligrape.com',new String [emailId],null,null,utilityService.getForgotPasswordHTML(user,confirmCode),true)
-*/
         render (view:"forgotPassword");
     }
 
 
-    def invalidLogin(){
 
+    def sendResetMail(ForgotPasswordCO forgotPasswordCO){
+        if (forgotPasswordCO.hasErrors()  ) {
+            respond forgotPasswordCO.errors, view:'forgotPassword'
+            return
+        }
+
+        User user = utilityService.getUserOnEmailID(forgotPasswordCO.emailID)
+        if(forgotPasswordCO.emailID !=''){
+            String confirmCode= user.lastName+user.lastName +UUID.randomUUID().toString()
+            user.secretKeyToResetPassword = confirmCode
+            //user.save(flush: true)
+            User.executeUpdate("update User set secretKeyToResetPassword=:confirmCode where id =(:id)", [confirmCode:confirmCode,id: user.id])
+            utilityService.triggerForgotPasswordMail(user,forgotPasswordCO,confirmCode)
+        }
+        render (view:"forgotPassword");
+    }
+
+    def invalidLogin(){
         render (view:"invalidLogin")
     }
 
@@ -53,7 +51,6 @@ class UserController {
 
     def dashboard(){
         String userID = session.getAttribute("userID")
-
         List subscribedTopics = Topic.createCriteria().list {
             eq("owner.id",Long.parseLong(userID));
         }
@@ -71,11 +68,7 @@ class UserController {
 
 
         List top15Topics = Topic.createCriteria().list(max: 15) {
-
             eq("visibility",'public')
-            //eq("resourceSettings.readStatus",'unread')
-            //eq("topic.userSubscriptionDetails.user.id",Long.parseLong(userID))
-
         }
         request.setAttribute("top15Topics",top15Topics)
 
@@ -201,24 +194,48 @@ class UserController {
         }
     }
 
-    /* @Transactional
-     def delete(User userInstance) {
 
-         if (userInstance == null) {
-             notFound()
-             return
-         }
 
-         userInstance.delete flush:true
 
-         request.withFormat {
-             form multipartForm {
-                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'User.label', default: 'User'), userInstance.id])
-                 redirect action:"index", method:"GET"
-             }
-             '*'{ render status: NO_CONTENT }
-         }
-     }*/
+
+
+    def resetPassword(){
+        String secretKeyToResetPassword = params.confirmCode
+
+        User user = User.createCriteria().get {
+            eq('secretKeyToResetPassword',secretKeyToResetPassword);
+        }
+
+        if(user!=null && user.secretKeyToResetPassword.equals(secretKeyToResetPassword)  ){
+            render view: 'resetPassword'
+        }else{
+
+            render view: 'error'
+        }
+    }
+
+    def configureSecretQuestion(SecretQuestionCO secretQuestionCO){
+        User user =utilityService.getCurrentUser()
+        secretQuestionCO.answer= user.answer
+        secretQuestionCO.secretQuestion=user.secretQuestion
+        params.put('secretQuestionCO',secretQuestionCO)
+        render view: 'configureSecretQuestion'
+    }
+
+
+    def administration(){
+        render view: 'administration'
+    }
+
+    def submitSecretQuestion(SecretQuestionCO secretQuestionCO){
+        int count = User.executeUpdate("update User  set answer=:answer,  secretQuestion=:question where id=:id",[answer:secretQuestionCO.answer,question:secretQuestionCO.secretQuestion,id:utilityService.getCurrentUser().id])
+        if(count == 1){
+            println "Hurray!Secret Question has been set."
+        }
+        params.put('secretQuestionCO',secretQuestionCO)
+        respond secretQuestionCO,view:'secretQuestion'
+    }
+
 
     protected void notFound() {
         request.withFormat {
@@ -228,10 +245,5 @@ class UserController {
             }
             '*'{ render status: NOT_FOUND }
         }
-    }
-
-
-    def resetPassword(){
-        println "Random number is :"+params.confirmCode
     }
 }

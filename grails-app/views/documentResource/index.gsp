@@ -61,7 +61,6 @@
                             <img src="${resource(dir: "images",file: "-trash.png")}" height="20px" width="20px" title="Delete"/>
                         </g:link>
 
-
                         <a  href="javascript:markAsReadUnread(${documentResourceInstance.id})">
                             <img id="contentRead${documentResourceInstance.id}" src="${resource(dir: "images",file: (documentResourceInstance.resourceSettings.readStatus.contains('unread')? "unread.png":"read.png"))}" height="20px" width="20px" title="Mark as Read"/>
                         </a>

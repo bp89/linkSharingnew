@@ -55,19 +55,21 @@
             </li>
         </g:if>
 
-        <g:if test="${topicInstance?.resources}">
+      %{--  <g:if test="${topicInstance?.resources}">--}%
             <li class="fieldcontain">
                 <span id="resources-label" class="property-label" ><g:message code="topic.resources.label" default="Resources" /></span>
 
                 <span class="property-value" aria-labelledby="visibility-label" >
                     <g:link title="Document Resources " controller="documentResource" action="index" params="['topicId':topicInstance.id]">
-                        ${topicInstance?.findResources(DocumentResource)}</g:link>
+                        ${topicInstance?.findResources(DocumentResource)}
+                    </g:link>
                     Document(s)
                 </span>
 
                 <span class="property-value" aria-labelledby="visibility-label">
                     <g:link title="Link Resources " controller="linkResource" action="index" params="['topicId':topicInstance.id]" >
-                        ${topicInstance?.findResources(LinkResource)}</g:link>
+                        ${topicInstance?.findResources(LinkResource)}
+                    </g:link>
                     Link(s)
                 </span>
                 %{-- <g:each in="${topicInstance.resources}" var="r">
@@ -78,7 +80,7 @@
                  </g:each>--}%
 
             </li>
-        </g:if>
+        %{--</g:if>--}%
 
 
     </ol>
