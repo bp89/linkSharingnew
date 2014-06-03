@@ -85,7 +85,8 @@ grails {
 }
 
 
-grails.converters.encoding = "UTF-8"
+grails.converters.encoding = "  UTF-8"
+grails.views.javascript.library="jquery"
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'
 
@@ -122,6 +123,21 @@ environments {
     }
 }
 
+/*grails.resources.modules = {
+    application {
+        resource url:'/js/application.js'
+    }
+
+    prototype {
+        resource url:'/js/prototype.js'
+    }
+    scriptaculous {
+        resource url:'/js/scriptaculous.js'
+    }
+    jquery{
+        resource url:'/js/jquery-1.11.1.js'
+    }
+}*/
 // log4j configuration
 log4j = {
     // Example of changing the log pattern for the default console appender:

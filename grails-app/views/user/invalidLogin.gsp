@@ -12,7 +12,7 @@
 </head>
 
 <body>
-Your session has timed out.
+Either your session has timed out or you are not logged in.
 <a class="home" href="${createLink(uri: '')}">Login</a>
 </body>
 </html>

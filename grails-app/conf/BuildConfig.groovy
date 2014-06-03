@@ -64,7 +64,7 @@ grails.project.dependency.resolution = {
         // plugins needed at runtime but not for compilation
         runtime ":hibernate:3.6.10.13" // or ":hibernate4:4.3.5.1"
         runtime ":database-migration:1.4.0"
-        runtime ":jquery:1.11.0.2"
+        compile ":jquery:1.11.0.2"
         compile ":jquery-validation-ui:1.4.9"
         compile ":jquery-validation:1.9"
         runtime ":resources:1.2.7"
@@ -84,7 +84,6 @@ grails.project.dependency.resolution = {
         compile ":simple-captcha:0.9.9"
         compile ":console:1.3"
         compile ":mail:1.0.5"
-
         compile ":jquery-ui:1.10.3"
 
     }

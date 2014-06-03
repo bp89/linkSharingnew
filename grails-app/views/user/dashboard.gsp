@@ -42,108 +42,98 @@
 </head>
 
 <body>
-<div class="dashboard">
-    <div class="section">
 
+        <div class="col-md-12 col-sm-12">
+            <table>
+                <thead>
+                <tr><td colspan="2" onclick="toggleMe('topicsSubscribed',this)"><h1>Topics Subscribed   <img src="${resource(dir: 'images',file: 'show.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
+                <tbody id="topicsSubscribed" >
+                <tr>
 
-
-        <table>
-            <thead>
-            <tr><td colspan="2"><h1>Topics Subscribed   <img src="${resource(dir: 'images',file: 'hide-512.png')}" height="20px" width="20px" onclick="toggleMe('topicsSubscribed',this)" style="float: right"/></h1></td></tr>
-            <tbody id="topicsSubscribed" style="display: none">
-            <tr>
-
-                <th>Topic</th>
-                <th>Description</th>
-            </tr>
-
-            </thead>
-
-            <g:if test="${request.subscribedTopics == null || request.subscribedTopics.size == 0 }">
-                <tr class="odd">
-                    <td colspan="2">
-                        No records found.
-                    </td>
+                    <th>Topic</th>
+                    <th>Description</th>
                 </tr>
-            </g:if>
-            <g:else>
-                <g:each in="${request.subscribedTopics}" status="i" var="subscribedTopic">
-                    <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                        <td>${fieldValue(bean: subscribedTopics, field: "name")}</td>
-                        <td>${fieldValue(bean: subscribedTopics, field: "description").substring(0,20)}...</td>
+
+                </thead>
+
+                <g:if test="${request.subscribedTopics == null || request.subscribedTopics.size == 0 }">
+                    <tr class="odd">
+                        <td colspan="2">
+                            No records found.
+                        </td>
                     </tr>
-                </g:each>
-            </g:else>
+                </g:if>
+                <g:else>
+                    <g:each in="${request.subscribedTopics}" status="i" var="subscribedTopic">
+                        <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+                            <td>${fieldValue(bean: subscribedTopics, field: "name")}</td>
+                            <td>${fieldValue(bean: subscribedTopics, field: "description").substring(0,20)}...</td>
+                        </tr>
+                    </g:each>
+                </g:else>
             </tbody>
-        </table>
+            </table>
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <table>
+                <thead>
+                <tr><td colspan="2" onclick="toggleMe('unreadItems',this)"><h1>Unread Items  <img src="${resource(dir: 'images',file: 'hide-512.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
+                <tbody id="unreadItems" style="display: none">
+                <tr>
 
-    </div>
-    <div class="section">
-        <table>
-            <thead>
-            <tr><td colspan="2"><h1>Unread Items  <img src="${resource(dir: 'images',file: 'hide-512.png')}" height="20px" width="20px" onclick="toggleMe('unreadItems',this)" style="float: right"/></h1></td></tr>
-            <tbody id="unreadItems" style="display: none">
-            <tr>
-
-                <th>Title</th>
-                <th>Topic</th>
-            </tr>
-            </thead>
-
-            <g:if test="${request.subscribedTopics == null || request.subscribedTopics.size == 0 }">
-                <tr class="odd">
-                    <td colspan="2">
-                        No records found.
-                    </td>
+                    <th>Title</th>
+                    <th>Topic</th>
                 </tr>
-            </g:if>
-            <g:else>
-                <g:each in="${request.unreadItems}" status="i" var="unreadItems">
-                    <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                        <td>${fieldValue(bean: unreadItems, field: "title")}</td>
-                        <td>${fieldValue(bean: unreadItems, field: "topic.name")}</td>
+                </thead>
+
+                <g:if test="${request.subscribedTopics == null || request.subscribedTopics.size == 0 }">
+                    <tr class="odd">
+                        <td colspan="2">
+                            No records found.
+                        </td>
                     </tr>
-                </g:each>
-            </g:else>
+                </g:if>
+                <g:else>
+                    <g:each in="${request.unreadItems}" status="i" var="unreadItems">
+                        <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+                            <td>${fieldValue(bean: unreadItems, field: "title")}</td>
+                            <td>${fieldValue(bean: unreadItems, field: "topic.name")}</td>
+                        </tr>
+                    </g:each>
+                </g:else>
             </tbody>
-        </table>
+            </table>
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <table>
+                <thead>
+                <tr><td colspan="2" onclick="toggleMe('top15Topics',this)" style="cursor: hand;"><h1>Top 15 Public Topics <img src="${resource(dir: 'images',file: 'hide-512.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
+                <tbody  id="top15Topics" style="display: none">
+                <tr>
 
-
-    </div>
-    <div class="section">
-        <table>
-            <thead>
-            <tr><td colspan="2"><h1>Top 15 Public Topics <img src="${resource(dir: 'images',file: 'hide-512.png')}" height="20px" width="20px" onclick="toggleMe('top15Topics',this)" style="float: right"/></h1></td></tr>
-            <tbody style="display: none" id="top15Topics">
-            <tr>
-
-                <th>Topic</th>
-                <th>Description</th>
-            </tr>
-            </thead>
-
-            <g:if test="${request.subscribedTopics == null || request.subscribedTopics.size == 0 }">
-                <tr class="odd">
-                    <td colspan="2">
-                        No records found.
-                    </td>
+                    <th>Topic</th>
+                    <th>Description</th>
                 </tr>
-            </g:if>
-            <g:else>
-                <g:each in="${request.top15Topics}" status="i" var="topic">
-                    <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                        <td>${fieldValue(bean: topic, field: "name")}</td>
-                        <td>${fieldValue(bean: topic, field: "description").substring(0,20)}...</td>
+                </thead>
+
+                <g:if test="${request.subscribedTopics == null || request.subscribedTopics.size == 0 }">
+                    <tr class="odd">
+                        <td colspan="2">
+                            No records found.
+                        </td>
                     </tr>
-                </g:each>
-            </g:else>
+                </g:if>
+                <g:else>
+                    <g:each in="${request.top15Topics}" status="i" var="topic">
+                        <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+                            <td>${fieldValue(bean: topic, field: "name")}</td>
+                            <td>${fieldValue(bean: topic, field: "description").substring(0,20)}...</td>
+                        </tr>
+                    </g:each>
+                </g:else>
             </tbody>
-        </table>
-
-
-    </div>
-</div>
-
+            </table>
+        </div>
 
 <script type="text/javascript">
     function toggleMe(me,ele){
@@ -153,10 +143,10 @@
 
         if($('#'+me).css('display')=='none'){
             $('#'+me).show();
-          $(ele).attr("src", showIcon);
+            $(ele).find('img').attr("src", showIcon);
         }else{
             $('#'+me).hide();
-            $(ele).attr("src", hideIcon);
+            $(ele).find('img').attr("src", hideIcon);
         }
 
     }

@@ -4,22 +4,20 @@ import org.apache.commons.lang.StringEscapeUtils
 import org.apache.commons.lang.StringUtils
 
 class UserFilters {
-
+UtilityService utilityService
     def filters = {
 
          //all(controller: '*', action:'*') {
-       all( controller: '*', action:'create|invalidLogin', invert:true,uriExclude:'/linksharing/') {
+       notUser( controller: 'user',uriExclude:'/') {
             before = {
-                String userName = session.getAttribute("user");
+                String userID = session.getAttribute("userID");
                 //setting session to expiry in 30 mins
-                if (UtilityService.isValidString(userName)) {
+
+                User user = User.get(Long.parseLong(userID));
+                if (user) {
                     session.setMaxInactiveInterval(30 * 60);
-                    session.removeAttribute("user");
                 } else {
-                    if(!controllerName == 'simpleCaptcha' ){
-                        redirect(controller: 'user', action: 'invalidLogin')
-                    }
-                    return false;
+                    render view: 'invalidLogin'
                 }
             }
             after = { Map model ->

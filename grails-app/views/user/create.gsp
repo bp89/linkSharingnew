@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="layout" content="main">
+    %{--    <meta name="layout" content="main">--}%
     <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}" />
     <title><g:message code="default.create.label" args="[entityName]" /></title>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
@@ -12,27 +12,25 @@
 
 
     html {
-        background-color: #ddd;
-        background-image: -moz-linear-gradient(center top, #aaa, #ddd);
-        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #aaa), color-stop(1, #ddd));
-        background-image: linear-gradient(top, #aaa, #ddd);
+        background-color: #fff8f6;
+        background-image: -moz-linear-gradient(center top, #fff8f6, #ddd);
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff8f6), color-stop(1, #ddd));
+        background-image: linear-gradient(top, #fff8f6, #ddd);
         filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#aaaaaa', EndColorStr = '#dddddd');
-        background-repeat: no-repeat;
-        height: 100%;
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
         font-family: Geneva, Arial, Helvetica, sans-serif;
+
     }
 
     body {
-        background-color: #cca;
-        background-image: -moz-linear-gradient(center top, #aaa, #def);
-        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #aaa), color-stop(1, #ddd));
-        background-image: linear-gradient(top, #aaa, #ddd);
+        background-color: #fffbf9;
+        background-image: -moz-linear-gradient(center top, #fffbf9, #def);
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fffbf9), color-stop(1, #ddd));
+        background-image: linear-gradient(top, #fbfbff, #ddd);
         color: #333333;
-        margin: 10px 200px;
-        width: 850px;
+        width: 900px;
         overflow-x: hidden; /* prevents box-shadow causing a horizontal scrollbar in firefox when viewport < 960px wide */
         -moz-box-shadow: 0 0 0.3em #ccc;;
         -webkit-box-shadow: 0 0 0.3em #ccc;;
@@ -40,6 +38,7 @@
         -moz-border-radius: 0.3em;
         -webkit-border-radius: 0.3em;
         border-radius: 0.3em;
+        margin-left:160px ;
     }
     h1{
         font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -61,12 +60,12 @@
         float: left;
 
     }
-        .info ul{
-            list-style-type: none;
-        }
-        .info ul img{
-            padding-left: 50px;
-        }
+    .info ul{
+        list-style-type: none;
+    }
+    .info ul img{
+        padding-left: 50px;
+    }
     </style>
 </head>
 <body>
@@ -135,8 +134,7 @@
                         <g:render template="form"/>
                     </fieldset>
 
-
-                    <fieldset class="buttons">
+                    <fieldset class="button" style="float: left">
                         <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
                     </fieldset>
                 </g:form>
@@ -145,23 +143,23 @@
     </tr>
 </table>
 <script type="text/javascript">
-$(document).ready(function(){
-$('#signUpForm').validate({
+    $(document).ready(function(){
+        $('#signUpForm').validate({
 
 
 
-    rules : {
-            'userName': {
-            required: true
-        }
-    }
-});
+            rules : {
+                'userName': {
+                    required: true
+                }
+            }
+        });
 
-});
+    });
     //addClassRules
-/*submit:function(form){
-}
-return false;*/
+    /*submit:function(form){
+     }
+     return false;*/
 
 </script>
 

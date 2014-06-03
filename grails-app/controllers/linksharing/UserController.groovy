@@ -1,13 +1,13 @@
 package linksharing
 
 import com.linksharing.ForgotPasswordCO
+import com.linksharing.LoginCO
 import com.linksharing.SecretQuestionCO
 import grails.plugin.mail.MailService
 import grails.plugin.simplecaptcha.SimpleCaptchaService
 import grails.transaction.Transactional
 import linksharing.resource.Resource
 import linksharing.resource.Topic
-
 import static org.springframework.http.HttpStatus.*
 
 //@Transactional(readOnly = true)
@@ -103,30 +103,42 @@ class UserController {
         flash.put("logoutMessage","You have been logged out successfully.")
 
         //render (controllerName:"main",view:"index")
-        redirect(uri: "")
-        //redirect "/index.gsp"
+        //redirect(uri: "")
+        render view: '/index'
+//        redirect "/index.gsp"
     }
 
-    def login(){
-        User user = User.createCriteria().get(){
-            eq("userName",params.userName)
-            eq("password",params.password)
-        }
+    def login(LoginCO loginCO){
 
-        if(user){
-            session.setAttribute("userID",user.id);
-            //setting session to expiry in 30 mins
-            session.setMaxInactiveInterval(30*60);
+        if(loginCO.hasErrors()){
+            loginCO.errors.each {
+                println "========="+it
+            }
+            respond loginCO.errors, view: '/index'
+            return
 
-            /*Cookie loginCookie = new Cookie("user",user);
-            //setting cookie to expiry in 30 mins
-            loginCookie.setMaxAge(30*60);
-            response.addCookie(loginCookie);
-            response.addCookie(loginCookie);
-            */
-            render (view: "dashboard")
         }else{
-            render (view: "loginFailure")
+            User user = User.createCriteria().get(){
+                if(loginCO.loginWith=='uName'){
+                    eq("userName",loginCO.userName)
+                }else{
+                    eq("emailID",loginCO.emailID)
+                }
+                eq("password",loginCO.password)
+            }
+            if(user && !loginCO.hasErrors()){
+                session.setAttribute("userID",user.id);
+                //setting session to expiry in 30 mins
+                session.setMaxInactiveInterval(30*60);
+
+                /*Cookie loginCookie = new Cookie("user",user);
+                //setting cookie to expiry in 30 mins
+                loginCookie.setMaxAge(30*60);
+                response.addCookie(loginCookie);
+                response.addCookie(loginCookie);*/
+
+                render (view: "dashboard")
+            }
         }
     }
     def show(User userInstance) {
