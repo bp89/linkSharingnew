@@ -65,6 +65,7 @@ grails.project.dependency.resolution = {
         runtime ":hibernate:3.6.10.13" // or ":hibernate4:4.3.5.1"
         runtime ":database-migration:1.4.0"
         compile ":jquery:1.11.0.2"
+        compile ":google-visualization:0.7"
         compile ":jquery-validation-ui:1.4.9"
         compile ":jquery-validation:1.9"
         runtime ":resources:1.2.7"

@@ -3,6 +3,7 @@
 2. A new user should be able to register.
 %{--Done--}%
 3. A user should be able to reset his/her password by clicking on the forgot password link. 
+%{--Done--}%
 
 4. User can create a new topic and he will be automatically subscribed to it. The topic can be private or public.
 %{--Done--}%
@@ -53,3 +54,9 @@
 
 GRANT SELECT, INSERT,UPDATE, DELETE, INDEX, ALTER, CREATE, LOCK TABLES,CREATE TEMPORARY TABLES, DROP, REFERENCES ON bugzilla.*
 TO bugzilla@localhost IDENTIFIED BY 'Bugs4All';
+
+
+1) ./deploy.sh./restartServer.sh;catalina.out
+2) 
+
+

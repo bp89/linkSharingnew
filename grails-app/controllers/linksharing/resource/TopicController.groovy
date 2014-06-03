@@ -20,11 +20,11 @@ class TopicController {
 
         User user = utilityService.getCurrentUser();
 
+        println "Current User is ========="+user.id
         UserSubscriptionDetails usd = UserSubscriptionDetails.createCriteria().get {
             eq('user',user)
             eq('topic',topic)
         }
-
         if(usd == null ){
             render "Not Subscribed"
         }else{
@@ -53,8 +53,9 @@ class TopicController {
 
         UserSubscriptionDetails userSubscriptionDetails = new UserSubscriptionDetails();
         // topicInstance.properties=params
-        User user=User.get("1");
-        userSubscriptionDetails.comments = 'abc';
+        String userID = session.getAttribute('userID')
+        User user = User.get(Long.parseLong(userID))
+        userSubscriptionDetails.comments = 'Owner of the topic';
         userSubscriptionDetails.user=user;
         userSubscriptionDetails.seriousnessLevel=SeriousnessLevel.MEDIUM.ordinal();
         userSubscriptionDetails.subscribedOn=new Date();

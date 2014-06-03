@@ -3,6 +3,7 @@ package linksharing
 import com.linksharing.ForgotPasswordCO
 import com.linksharing.LoginCO
 import com.linksharing.SecretQuestionCO
+import com.linksharing.UpdatePasswordCO
 import grails.plugin.mail.MailService
 import grails.plugin.simplecaptcha.SimpleCaptchaService
 import grails.transaction.Transactional
@@ -52,27 +53,32 @@ class UserController {
 
     def dashboard(){
         String userID = session.getAttribute("userID")
-        List subscribedTopics = Topic.createCriteria().list {
-            eq("owner.id",Long.parseLong(userID));
+        if(!utilityService.isValidString(userID)){
+            flash.put("invalidLogin","You are not logged in.")
+            redirect(controller: 'user',action: 'invalidLogin')
+        }else{
+
+            List subscribedTopics = Topic.createCriteria().list {
+                eq("owner.id",Long.parseLong(userID));
+            }
+
+            request.setAttribute("subscribedTopics",subscribedTopics)
+
+            List unreadItems = Resource.createCriteria().list {
+
+                //eq("resourceSettings.readStatus",'unread')
+                //eq("topic.userSubscriptionDetails.user.id",Long.parseLong(userID))
+
+            }
+
+            request.setAttribute("unreadItems",unreadItems)
+
+
+            List top15Topics = Topic.createCriteria().list(max: 15) {
+                eq("visibility",'public')
+            }
+            request.setAttribute("top15Topics",top15Topics)
         }
-
-        request.setAttribute("subscribedTopics",subscribedTopics)
-
-        List unreadItems = Resource.createCriteria().list {
-
-            //eq("resourceSettings.readStatus",'unread')
-            //eq("topic.userSubscriptionDetails.user.id",Long.parseLong(userID))
-
-        }
-
-        request.setAttribute("unreadItems",unreadItems)
-
-
-        List top15Topics = Topic.createCriteria().list(max: 15) {
-            eq("visibility",'public')
-        }
-        request.setAttribute("top15Topics",top15Topics)
-
         render (view:"dashboard")
     }
 
@@ -106,18 +112,14 @@ class UserController {
         //render (controllerName:"main",view:"index")
         //redirect(uri: "")
         render view: '/index'
-//        redirect "/index.gsp"
+        //        redirect "/index.gsp"
     }
 
     def login(LoginCO loginCO){
 
         if(loginCO.hasErrors()){
-            loginCO.errors.each {
-                println "========="+it
-            }
             respond loginCO.errors, view: '/index'
             return
-
         }else{
             User user = User.createCriteria().get(){
                 if(loginCO.loginWith=='uName'){
@@ -218,13 +220,33 @@ class UserController {
         User user = User.createCriteria().get {
             eq('secretKeyToResetPassword',secretKeyToResetPassword);
         }
-
+        request.setAttribute('secretKeyToResetPassword',secretKeyToResetPassword)
+        request.setAttribute('userID',user.id)
         if(user!=null && user.secretKeyToResetPassword.equals(secretKeyToResetPassword)  ){
             render view: 'resetPassword'
         }else{
 
             render view: 'error'
         }
+    }
+
+
+    def updatePassword(UpdatePasswordCO updatePasswordCO){
+        String userID = params.userID;
+
+
+        if(updatePasswordCO.hasErrors()){
+            flash.put('errorInPassword','Password does not match')
+            respond updatePasswordCO.errors,view:'resetPassword'
+        }else{
+            User user = User.get(updatePasswordCO.userID);
+            user.password = params.password;
+
+            render "Password has been changed successfully."
+        }
+
+
+
     }
 
     def configureSecretQuestion(SecretQuestionCO secretQuestionCO){

@@ -13,13 +13,13 @@
 </head>
 <body>
 
-<g:uploadForm url="[resource:documentResourceInstance, action:'save']" >
+<g:uploadForm url="[resource:updatePasswordCOInstance, action:'save']" >
     <fieldset class="form">
 
 
-        <g:hasErrors bean="${documentResourceInstance}">
+        <g:hasErrors bean="${updatePasswordCOInstance}">
             <ul class="errors" role="alert">
-                <g:eachError bean="${documentResourceInstance}" var="error">
+                <g:eachError bean="${updatePasswordCOInstance}" var="error">
                     <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
                 </g:eachError>
             </ul>
@@ -47,6 +47,10 @@
     <fieldset class="button" style="float: left ">
         <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
     </fieldset>
+    <g:hiddenField name="secretKeyToResetPassword"  value="${request.getAttribute('secretKeyToResetPassword')}"/>
+    <g:hiddenField name="userID"  value="${request.getAttribute('userID')}"/>
+
+
 </g:uploadForm>
 </body>
 </html>

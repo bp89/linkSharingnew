@@ -26,10 +26,10 @@ environments {
         dataSource {
 
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://localhost:3306/linkSharing"
+            url = "jdbc:mysql://localhost:3306/banti_prajapati"
             dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
             username = "root"
-            password = "root"
+            password = "igdefault"
         }
     }
     test {

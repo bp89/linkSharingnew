@@ -53,6 +53,13 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form class="form-search" method="get" id="s" action="/">
+                    <div class="input-append">
+                        <input type="text" class="input-medium search-query" name="s" placeholder="Search" value="">
+                    </div>
+                </form>
+                </li>
                 <li><g:link  controller="user" action="administration">Administration</g:link></li>
                 <li><g:link  controller="user" action="logout">Logout</g:link></li>
             </ul>

@@ -70,17 +70,27 @@ class UtilityService {
         Invites invite = null;
         StringBuilder html = getInvitationHTML(topicIds);
 
+        def criteria = User.createCriteria()
+        def listResults = criteria.list() {
+            'in'('emailID',mailIds)
+        }
+
+        def results = listResults.collect { usr -> [emailID: usr.emailID, userID: usr.id] }
+
+        println "=========results goes here==========="+results
+
         for(String mailID:mailIds){
             invite = new Invites();
             invite.mailID=mailID;
             invite.sentBy = user;
-            invite.sentTo = user;
+            invite.sentTo = results.get(mailID);
             invite.sentOn = new  Date();
-            invite.mailID=mailID;
-            invite.topic=topic
+            invite.mailID = mailID;
+            invite.topic = topic
             invite.save(flush: true)
             println "Errors==========================" << invite.errors.allErrors
         }
+
         this.sendMail(user.emailID, Arrays.asList(mailIds),null,null,subject,html.toString(),true)
     }
 

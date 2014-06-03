@@ -22,7 +22,12 @@
 <!-- HTML code from Bootply.com editor -->
 
 <body  >
-
+<div class="jumbotron">
+    <div class="container-fluid">
+        <h2>Link Share</h2>
+        <p>Share what you want to.</p>
+    </div>
+</div>
 <!--login modal-->
 <div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -31,7 +36,7 @@
                 %{--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>--}%
                 <span class="pull-right"> <img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails" height="60px"/></span>
                 <span class="pull-left"> <img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails" height="60px"/></span>
-                <h1 class="text-center">Link Share Login</h1>
+                <h1 class="text-center">Login</h1>
             </div>
 
             <div class="container">
@@ -77,7 +82,7 @@
                         <span class="pull-right">
                             <g:link controller="user" action="create">New User? Sign Up</g:link>
                         </span>
-                        <span><a href="#">Need help?</a></span>%{--Need to access Forgot Password Links--}%
+                        <span><g:link style='text-decoration:no-underline;font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif' controller="user" action="forgotPassword">Forgot Password?</g:link></span>%{--Need to access Forgot Password Links--}%
                     </div>
                 </g:form>
             </div>
