@@ -36,6 +36,7 @@
 
             <div class="container">
                 <span style="font-size: smaller;color: #116644">${flash.logoutMessage}</span>
+                <span style="font-size: smaller;color: #116644">${flash.invalidLogin}</span>
                 <div class="row">
                     <div class="span4">
 
@@ -54,8 +55,8 @@
             <div class="modal-body">
                 <g:form controller="user" action="login" method="post" class="form col-md-12 center-block">
                     <g:if test="${loginCOInstance?.loginWith == 'emailID'}">
-                    <g:radio name="loginWith" value="uName" id="uName"  onchange="updateField('userName')"/><label for="uName">User Name</label>
-                    <g:radio name="loginWith" value="emailID" id="mailID" checked="checked" onchange="updateField('emailID')"/><label for="mailID" required="">Email Id</label>
+                        <g:radio name="loginWith" value="uName" id="uName"  onchange="updateField('userName')"/><label for="uName">User Name</label>
+                        <g:radio name="loginWith" value="emailID" id="mailID" checked="checked" onchange="updateField('emailID')"/><label for="mailID" required="">Email Id</label>
                     </g:if>
                     <g:else>
                         <g:radio name="loginWith" value="uName" id="uName"  checked="checked" onchange="updateField('userName')"/><label for="uName">User Name</label>

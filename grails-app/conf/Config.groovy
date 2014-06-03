@@ -115,7 +115,7 @@ environments {
     development {
         grails.logging.jul.usebridge = true
         builddocs="/home/prajapati/Desktop/project/builddocs/"
-        grails.serverURL = 'http://bp.pagekite.me/linksharing'
+        //grails.serverURL = 'http://bp.pagekite.me/linksharing'
     }
     production {
         grails.logging.jul.usebridge = false

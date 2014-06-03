@@ -41,7 +41,8 @@ class UserController {
     }
 
     def invalidLogin(){
-        render (view:"invalidLogin")
+
+        render view:'/index'
     }
 
     def index(Integer max) {
@@ -137,7 +138,7 @@ class UserController {
                 response.addCookie(loginCookie);
                 response.addCookie(loginCookie);*/
 
-                render (view: "dashboard")
+                redirect (controller: 'user', action: "dashboard")
             }
         }
     }
