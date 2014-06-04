@@ -74,9 +74,6 @@
 			$(document).ready(function(){
 				$(".group1").colorbox({rel:'group1'});
             });
-            $("#click").click(function(){
-                $('#click').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
-                return false;
-            });
+
 </script>
 

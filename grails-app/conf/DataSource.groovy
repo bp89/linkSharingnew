@@ -26,13 +26,22 @@ environments {
         dataSource {
 
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
+            url = "jdbc:mysql://localhost:3306/linkSharing"
+            dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+            username = "root"
+            password = "root"
+        }
+    }
+    test {
+        dataSource {
+            dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:mysql://localhost:3306/banti_prajapati"
             dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
             username = "root"
             password = "igdefault"
         }
     }
-    test {
+    qa {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:mysql://localhost:3306/banti_prajapati"

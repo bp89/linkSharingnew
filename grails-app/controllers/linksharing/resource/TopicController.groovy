@@ -12,15 +12,19 @@ class TopicController {
     UtilityService utilityService
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    def subscribeToTopic(){
+
+
+    }
 
     def updateSeriousnessLevel(){
 
         String seriousnessLevel = params.seriousnessLevel;
+        println "---------"+seriousnessLevel
         Topic topic =  Topic.get(Long.parseLong(params.topicId));
 
         User user = utilityService.getCurrentUser();
 
-        println "Current User is ========="+user.id
         UserSubscriptionDetails usd = UserSubscriptionDetails.createCriteria().get {
             eq('user',user)
             eq('topic',topic)
@@ -37,7 +41,35 @@ class TopicController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Topic.list(params), model:[topicInstanceCount: Topic.count()]
+        List list =   Topic.createCriteria().list {
+            'eq'('visibility','Public')
+        }
+        respond list, model:[topicInstanceCount: Topic.count()]
+    }
+
+    def publicTopic(Integer max){
+        params.max = Math.min(max ?: 10, 100)
+        List list =   Topic.createCriteria().list {
+            'eq'('visibility','Public')
+        }
+        respond list, model:[topicInstanceCount: Topic.count()],view: '_public'
+    }
+
+    def privateTopic(Integer max){
+        params.max = Math.min(max ?: 10, 100)
+        String userID = session.getAttribute("userID");
+       /* List list =   Topic.createCriteria().list {
+            'eq'('visibility','Private')
+            'join'('usersubscriptiondetails')
+
+            'eq'('usersubscriptiondetails.user.id',Long.parseLong(userID))
+        }*/
+        List list = null;
+        if(utilityService.isValidString(userID)){
+               String query = "select t from Topic t join t.userSubscriptionDetails usd where usd.user.id=:userID and t.visibility='Private'";
+              list = Topic.executeQuery(query,[userID:Long.parseLong(userID)])
+        }
+        respond list, model:[topicInstanceCount: Topic.count()],view: '_private'
     }
 
     def show(Topic topicInstance) {
@@ -51,6 +83,7 @@ class TopicController {
     @Transactional
     def save(Topic topicInstance) {
 
+        println "=============visibility================="+visibility
         UserSubscriptionDetails userSubscriptionDetails = new UserSubscriptionDetails();
         // topicInstance.properties=params
         String userID = session.getAttribute('userID')

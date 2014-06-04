@@ -101,8 +101,10 @@
         </ul>
     </div>
 </div>--}%
-<g:layoutBody />
 
+<div class="${(actionName =='index' && controllerName == 'topic')?'':'bodyDiv'}" id="mainDivImp">
+<g:layoutBody />
+</div>
 
 
 

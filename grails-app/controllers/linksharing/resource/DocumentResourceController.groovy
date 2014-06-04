@@ -19,16 +19,12 @@ class DocumentResourceController {
         String userID = session.getAttribute('userID');
         println "====userID====="+userID
         String  resourceID = params.id;
-        // def query = " from ResourceSettings as  rs WHERE  rs.user.id =:userID and rs.resource.id=:resourceID";
-
-        //def resourceSettings = ResourceSettings.executeQuery(query,['userID':1l,'resourceID':Long.parseLong(params.id)])
 
         ResourceSettings resourceSettings = ResourceSettings.createCriteria().get {
             //eq("user.id",Long.parseLong(userID))
             eq("user.id",Long.parseLong("1"))
             eq("resource.id",Long.parseLong(resourceID))
         }
-        println ">>>>>>>>>>"+resourceSettings
 
         if(resourceSettings== null || resourceSettings.readStatus==null){
             User user = User.get("1");

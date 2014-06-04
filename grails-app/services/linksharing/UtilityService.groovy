@@ -172,4 +172,22 @@ class UtilityService {
             return null;
         }
     }
+
+    public String getString(String ordinal){
+        return getString(Integer.parseInt(ordinal));
+    }
+    public String getString(Integer ordinal){
+        switch (ordinal){
+            case 1: return "Very Low"
+                break;
+            case 2 : return "Low"
+                break;
+            case 3: return "Medium"
+                break;
+            case 4:return "High"
+                break;
+            default :return "Extreme"
+                break;
+        }
+    }
 }

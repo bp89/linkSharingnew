@@ -85,7 +85,7 @@
 
     </ol>
     <g:form url="[resource:topicInstance, action:'delete']" method="DELETE">
-        <fieldset class="button" style="float: left">
+        <fieldset class="button" style="float: left;">
             <g:link class="edit" action="edit" resource="${topicInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
             <g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
         </fieldset>

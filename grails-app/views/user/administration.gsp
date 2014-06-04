@@ -17,7 +17,7 @@
 <body>
 
 <div class="tabs">
-    <ul class="tab-links">
+    <ul class="tab-links" style="margin-bottom: 0px;">
         <li class="active"><a href="#tab1">User Settings</a></li>
         <li><a href="#tab2">User Settings</a></li>
         <li><a href="#tab3">Tab #3</a></li>

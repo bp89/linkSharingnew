@@ -24,8 +24,9 @@ class Topic {
         description type:'text'
 
     }
+
     def findResources(Class className){//it should be there user default otherwise
-        if(resources ==null ||resources.size()==0){
+        if(resources == null){
             return 0
         }else{
             return resources.count {
