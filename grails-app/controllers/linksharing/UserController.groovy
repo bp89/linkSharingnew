@@ -61,23 +61,21 @@ class UserController {
             List subscribedTopics = Topic.createCriteria().list {
                 eq("owner.id",Long.parseLong(userID));
             }
-
             request.setAttribute("subscribedTopics",subscribedTopics)
-
+println "=========subscribedTopics=================="+subscribedTopics
             List unreadItems = Resource.createCriteria().list {
-
                 //eq("resourceSettings.readStatus",'unread')
-                //eq("topic.userSubscriptionDetails.user.id",Long.parseLong(userID))
-
+                //   eq("topic.userSubscriptionDetails.user.id",Long.parseLong(userID))
             }
-
             request.setAttribute("unreadItems",unreadItems)
 
 
             List top15Topics = Topic.createCriteria().list(max: 15) {
                 eq("visibility",'public')
             }
+
             request.setAttribute("top15Topics",top15Topics)
+
         }
         render (view:"dashboard")
     }

@@ -5,7 +5,7 @@
   Time: 5:29 PM
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="linksharing.resource.LinkResource; linksharing.resource.DocumentResource" contentType="text/html;charset=UTF-8" %>
 <g:javascript plugin="jquery" library="jquery"></g:javascript>
 <html>
 <head>
@@ -48,19 +48,20 @@
         <div class="col-md-12 col-sm-12">
             <table>
                 <thead>
-                <tr><td colspan="2" onclick="toggleMe('topicsSubscribed',this)"><h1>Topics Subscribed   <img src="${resource(dir: 'images',file: 'show.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
+                <tr><td colspan="3" onclick="toggleMe('topicsSubscribed',this)"><h1>Topics Subscribed   <img src="${resource(dir: 'images',file: 'show.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
                 <tbody id="topicsSubscribed" >
                 <tr>
 
                     <th>Topic</th>
                     <th>Description</th>
+                    <th>Resource(s)</th>
                 </tr>
 
                 </thead>
 
-                <g:if test="${request.subscribedTopics == null || request.subscribedTopics.size == 0 }">
+                <g:if test="${request.subscribedTopics == null || request.subscribedTopics.size() == 0 }">
                     <tr class="odd">
-                        <td colspan="2">
+                        <td colspan="3">
                             No records found.
                         </td>
                     </tr>
@@ -68,59 +69,84 @@
                 <g:else>
                     <g:each in="${request.subscribedTopics}" status="i" var="subscribedTopic">
                         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                            <td>${fieldValue(bean: subscribedTopics, field: "name")}</td>
-                            <td>${fieldValue(bean: subscribedTopics, field: "description").substring(0,20)}...</td>
+                            <td>${fieldValue(bean: subscribedTopic, field: "name")}</td>
+                            <td>${fieldValue(bean: subscribedTopic, field: "description")}</td>
+                            <td>
+                                <span class="property-value" aria-labelledby="visibility-label" >
+                                    <g:link title="Document Resources " controller="documentResource" action="index" params="['topicId':subscribedTopic.id]">
+                                        ${subscribedTopic?.findResources(DocumentResource)}
+                                    </g:link>
+                                    Document(s)
+                                </span>
+
+                                <span class="property-value" aria-labelledby="visibility-label">
+                                    <g:link title="Link Resources " controller="linkResource" action="index" params="['topicId':subscribedTopic.id]" >
+                                        ${subscribedTopic?.findResources(LinkResource)}
+                                    </g:link>
+                                    Link(s)
+                                </span>
+                            </td>
                         </tr>
                     </g:each>
                 </g:else>
             </tbody>
             </table>
         </div>
+
+
         <div class="col-md-12 col-sm-12">
             <table>
                 <thead>
-                <tr><td colspan="2" onclick="toggleMe('unreadItems',this)"><h1>Unread Items  <img src="${resource(dir: 'images',file: 'hide-512.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
+                <tr><td colspan="4" onclick="toggleMe('unreadItems',this)"><h1>Unread Items  <img src="${resource(dir: 'images',file: 'hide-512.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
                 <tbody id="unreadItems" style="display: none">
                 <tr>
 
                     <th>Title</th>
                     <th>Topic</th>
+                    <th>Type</th>
+                    <th>Description</th>
                 </tr>
                 </thead>
 
-                <g:if test="${request.subscribedTopics == null || request.subscribedTopics.size == 0 }">
+                <g:if test="${request.unreadItems == null || request.unreadItems.size() == 0 }">
                     <tr class="odd">
-                        <td colspan="2">
+                        <td colspan="4">
                             No records found.
                         </td>
                     </tr>
                 </g:if>
                 <g:else>
-                    <g:each in="${request.unreadItems}" status="i" var="unreadItems">
+                    <g:each in="${request.unreadItems}" status="i" var="unreadItem">
                         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                            <td>${fieldValue(bean: unreadItems, field: "title")}</td>
-                            <td>${fieldValue(bean: unreadItems, field: "topic.name")}</td>
+                            <td>${fieldValue(bean: unreadItem, field: "title")}</td>
+                            <td>${fieldValue(bean: unreadItem, field: "topic.name")}</td>
+                            <td>${unreadItem instanceof  linksharing.resource.LinkResource ?'Link':'Document'}</td>
+                            <td>${unreadItem.description}</td>
                         </tr>
                     </g:each>
                 </g:else>
             </tbody>
             </table>
         </div>
+
+
+
         <div class="col-md-12 col-sm-12">
             <table>
                 <thead>
-                <tr><td colspan="2" onclick="toggleMe('top15Topics',this)" style="cursor: hand;"><h1>Top 15 Public Topics <img src="${resource(dir: 'images',file: 'hide-512.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
+                <tr><td colspan="3" onclick="toggleMe('top15Topics',this)" style="cursor: hand;"><h1>Top 15 Public Topics <img src="${resource(dir: 'images',file: 'hide-512.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
                 <tbody  id="top15Topics" style="display: none">
                 <tr>
 
                     <th>Topic</th>
                     <th>Description</th>
+                    <th>Resource(s)</th>
                 </tr>
                 </thead>
 
-                <g:if test="${request.subscribedTopics == null || request.subscribedTopics.size == 0 }">
+                <g:if test="${request.top15Topics == null || request.top15Topics.size() == 0 }">
                     <tr class="odd">
-                        <td colspan="2">
+                        <td colspan="3">
                             No records found.
                         </td>
                     </tr>
@@ -130,6 +156,21 @@
                         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                             <td>${fieldValue(bean: topic, field: "name")}</td>
                             <td>${fieldValue(bean: topic, field: "description").substring(0,20)}...</td>
+                            <td>
+                                <span class="property-value" aria-labelledby="visibility-label" >
+                                    <g:link title="Document Resources " controller="documentResource" action="index" params="['topicId':topic.id]">
+                                        ${topic?.findResources(DocumentResource)}
+                                    </g:link>
+                                    Document(s)
+                                </span>
+
+                                <span class="property-value" aria-labelledby="visibility-label">
+                                    <g:link title="Link Resources " controller="linkResource" action="index" params="['topicId':topic.id]" >
+                                        ${topic?.findResources(LinkResource)}
+                                    </g:link>
+                                    Link(s)
+                                </span>
+                            </td>
                         </tr>
                     </g:each>
                 </g:else>
