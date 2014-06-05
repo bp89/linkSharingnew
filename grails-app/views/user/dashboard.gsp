@@ -48,7 +48,7 @@
         <div class="col-md-12 col-sm-12">
             <table>
                 <thead>
-                <tr><td colspan="3" onclick="toggleMe('topicsSubscribed',this)"><h1>Topics Subscribed   <img src="${resource(dir: 'images',file: 'show.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
+                <tr><td colspan="3" onclick="toggleMe('topicsSubscribed',this)" onmouseover="javascript:$(this).css('cursor', 'pointer');"><h1>Topics Subscribed   <img src="${resource(dir: 'images',file: 'show.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
                 <tbody id="topicsSubscribed" >
                 <tr>
 
@@ -97,7 +97,7 @@
         <div class="col-md-12 col-sm-12">
             <table>
                 <thead>
-                <tr><td colspan="4" onclick="toggleMe('unreadItems',this)"><h1>Unread Items  <img src="${resource(dir: 'images',file: 'hide-512.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
+                <tr><td colspan="4" onclick="toggleMe('unreadItems',this)" onmouseover="javascript:$(this).css('cursor', 'pointer');"><h1>Unread Items  <img src="${resource(dir: 'images',file: 'hide-512.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
                 <tbody id="unreadItems" style="display: none">
                 <tr>
 
@@ -134,7 +134,7 @@
         <div class="col-md-12 col-sm-12">
             <table>
                 <thead>
-                <tr><td colspan="3" onclick="toggleMe('top15Topics',this)" style="cursor: hand;"><h1>Top 15 Public Topics <img src="${resource(dir: 'images',file: 'hide-512.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
+                <tr><td colspan="3" onclick="toggleMe('top15Topics',this)" onmouseover="javascript:$(this).css('cursor', 'pointer');"><h1>Top 15 Public Topics <img src="${resource(dir: 'images',file: 'hide-512.png')}" height="20px" width="20px"  style="float: right"/></h1></td></tr>
                 <tbody  id="top15Topics" style="display: none">
                 <tr>
 

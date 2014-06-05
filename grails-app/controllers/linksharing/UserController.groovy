@@ -58,9 +58,12 @@ class UserController {
             redirect(controller: 'user',action: 'invalidLogin')
         }else{
 
-            List subscribedTopics = Topic.createCriteria().list {
+            /*List subscribedTopics = Topic.createCriteria().list {
                 eq("owner.id",Long.parseLong(userID));
             }
+            */
+         List subscribedTopics =   Topic.executeQuery("select t from Topic t join t.userSubscriptionDetails usd where usd.user.id=:userID",[userID:Long.parseLong(userID)])
+
             request.setAttribute("subscribedTopics",subscribedTopics)
 println "=========subscribedTopics=================="+subscribedTopics
             List unreadItems = Resource.createCriteria().list {
