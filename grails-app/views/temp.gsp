@@ -9,7 +9,7 @@
 %{--Done--}%
 
 5. User can subscribe to an existing public topic.
-%{--TODo--}%
+%{--Done--}%
 
 6. User can specify his/her seriousness to a particular topic. 
 %{--Done--}%
@@ -18,6 +18,7 @@
 %{--TODo--}%
 8. The user should be able to browse all the public topics.
 %{--TODo--}%
+
 9. The user should be able to add a resource to a subscribed topic.
 %{--TODo--}%
 

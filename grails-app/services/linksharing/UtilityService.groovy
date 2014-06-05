@@ -13,18 +13,25 @@ class UtilityService {
     def grailsApplication
     MailService mailService
 
-
-
-
     def serviceMethod() {
 
     }
 
+    /**
+     *
+     * @param string
+     * @return
+     */
     Boolean isValidString(String string){
         string==null  || string == 'null' || string.trim() =='' ?false:true;
     }
 
-
+    /**
+     *
+     * @param params
+     * @param fileBytes
+     * @return
+     */
     Boolean uploadFile(GrailsParameterMap params,def fileBytes){
         int size = 0;
         println ">>>>>>>>>>>>>>>>>>>>>>"+params.topic
@@ -54,8 +61,12 @@ class UtilityService {
 
     }
 
-
-
+    /**
+     *
+     * @param mailIds
+     * @param sentBy
+     * @param topicIds
+     */
     void sendInvites(String []mailIds,String sentBy,def topicIds){
 
         User user = null;
@@ -94,7 +105,17 @@ class UtilityService {
         this.sendMail(user.emailID, Arrays.asList(mailIds),null,null,subject,html.toString(),true)
     }
 
-
+    /**
+     *
+     * @param sender
+     * @param sendTo
+     * @param mailCC
+     * @param mailBcc
+     * @param mailSubject
+     * @param textOrHTML
+     * @param isHTML
+     * @return
+     */
     def sendMail(String sender,List<String> sendTo,List<String> mailCC,List<String> mailBcc,String mailSubject,String textOrHTML,boolean isHTML){
         mailService.sendMail {
             from sender
@@ -110,7 +131,11 @@ class UtilityService {
         }
 
     }
-
+    /**
+     *
+     * @param topicID
+     * @return
+     */
     StringBuilder getInvitationHTML(String topicID){
         def webUtils = WebUtils.retrieveGrailsWebRequest()
         Topic topic = Topic.get(Long.parseLong(topicID))
@@ -124,7 +149,12 @@ class UtilityService {
         return html
     }
 
-
+    /**
+     *
+     * @param user
+     * @param randomNumber
+     * @return
+     */
     StringBuilder getForgotPasswordHTML(User user,String randomNumber){
         def webUtils = WebUtils.retrieveGrailsWebRequest()
         String siteUrl = webUtils.getCurrentRequest().siteUrl
@@ -152,17 +182,33 @@ class UtilityService {
 
     }
 
+    /**
+     *
+     * @param emailID
+     * @return
+     */
     User getUserOnEmailID(String emailID){
         return  User.createCriteria().get {
             eq("emailID",emailID)
         }
     }
 
+    /**
+     *
+     * @param user
+     * @param forgotPasswordCO
+     * @param confirmCode
+     * @return
+     */
     def triggerForgotPasswordMail(User user,ForgotPasswordCO forgotPasswordCO,String confirmCode){
         String subject = "Reset your password now."
         sendMail('support@intelligrape.com', [forgotPasswordCO.emailID],null,null,subject,getForgotPasswordHTML(user,confirmCode).toString(),true)
     }
 
+    /**
+     *
+     * @return
+     */
     def getCurrentUser(){
         def webUtils = WebUtils.retrieveGrailsWebRequest()
         String userID= webUtils.getCurrentRequest().getSession().getAttribute("userID");
@@ -173,9 +219,19 @@ class UtilityService {
         }
     }
 
+    /**
+     *
+     * @param ordinal
+     * @return
+     */
     public String getString(String ordinal){
         return getString(Integer.parseInt(ordinal));
     }
+    /**
+     *
+     * @param ordinal
+     * @return
+     */
     public String getString(Integer ordinal){
         switch (ordinal){
             case 1: return "Very Low"
@@ -189,5 +245,58 @@ class UtilityService {
             default :return "Extreme"
                 break;
         }
+    }
+
+    /**
+     *
+     * @param userID
+     * @return
+     */
+    def getSubscribedToTopics(Long userID){
+        return  UserSubscriptionDetails.createCriteria().list {
+            projections{
+                property('topic.id')
+                property('seriousnessLevel','seriousnessLevel')
+            }
+            'eq'('user.id',userID)
+        }
+    }
+
+    /**
+     *
+     * @param userID
+     * @return
+     */
+    def getSubscribedToTopics(String userID){
+        return getSubscribedToTopics(Long.parseLong(userID))
+
+    }
+
+    /**
+     *
+     * @return
+     */
+    def getPublicTopics(){
+        return Topic.createCriteria().list {
+            'eq'('visibility','Public')
+        }
+    }
+    /**
+     *
+     */
+    def fillPublicTopicDetails(){
+        def webUtils = WebUtils.retrieveGrailsWebRequest()
+        def request = webUtils.getCurrentRequest()
+        User user = getCurrentUser()
+        List tempList =   getSubscribedToTopics(user.id)
+        List subscribedTo = []
+        Map <String,String> seriousnessLevel = [:];
+
+        tempList.each {
+            seriousnessLevel.put(it[0],it[1]);
+            subscribedTo.add(it[0])
+        }
+        request.setAttribute('subscribedTo',subscribedTo)
+        request.setAttribute('seriousnessLevel',seriousnessLevel)
     }
 }

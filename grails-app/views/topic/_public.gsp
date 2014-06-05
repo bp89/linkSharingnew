@@ -41,20 +41,18 @@
                     <td style="word-wrap: break-word;width: 25%;text-overflow: ellipsis ;overflow: hidden" ><g:link style="word-wrap: normal" action="show" id="${topicInstance.id}">${fieldValue(bean: topicInstance, field: "description")}</g:link></td>
                     %{-- <td>${fieldValue(bean: topicInstance, field: "visibility")}</td>--}%
                     <td>
-                    <%
-                        int j=Integer.parseInt(topicInstance.userSubscriptionDetails[0].seriousnessLevel)
-                        for(int m=1;m <= 5 ;m++){
+                        <%
+                            //String seriousnessLevel = topicInstance.userSubscriptionDetails[0]?.seriousnessLevel;
+                            String seriousnessLevel = request.seriousnessLevel.get(topicInstance.id);
+                            int j=Integer.parseInt(utilityService.isValidString(seriousnessLevel)?seriousnessLevel:'0')
+                            for(int m=1;m <= 5 ;m++){
 
-                    %>
-                    <img src="${resource(dir: "images",file: "${(j-->0?'star_PNG1594.png':'1211769487.png')}")}" height="22px" width="22px" title="Very Low" name="serious${topicInstance.id}_${m}" onclick="javascript:setSeriousness('${m}',${topicInstance.id})"/>
-                    <%
-                        }%>
-                    %{--    <img src="${resource(dir: "images",file: "1211769487.png")}" height="22px" width="22px" title="Very Low" name="serious${topicInstance.id}_1" onclick="javascript:setSeriousness('1',${topicInstance.id})"/>
-                        <img src="${resource(dir: "images",file: "1211769487.png")}" height="22px" width="22px" title="Low" name="serious${topicInstance.id}_2" onclick="javascript:setSeriousness('2',${topicInstance.id})"/>
-                        <img src="${resource(dir: "images",file: "1211769487.png")}" height="22px" width="22px" title="Medium" name="serious${topicInstance.id}_3" onclick="javascript:setSeriousness('3',${topicInstance.id})"/>
-                        <img src="${resource(dir: "images",file: "1211769487.png")}" height="22px" width="22px" title="High" name="serious${topicInstance.id}_4" onclick="javascript:setSeriousness('4',${topicInstance.id})"/>
-                        <img src="${resource(dir: "images",file: "1211769487.png")}" height="22px" width="22px" title="Extreme" name="serious${topicInstance.id}_5" onclick="javascript:setSeriousness('5',${topicInstance.id})"/>
-                    --}%</td>
+                        %>
+                        <img src="${resource(dir: "images",file: "${(j-->0?'star_PNG1594.png':'1211769487.png')}")}" height="22px" width="22px" title="Very Low" name="serious${topicInstance.id}_${m}" onclick="javascript:setSeriousness('${m}',${topicInstance.id})"/>
+                        <%
+                            }
+                        %>
+                    </td>
                     <td>
                         <g:link class="actions" controller="topic" action="show" params="['id':topicInstance.id]">
                             <img src="${resource(dir: "images",file: "view-512.png")}" height="20px" width="20px" title="View"/>
@@ -68,10 +66,17 @@
                         <g:link class="actions" controller="invites" action="sendInvites" params="['id':topicInstance.id]">
                             <img src="${resource(dir: "images",file: "invites.png")}" height="20px" width="20px" title="Send Invites"/>
                         </g:link>
-                        <g:link class="actions" controller="topic" action="subscribeToTopic" params="['id':topicInstance.id]">
+                        <a class="actions" href="javascript:toggleSubscription('${topicInstance.id}')" >
                             %{--<img src="${resource(dir: "images",file: "subscribed.png")}" height="20px" width="20px" title="Send Invites"/>--}%
-                            <span style="font-size: medium">S</span>
-                        </g:link>
+                            <span style="font-size: medium" id="subscriptionToggle_${topicInstance.id}" title="Subscribe">
+                                <g:if test="${request.subscribedTo.contains(topicInstance.id)}">
+                                    U
+                                </g:if>
+                                <g:else>
+                                    S
+                                </g:else>
+                            </span>
+                        </a>
                     </td>
                 </tr>
             </g:each>
@@ -82,5 +87,29 @@
         <g:paginate total="${topicInstanceCount ?: 0}" />
     </div>
 </div>
+<script>
+    function toggleSubscription(topicID){
+        var urlToggle =  '${createLink(controller:'topic',action:'toggleSubscription')}';
+
+        $.ajax({
+            type: 'POST',
+            url: urlToggle,
+            data: {
+                topicID:topicID
+            },
+            success: function(data) {
+                if(data == 'subscribed'){
+                    document.getElementById('subscriptionToggle_'+topicID).innerHTML = 'U'
+                }else{
+                    document.getElementById('subscriptionToggle_'+topicID).innerHTML = 'S'
+                }
+            },
+            error: function() {
+
+                return false;
+            }});
+
+    }
+</script>
 </body>
 </html>

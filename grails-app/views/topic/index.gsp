@@ -15,27 +15,13 @@
         <g:link controller="topic" action="create">Add New Topic</g:link>
     </span>
 </h1>
-</div>
-
-
-%{--<div class="tabs">
-    <ul class="tab-links" style="margin-bottom: 0px;">
-        <li class="active"><a href="javascript:getTopicData('private',this);">Public</a></li>
-        <li ><a href="javascript:getTopicData('private',this);">Private</a></li>
-    </ul>
-
-    <div class="tab-content tab active"  id="tabForContent" >
-        <divclass="">
-            <g:include action="publicTopic"/>
-        </div>
-    </div>--}%
-
 <div class="bs-example">
     <ul class="nav nav-tabs" data-tabs="tabs">
         <li class="active" id="hash1"><a href="javascript:getTopicData('public','hash1');">Public</a></li>
         <li id="hash2"><a href="javascript:getTopicData('private','hash2');">Private</a></li>
     </ul>
 </div>
+
 <div id="my-tab-content" class="tab-content">
     <div class="tab-pane active bodyDiv" id="tabForContent">
         <g:render template="/topic/public"/>
@@ -46,7 +32,6 @@
 <script>
 
     function getTopicData(type,id){
-
         var urlPublic =  '${createLink(controller:'topic',action:'publicTopic')}';
         var urlPrivate =  '${createLink(controller:'topic',action:'privateTopic')}';
 
@@ -75,12 +60,6 @@
         $('img[name^=serious'+whichTopic+']').each(function(){
             if( $(this).attr('src') =='${resource(dir: "images",file: "star_PNG1594.png")}')
                 lastSelection++;
-
-            if($(this).attr('name').split('_')[1] <= seriousness ){
-                $(this).attr('src','${resource(dir: "images",file: "star_PNG1594.png")}')
-            }else{
-                $(this).attr('src','${resource(dir: "images",file: "1211769487.png")}')
-            }
         });
         $.ajax({
             type: 'POST',
@@ -92,6 +71,15 @@
             success: function(data) {
                 if(data=="done"){
                     var currentSelected= 'serious'+whichTopic+'_'+seriousness;
+
+                    $('img[name^=serious'+whichTopic+']').each(function(){
+
+                        if($(this).attr('name').split('_')[1] <= seriousness ){
+                            $(this).attr('src','${resource(dir: "images",file: "star_PNG1594.png")}')
+                        }else{
+                            $(this).attr('src','${resource(dir: "images",file: "1211769487.png")}')
+                        }
+                    });
 
                     if(lastSelection == (seriousness ) &&  $('img[name='+currentSelected+']').attr('src') == '${resource(dir: "images",file: "star_PNG1594.png")}'){
                         $('img[name='+currentSelected+']').attr('src','${resource(dir: "images",file: "1211769487.png")}')
@@ -107,6 +95,8 @@
                 return false;
             }});
     }
+
+
 </script>
 </body>
 </html>

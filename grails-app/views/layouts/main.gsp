@@ -54,11 +54,10 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <form class="form-search" method="get" id="s" action="/">
-                    <div class="input-append">
-                        <input type="text" class="input-medium search-query" name="s" placeholder="Search" value="">
-                    </div>
-                </form>
+                        <div class="input-group">
+                            <input type="text" class="input-large search-query" name="searchText" placeholder="Search..." value="" style="height:33px;margin-top: 8px">
+
+                        </div>
                 </li>
                 <li><g:link  controller="user" action="administration">Administration</g:link></li>
                 <li><g:link  controller="user" action="logout">Logout</g:link></li>
@@ -103,7 +102,7 @@
 </div>--}%
 
 <div class="${(actionName =='index' && controllerName == 'topic')?'':'bodyDiv'}" id="mainDivImp">
-<g:layoutBody />
+    <g:layoutBody />
 </div>
 
 

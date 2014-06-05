@@ -26,7 +26,7 @@ class Topic {
     }
 
     def findResources(Class className){//it should be there user default otherwise
-        if(resources == null){
+        if(!resources){
             return 0
         }else{
             return resources.count {
