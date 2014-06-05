@@ -26,13 +26,15 @@ class Topic {
     }
 
     def findResources(Class className){//it should be there user default otherwise
-        if(resources.empty){
-            return 0
-        }else{
-            return resources.count {
+       int count = 0;
+        try{
+        count =  resources.count {
                 it.instanceOf( className )
             }
+        }catch(Exception e){
+            e.printStackTrace()
         }
+        return count;
     }
 
 }
