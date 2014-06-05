@@ -69,9 +69,9 @@
                 <g:else>
                     <g:each in="${request.subscribedTopics}" status="i" var="subscribedTopic">
                         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                            <td>${fieldValue(bean: subscribedTopic, field: "name")}</td>
+                            <td nowrap>${fieldValue(bean: subscribedTopic, field: "name")}</td>
                             <td>${fieldValue(bean: subscribedTopic, field: "description")}</td>
-                            <td>
+                            <td nowrap>
                                 <span class="property-value" aria-labelledby="visibility-label" >
                                     <g:link title="Document Resources " controller="documentResource" action="index" params="['topicId':subscribedTopic.id]">
                                         ${subscribedTopic?.findResources(DocumentResource)}
@@ -101,7 +101,7 @@
                 <tbody id="unreadItems" style="display: none">
                 <tr>
 
-                    <th>Title</th>
+                    <th >Title</th>
                     <th>Topic</th>
                     <th>Type</th>
                     <th>Description</th>
@@ -118,9 +118,9 @@
                 <g:else>
                     <g:each in="${request.unreadItems}" status="i" var="unreadItem">
                         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                            <td>${fieldValue(bean: unreadItem, field: "title")}</td>
-                            <td>${fieldValue(bean: unreadItem, field: "topic.name")}</td>
-                            <td>${unreadItem instanceof  linksharing.resource.LinkResource ?'Link':'Document'}</td>
+                            <td nowrap >${fieldValue(bean: unreadItem, field: "title")}</td>
+                            <td nowrap>${fieldValue(bean: unreadItem, field: "topic.name")}</td>
+                            <td nowrap>${unreadItem instanceof  linksharing.resource.LinkResource ?'Link':'Document'}</td>
                             <td>${unreadItem.description}</td>
                         </tr>
                     </g:each>
