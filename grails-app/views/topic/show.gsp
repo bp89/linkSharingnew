@@ -10,16 +10,20 @@
 
 
     </style>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
+    <link rel="stylesheet" href="../css/colorbox.css" />
+
 </head>
 <body>
+<span class="button" style="padding: 1px 8px 2px 0px">
+    <g:link class="group1" controller="documentResource" action="create"><span class="glyphicon glyphicon-plus"></span>Add Document</g:link>
+    <g:link class="group1" controller="linkResource" action="create"><span class="glyphicon glyphicon-plus"></span>Add Link</g:link>
+</span>
 
-<div id="show-topic" class="content scaffold-show" role="main">
+<div  class="content scaffold-show" role="main" style="margin-left: 10px;margin-right: 10px;margin-top: 30px">
     <h1>
         <g:message code="default.show.label" args="[entityName]" />
-        <span class="button">
-            <g:link controller="documentResource" action="create">Add Document</g:link>
-            <g:link controller="linkResource" action="create">Add Link</g:link>
-        </span>
+
     </h1>
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
@@ -36,15 +40,12 @@
         </g:if>
 
         <g:if test="${topicInstance?.description}">
-            <li class="fieldcontain">
+            <li class="fieldcontain" style="width: 800px;">
                 <span id="description-label" class="property-label"><g:message code="topic.description.label" default="Description" /></span>
                 <span style='' class="property-value" aria-labelledby="description-label"><g:fieldValue bean="${topicInstance}" field="description"/></span>
 
             </li>
         </g:if>
-
-
-
 
         <g:if test="${topicInstance?.visibility}">
             <li class="fieldcontain">
@@ -91,5 +92,7 @@
         </fieldset>
     </g:form>
 </div>
+<script type="text/javascript" src="../js/jquery.colorbox.js"></script>
+
 </body>
 </html>

@@ -34,7 +34,6 @@ class InvitesController {
         String userID = session.getAttribute('userID')
         utilityService.sendInvites(mailIds,userID,topicIds,)
 
-
         request.setAttribute('message',"Invites has been sent successfully.")
         render view:'successPage'
     }

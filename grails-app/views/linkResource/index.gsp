@@ -13,7 +13,7 @@
     <h1>
         <g:message code="default.list.label" args="['Link']" />
         <span class="button">
-            <g:link controller="linkResource" action="create">Add Link</g:link>
+            <g:link controller="linkResource" action="create"><span class="glyphicon glyphicon-plus"></span>Add Link</g:link>
         </span>
     </h1>
     <g:if test="${flash.message}">

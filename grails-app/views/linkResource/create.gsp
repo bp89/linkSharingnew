@@ -6,7 +6,9 @@
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>
 	<body>
-
+    <%
+        def utilityService = grailsApplication.mainContext.getBean("utilityService");
+    %>
 		<div id="create-linkResource" class="content scaffold-create" role="main">
 			<h1><g:message code="default.create.label" args="["Link"]" /></h1>
 			<g:if test="${flash.message}">
@@ -22,6 +24,7 @@
 			<g:form url="[resource:linkResourceInstance, action:'save']" >
 				<fieldset class="form">
 					<g:render template="form"/>
+                    <g:hiddenField name="user.id" value="${utilityService.getCurrentUser().id}"/>
 				</fieldset>
 				<fieldset class="button" style="float: left">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

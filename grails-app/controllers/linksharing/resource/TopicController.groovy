@@ -10,10 +10,6 @@ import grails.transaction.Transactional
 
 class TopicController {
     UtilityService utilityService
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
-
-
 
     def toggleSubscription(){
 
@@ -168,9 +164,10 @@ class TopicController {
         }
     }
 
-    @Transactional
-    def delete(Topic topicInstance) {
+    def delete() {
 
+        Topic topicInstance =  Topic.get(Long.parseLong(params.topicId))
+        println "========topicInstance====="+topicInstance
         if (topicInstance == null) {
             notFound()
             return
@@ -181,10 +178,23 @@ class TopicController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Topic.label', default: 'Topic'), topicInstance.id])
-                redirect action:"index", method:"GET"
+                redirect action:"confirmation", method:"GET",params: ['fromWhere':'topicDelete']
             }
             '*'{ render status: NO_CONTENT }
         }
+    }
+
+    def confirmation(){
+        String fromWhere = params.fromWhere;
+        String message = "";
+        println "=====fromWhere========="+fromWhere
+        if(fromWhere  == 'topicDelete'){
+            message = "Topic has been deleted successfully."
+        }else{
+            message = "Confirmation not configured."
+        }
+
+        render view: 'confirmation',model :['message' : message]
     }
 
     protected void notFound() {
@@ -195,5 +205,12 @@ class TopicController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+
+
+    def beforeDelete(){
+
+        render view: 'deleteSettings'
     }
 }

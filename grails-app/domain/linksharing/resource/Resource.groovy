@@ -17,7 +17,7 @@ abstract class Resource {
     static mapping = {
         // tablePerConcreteClass true
         tablePerSubclass false
-        topic cascade: 'all'
-        creator cascade: 'all'
+//        topic cascade: 'all'
+//        creator cascade: 'all'
     }
 }

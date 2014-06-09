@@ -1,5 +1,6 @@
 package linksharing.resource
 
+import linksharing.Invites
 import linksharing.User
 import linksharing.UserSubscriptionDetails
 
@@ -8,7 +9,7 @@ class Topic {
     String description
     String visibility
 
-    static hasMany = [resources:Resource,userSubscriptionDetails:UserSubscriptionDetails]
+    static hasMany = [resources:Resource,userSubscriptionDetails:UserSubscriptionDetails,invites:Invites]
     static belongsTo =  [owner:User]
     static constraints = {
         name nullable: false,blank: false,unique: true

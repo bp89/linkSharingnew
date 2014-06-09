@@ -5,6 +5,7 @@
 <head>
     <g:set var="entityName" value="${message(code: 'topic.label', default: 'Topic')}" />
     <title><g:message code="default.list.label" args="[entityName]" /></title>
+
 </head>
 <body>
 <%
@@ -38,7 +39,7 @@
             <g:each in="${topicInstanceList}" status="i" var="topicInstance">
                 <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                     <td>${fieldValue(bean: topicInstance, field: "name")}</td>
-                    <td style="word-wrap: break-word;width: 25%;text-overflow: ellipsis ;overflow: hidden" ><g:link style="word-wrap: normal" action="show" id="${topicInstance.id}">${fieldValue(bean: topicInstance, field: "description")}</g:link></td>
+                    <td style="word-wrap: break-word;width: 25%;text-overflow: ellipsis ;overflow: hidden" ><g:link style="word-wrap: normal" action="show" id="${topicInstance.id}" class="group1">${fieldValue(bean: topicInstance, field: "description")}</g:link></td>
                     %{-- <td>${fieldValue(bean: topicInstance, field: "visibility")}</td>--}%
                     <td>
                         <%
@@ -57,12 +58,16 @@
                         <g:link class="actions" controller="topic" action="show" params="['id':topicInstance.id]">
                             <img src="${resource(dir: "images",file: "view-512.png")}" height="20px" width="20px" title="View"/>
                         </g:link>
-                        <g:link class="actions" controller="topic" action="edit" params="['id':topicInstance.id]">
-                            <img src="${resource(dir: "images",file: "pencil1.png")}" height="20px" width="20px" title="Edit"/>
-                        </g:link>
-                        <g:link  class="actions" controller="topic" action="delete" params="['id':topicInstance.id]">
-                            <img src="${resource(dir: "images",file: "-trash.png")}" height="20px" width="20px" title="Delete"/>
-                        </g:link>
+                        <g:if test="${topicInstance.owner.id == utilityService.getCurrentUser().id}">
+                            <g:link class="actions" controller="topic" action="edit" params="['id':topicInstance.id]">
+                                <img src="${resource(dir: "images",file: "pencil1.png")}" height="20px" width="20px" title="Edit"/>
+                            </g:link>
+
+                            <g:link  class="actions deleteTopic" controller="topic" action="beforeDelete" params="['id':topicInstance.id]">
+                                <img src="${resource(dir: "images",file: "-trash.png")}" height="20px" width="20px" title="Delete"/>
+                            </g:link>
+                        </g:if>
+
                         <g:link class="actions" controller="invites" action="sendInvites" params="['id':topicInstance.id]">
                             <img src="${resource(dir: "images",file: "invites.png")}" height="20px" width="20px" title="Send Invites"/>
                         </g:link>
@@ -87,7 +92,7 @@
         <g:paginate total="${topicInstanceCount ?: 0}" />
     </div>
 </div>
-<script>
+<r:script>
     function toggleSubscription(topicID){
         var urlToggle =  '${createLink(controller:'topic',action:'toggleSubscription')}';
 
@@ -110,6 +115,26 @@
             }});
 
     }
-</script>
+
+    $(document).ready(function(){
+     $(".deleteTopic").colorbox({iframe:true,width:'700px',height:'370px'});
+     });
+
+
+
+    /*function deleteTopic(topicID){
+
+
+        $(".group1").colorbox({rel:'group1',iframe:true, innerWidth:480, innerHeight:390});
+
+        var decision = confirm('Are you sure you want to delete this topic.');
+
+        if(decision){
+
+        }else{
+
+        }
+    }*/
+</r:script>
 </body>
 </html>

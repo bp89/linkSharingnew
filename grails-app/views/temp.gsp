@@ -16,12 +16,12 @@
 
 7. Subscribed users can send invites to a public or private topic.
 %{--TODo--}%
+
 8. The user should be able to browse all the public topics.
-%{--TODo--}%
+%{--Done--}%
 
 9. The user should be able to add a resource to a subscribed topic.
-%{--TODo--}%
-
+%{--Done--}%
 
 1. A resource can either be a link resource or a document resource.
 %{--Done--}%
@@ -52,7 +52,7 @@
 2. List of top 15 unread items 
 
 3. Top 15 public topics on basis of number of subscribers.
-%{--TODo--}%
+%{--Done--}%
 
 
 GRANT SELECT, INSERT,UPDATE, DELETE, INDEX, ALTER, CREATE, LOCK TABLES,CREATE TEMPORARY TABLES, DROP, REFERENCES ON bugzilla.*

@@ -12,7 +12,6 @@ class DocumentResourceController {
     UtilityService utilityService
     def  mailService
     //def grailsApplication
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 
     def markAsReadUnread(){
@@ -86,12 +85,10 @@ class DocumentResourceController {
         utilityService.uploadFile(params,request.getFile('file'))
         String  userId = session.getAttribute("userID")
 
-        User user =User.get(Long.parseLong(userId))
+        User user = utilityService.getCurrentUser()
         user.addToResources(documentResourceInstance)
 
         documentResourceInstance.properties=params
-
-        println documentResourceInstance.errors;
 
         if (documentResourceInstance.hasErrors()) {
             respond documentResourceInstance.errors, view:'edit'
@@ -149,11 +146,23 @@ class DocumentResourceController {
         documentResourceInstance.delete flush:true
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message',args: [message(code: 'documentResource.label', default: 'DocumentResource'), documentResourceInstance.id])
-                redirect action:"index", method:"GET"
+                redirect action:"confirmation", method:"GET",params: ['fromWhere':'documentDelete']
             }
             '*'{ render status: NO_CONTENT }
         }
+    }
+
+
+    def confirmation(){
+        String fromWhere = params.fromWhere;
+        String message = "";
+        if(fromWhere  == 'documentDelete'){
+            message = "Document has been deleted successfully."
+        }else{
+            message = "Confirmation not configured."
+        }
+
+        render view: 'confirmation',model :['message' : message]
     }
 
     protected void notFound() {

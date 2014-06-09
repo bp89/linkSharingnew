@@ -54,10 +54,10 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                        <div class="input-group">
-                            <input type="text" class="input-large search-query" name="searchText" placeholder="Search..." value="" style="height:33px;margin-top: 8px">
+                    <div class="input-group">
+                        <input type="text" class="input-large search-query " name="searchText" placeholder="Search..."" value="" style="height:33px;margin-top: 8px">
 
-                        </div>
+                    </div>
                 </li>
                 <li><g:link  controller="user" action="administration">Administration</g:link></li>
                 <li><g:link  controller="user" action="logout">Logout</g:link></li>

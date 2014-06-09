@@ -62,16 +62,6 @@ grails {
         // filteringCodecForContentType.'text/html' = 'html'
     }
 
-    /*mail{
-        host:"smtp.gmail.com"
-        port:465
-        username="banti.prajapati@intelligrape.com"
-        password="J@ishr33r@m"
-        props = ["mail.transport.protocol":"smtps",
-                "mail.smtps.host":"smtp.gmail.com",
-                "mail.smtps.port":"465",
-                "mail.smtps.auth":"true"]
-    }*/
     mail {
         host = "smtp.gmail.com"
         port = 465
@@ -119,11 +109,11 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-            // TODO: grails.serverURL = "http://www.changeme.com"
+        // TODO: grails.serverURL = "http://www.changeme.com"
     }
 }
 
-/*grails.resources.modules = {
+grails.resources.modules = {
     application {
         resource url:'/js/application.js'
     }
@@ -131,35 +121,51 @@ environments {
     prototype {
         resource url:'/js/prototype.js'
     }
-    scriptaculous {
-        resource url:'/js/scriptaculous.js'
-    }
-    jquery{
-        resource url:'/js/jquery-1.11.1.js'
-    }
-}*/
-// log4j configuration
-log4j = {
-    // Example of changing the log pattern for the default console appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
 
-    error  'org.codehaus.groovy.grails.web.servlet',        // controllers
-            'org.codehaus.groovy.grails.web.pages',          // GSP
-            'org.codehaus.groovy.grails.web.sitemesh',       // layouts
-            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-            'org.codehaus.groovy.grails.web.mapping',        // URL mapping
-            'org.codehaus.groovy.grails.commons',            // core / classloading
-            'org.codehaus.groovy.grails.plugins',            // plugins
-            'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
-            'org.springframework',
-            'org.hibernate',
-            'net.sf.ehcache.hibernate'
+    jquery{
+        resource url:'/js/jquery-1.11.1.min.js'
+    }
+
+    colorbox{
+        dependsOn 'jquery'
+        resource url: '/js/jquery.colorbox.js'
+        resource url: '/css/colorbox.css'
+    }
 }
+// log4j configuration
 
 // Added by the JQuery Validation UI plugin:
+log4j = {
+//    Example of changing the log pattern for the default console appender:
+    appenders {
+        console name: "stdout", threshold: org.apache.log4j.Level.INFO
+    }
+    /*appenders {
+        file name:'file', file:'/var/logs/errorLog.log'
+
+    }*/
+    appenders {
+        // console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+        /*appender new RollingFileAppender(
+                name: "myAppender",
+                maxFileSize: 1024,
+                file: "/tmp/logs/myApp.log")
+    }*/
+}
+
+error  'org.codehaus.groovy.grails.web.servlet',        // controllers
+        'org.codehaus.groovy.grails.web.pages',          // GSP
+        'org.codehaus.groovy.grails.web.sitemesh',       // layouts
+        'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+        'org.codehaus.groovy.grails.web.mapping',        // URL mapping
+        'org.codehaus.groovy.grails.commons',            // core / classloading
+        'org.codehaus.groovy.grails.plugins',            // plugins
+        'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
+        'org.springframework',
+        'org.hibernate',
+        'net.sf.ehcache.hibernate'
+}
+
 jqueryValidationUi {
     errorClass = 'error'
     validClass = 'valid'

@@ -7,12 +7,15 @@
     <g:set var="entityName" value="${message(code: 'topic.label', default: 'Topic')}" />
     <title><g:message code="default.list.label" args="[entityName]" /></title>
     <g:javascript library="jquery" plugin="jquery"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
+    <r:require modules="colorbox"/>
+
 </head>
 <body>
 
 <h1>
     <span class="button">
-        <g:link controller="topic" action="create">Add New Topic</g:link>
+        <g:link controller="topic" action="create"><span class="glyphicon glyphicon-plus"></span>Add New Topic</g:link>
     </span>
 </h1>
 <div class="bs-example">
@@ -29,7 +32,7 @@
 </div>
 
 
-<script>
+<r:script>
 
     function getTopicData(type,id){
         var urlPublic =  '${createLink(controller:'topic',action:'publicTopic')}';
@@ -46,6 +49,10 @@
                 document.getElementById('tabForContent').innerHTML = data
                 $('[id^=hash]').removeClass('active');
                 $('#'+id).addClass('active');
+                $(document).ready(function(){
+                    $(".group1").colorbox({rel:'group1'});
+                });
+
             },
             error: function() {
 
@@ -97,6 +104,6 @@
     }
 
 
-</script>
+    </r:script>
 </body>
 </html>

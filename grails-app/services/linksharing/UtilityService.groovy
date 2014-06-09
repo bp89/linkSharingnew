@@ -68,7 +68,7 @@ class UtilityService {
      * @param topicIds
      */
     void sendInvites(String []mailIds,String sentBy,def topicIds){
-
+        def g = grailsApplication.mainContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib')
         User user = null;
         if(isValidString(sentBy)){
             user = User.get(Long.parseLong(sentBy))
@@ -79,14 +79,23 @@ class UtilityService {
         List<Invites> invitesList = new ArrayList<Invites>();
         Topic topic = Topic.get(Long.parseLong(topicIds))
         Invites invite = null;
-        StringBuilder html = getInvitationHTML(topicIds);
-
+        //  StringBuilder html = getInvitationHTML(topicIds);
+        StringBuilder html = new StringBuilder(g.render(template: '/templates/sendInvitesTemplate'))
         def criteria = User.createCriteria()
+
+
         def listResults = criteria.list() {
             'in'('emailID',mailIds)
         }
 
-        def results = listResults.collect { usr -> [emailID: usr.emailID, userID: usr.id] }
+        //Map results = listResults.collect { usr -> [emailID: usr.emailID, userID: usr.id] }
+
+        Map results =[:]
+
+        listResults.each {user1 ->
+            results.put(user1.emailID, user1)
+        }
+        //Map results = listResults.collect{itr.inject([:]) {results, col -> results << [(col.emailID): col.id]}}
 
         println "=========results goes here==========="+results
 

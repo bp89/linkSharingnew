@@ -7,8 +7,7 @@ import grails.transaction.Transactional
 
 class LinkResourceController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
+    def utilityService
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond LinkResource.list(params), model:[linkResourceInstanceCount: LinkResource.count()]
@@ -21,27 +20,19 @@ class LinkResourceController {
     def create() {
         respond new LinkResource(params)
     }
-
+    @Transactional
     def save(LinkResource linkResourceInstance) {
         if (linkResourceInstance == null) {
             notFound()
             return
         }
 
-        String  userId = session.getAttribute("userID")
-
-        User user =User.get(Long.parseLong(userId))
-
-        println user.id
-
-        user.addToResources(linkResourceInstance)
-
         if (linkResourceInstance.hasErrors()) {
             respond linkResourceInstance.errors, view:'create'
             return
         }
 
-        linkResourceInstance.save flush:true
+            linkResourceInstance.save flush:true
 
         request.withFormat {
             form multipartForm {
@@ -91,12 +82,25 @@ class LinkResourceController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'LinkResource.label', default: 'LinkResource'), linkResourceInstance.id])
-                redirect action:"index", method:"GET"
+                redirect action:"confirmation", method:"GET",params: ['fromWhere':'linkDelete']
             }
             '*'{ render status: NO_CONTENT }
         }
     }
+
+
+    def confirmation(){
+        String fromWhere = params.fromWhere;
+        String message = "";
+        if(fromWhere  == 'linkDelete'){
+            message = "Link has been deleted successfully."
+        }else{
+            message = "Confirmation not configured."
+        }
+
+        render view: 'confirmation',model :['message' : message]
+    }
+
 
     protected void notFound() {
         request.withFormat {

@@ -13,7 +13,7 @@
     <h1>
         <g:message code="default.list.label" args="['Document']" />
         <span class="button">
-            <g:link controller="documentResource" action="create">Add Document</g:link>
+            <g:link controller="documentResource" action="create"><span class="glyphicon glyphicon-plus"></span>Add Document</g:link>
         </span>
     </h1>
     <g:if test="${flash.message}">
@@ -48,7 +48,7 @@
                     <td>${fieldValue(bean: documentResourceInstance, field: "title")}</td>
                     <td>${fieldValue(bean: documentResourceInstance, field: "fileName")}</td>
                     <td>${fieldValue(bean: documentResourceInstance, field: "fileType")}</td>
-                    <td><g:link  action="show" id="${documentResourceInstance.id}">${fieldValue(bean: documentResourceInstance, field: "description").toString().substring(0,10)}...</g:link></td>
+                    <td><g:link  action="show" id="${documentResourceInstance.id}">${fieldValue(bean: documentResourceInstance, field: "description").toString()}</g:link></td>
                     <td>${fieldValue(bean: documentResourceInstance, field: "topic.name")}</td>
                     <td>
                         <g:link controller="documentResource" action="download" params="['id':documentResourceInstance.topic.id,'fileName':documentResourceInstance.fileName,'fileType':documentResourceInstance.fileType]">
