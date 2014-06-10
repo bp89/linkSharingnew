@@ -3,8 +3,10 @@ package linksharing.resource
 import grails.transaction.Transactional
 import linksharing.User
 import linksharing.UtilityService
+import org.hibernate.criterion.CriteriaSpecification
 
 import javax.management.Query
+import javax.persistence.criteria.JoinType
 
 import static org.springframework.http.HttpStatus.*
 
@@ -46,13 +48,23 @@ class DocumentResourceController {
     }
 
     def index(Integer max) {
+        User currentUser = utilityService.getCurrentUser()
+        println "==========currentUser.id============="+currentUser.id
         List<DocumentResource> listOfResources= DocumentResource.createCriteria().list {
             if(utilityService.isValidString(params.topicId)){
                 eq("topic.id",Long.parseLong(params.topicId))
-                groupProperty('')
+            }else{
+                createAlias('topic', 't', CriteriaSpecification.INNER_JOIN)
+                createAlias('t.userSubscriptionDetails', 'usd', CriteriaSpecification.LEFT_JOIN)
+                'or'{
+                    'eq'('usd.user.id',currentUser.id)
+                    if(! currentUser.isAdmin == '1'){
+                        'eq'('user.id',currentUser.id)
+                    }
+                }
+
             }
         }
-
         respond listOfResources, model:[documentResourceInstanceCount: DocumentResource.count()]
     }
 
@@ -61,6 +73,14 @@ class DocumentResourceController {
     }
 
     def create() {
+        User user = utilityService.getCurrentUser()
+
+        List topics = Topic.createCriteria().list {
+            createAlias('userSubscriptionDetails','usd',CriteriaSpecification.INNER_JOIN)
+            'eq'('usd.user.id',user.id)
+        }
+
+        request.setAttribute('topics',topics)
         respond new DocumentResource(params)
     }
 

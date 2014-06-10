@@ -15,7 +15,7 @@
 %{--Done--}%
 
 7. Subscribed users can send invites to a public or private topic.
-%{--TODo--}%
+%{--TODo--}%    
 
 8. The user should be able to browse all the public topics.
 %{--Done--}%
@@ -37,10 +37,11 @@
 %{--Done--}%
 
 12. Only a Creator of a resource or admin can delete a resource.
-%{--TODo--}%
+%{--Done--}%
+-- Combo for topics is incorrect.  //Done
 
 13. Only a Creator of a topic or admin can delete a topic. Its resources should also be deleted irrespective of the ownership status or resources.
-%{--TODo--}%
+%{--Done--}%
 
 14. Admin user has a statistics screen and can moderate anything.
 %{--TODo--}%

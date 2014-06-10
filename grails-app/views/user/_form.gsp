@@ -98,7 +98,7 @@
 
 <div class="fieldcontain required">
     <label for="captcha">Prove you're not a Robot :</label>
-    <img  src="${createLink(controller: 'simpleCaptcha', action: 'captcha')}"/><br/>
+    <img src="${createLink(controller: 'simpleCaptcha', action: 'captcha')}"/><br/>
    <g:textField name="captcha"/>
 </div>
 

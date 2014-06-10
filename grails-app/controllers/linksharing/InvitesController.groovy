@@ -1,6 +1,6 @@
 package linksharing
 
-
+import com.linksharing.InviteCO
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -16,23 +16,37 @@ class InvitesController {
 
 
     def received(Integer max) {
+        User user = utilityService.getCurrentUser()
         params.max = Math.min(max ?: 10, 100)
-        respond Invites.list(params), model:[invitesInstanceCount: Invites.count()]
+
+       List invites =  Invites.createCriteria().list{
+            'eq'('sentTo',user)
+        }
+        respond invites, model:[invitesInstanceCount: Invites.count()]
     }
 
 
     def sendInvites(){
         println ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+request.siteUrl
-        render view: 'sendInvites'
+
+        List userMailList = User.createCriteria().list {
+        }
+
+        println "=====================userMailList=================="+userMailList
+
+        render view: 'sendInvites',model: ['userMailList':userMailList]
     }
 
-    def invite(){
-        def topicIds  = params.topic.id
-        println "==============="+topicIds
-        String invitedMails = params.sendInvite;
-        String []mailIds = invitedMails.split(";")
+    def invite(InviteCO inviteCO){
+
+        if(inviteCO.hasErrors()){
+            respond inviteCO.errors, view:'sendInvites'
+            return
+        }
+
+        String []mailIds = inviteCO.sendInvite.split(",")
         String userID = session.getAttribute('userID')
-        utilityService.sendInvites(mailIds,userID,topicIds,)
+        utilityService.sendInvites(mailIds,userID,inviteCO.topicId,inviteCO.sendMail)
 
         request.setAttribute('message',"Invites has been sent successfully.")
         render view:'successPage'

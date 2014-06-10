@@ -8,7 +8,7 @@ class UserFilters {
     def filters = {
 
         //all(controller: '*', action:'*') {
-        all( controller: 'user',action:'create|dashboard|invalidLogin|login|forgotPassword|sendResetMail|resetPassword',invert:true) {
+        all( controller: 'user',action:'create|dashboard|invalidLogin|login|forgotPassword|sendResetMail|resetPassword|save',invert:true) {
             before = {
                 String userID = session.getAttribute("userID");
                 //setting session to expiry in 30 mins

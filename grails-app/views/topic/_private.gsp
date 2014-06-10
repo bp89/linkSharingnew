@@ -59,7 +59,7 @@
                         <g:link class="actions" controller="topic" action="show" params="['id':topicInstance.id]">
                             <img src="${resource(dir: "images",file: "view-512.png")}" height="20px" width="20px" title="View"/>
                         </g:link>
-                        <g:if test="${topicInstance.owner.id == utilityService.getCurrentUser().id}">
+                <g:if test="${topicInstance.owner.id == utilityService.getCurrentUser().id}">
                             <g:link class="actions" controller="topic" action="edit" params="['id':topicInstance.id]">
                                 <img src="${resource(dir: "images",file: "pencil1.png")}" height="20px" width="20px" title="Edit"/>
                             </g:link>

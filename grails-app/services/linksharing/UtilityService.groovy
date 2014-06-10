@@ -67,7 +67,7 @@ class UtilityService {
      * @param sentBy
      * @param topicIds
      */
-    void sendInvites(String []mailIds,String sentBy,def topicIds){
+    void sendInvites(String []mailIds,String sentBy,def topicIds,def sendMail){
         def g = grailsApplication.mainContext.getBean('org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib')
         User user = null;
         if(isValidString(sentBy)){
@@ -80,7 +80,6 @@ class UtilityService {
         Topic topic = Topic.get(Long.parseLong(topicIds))
         Invites invite = null;
         //  StringBuilder html = getInvitationHTML(topicIds);
-        StringBuilder html = new StringBuilder(g.render(template: '/templates/sendInvitesTemplate'))
         def criteria = User.createCriteria()
 
 
@@ -89,7 +88,7 @@ class UtilityService {
         }
 
         //Map results = listResults.collect { usr -> [emailID: usr.emailID, userID: usr.id] }
-
+        println "=========listResults goes here==========="+listResults
         Map results =[:]
 
         listResults.each {user1 ->
@@ -98,8 +97,11 @@ class UtilityService {
         //Map results = listResults.collect{itr.inject([:]) {results, col -> results << [(col.emailID): col.id]}}
 
         println "=========results goes here==========="+results
-
+        StringBuilder html = null
         for(String mailID:mailIds){
+
+            html  = new StringBuilder(g.render(template: '/templates/sendInvitesTemplate',model:['user':results.get(mailID),'topic':topic,'sender':user]))
+
             invite = new Invites();
             invite.mailID=mailID;
             invite.sentBy = user;
@@ -108,10 +110,12 @@ class UtilityService {
             invite.mailID = mailID;
             invite.topic = topic
             invite.save(flush: true)
-            println "Errors==========================" << invite.errors.allErrors
+            if(isValidString(sendMail) && sendMail=='yes'){
+                this.sendMail(user.emailID, Arrays.asList(mailIds),null,null,subject,html.toString(),true)
+            }
         }
 
-        this.sendMail(user.emailID, Arrays.asList(mailIds),null,null,subject,html.toString(),true)
+
     }
 
     /**

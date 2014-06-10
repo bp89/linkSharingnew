@@ -10,7 +10,7 @@
         <g:message code="documentResource.topic.label" default="Topic" />
         <span class="required-indicator">*</span>
     </label>
-    <g:select id="topic" name="topic.id" from="${Topic.list().sort({l1,l2 -> l1.name<=>l2.name})}" optionKey="id" optionValue="name" required="" value="${documentResourceInstance?.topic?.id}" class="many-to-one"/>
+    <g:select id="topic" name="topic.id" from="${request.topics.sort({l1,l2 -> l1.name<=>l2.name})}" optionKey="id" optionValue="name" required="" value="${documentResourceInstance?.topic?.id}" class="many-to-one"/>
     <g:link controller="topic" action="create" class="group1" params="[isPopUp: 'true']"><img src="${resource(dir: 'images',file: 'plus-sign-simple.png')}" height="25px" width="25px" title="Add New Topic"/></g:link>
 </div>
 

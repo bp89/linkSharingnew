@@ -14,7 +14,9 @@
     margin-left: 10px;
 }
 </style>
-
+<%
+    def utilityService = grailsApplication.mainContext.getBean("utilityService");
+%>
 <div class="fieldcontain ${hasErrors(bean: topicInstance, field: 'name', 'error')} required">
     <label for="name">
         <g:message code="topic.name.label" default="Name" />
@@ -83,7 +85,7 @@
 
     </ul>
 </div>
-<g:hiddenField name="owner.id" value="1"/>
+<g:hiddenField name="owner.id" value="${utilityService.getCurrentUser().id}"/>
 %{--<g:hiddenField name="userSubscriptionDetails.comments" value="Topic Owner"/>
 <g:hiddenField name="userSubscriptionDetails.seriousnessLevel" value="NA"/>
 

@@ -118,9 +118,9 @@ grails.resources.modules = {
         resource url:'/js/application.js'
     }
 
-    prototype {
+   /* prototype {
         resource url:'/js/prototype.js'
-    }
+    }*/
 
     jquery{
         resource url:'/js/jquery-1.11.1.min.js'
@@ -130,6 +130,31 @@ grails.resources.modules = {
         dependsOn 'jquery'
         resource url: '/js/jquery.colorbox.js'
         resource url: '/css/colorbox.css'
+    }
+
+    bootstrap{
+        dependsOn 'jquery'
+        resource url: 'js/bootstrap.min.js'
+        resource url: 'css/bootstrap.css'
+        resource url: 'js/bootstrap-alert.js'
+    }
+
+    select2{
+        dependsOn 'jquery'
+        resource url :'js/select2.js'
+        resource url :'css/select2.css'
+    }
+
+    multiselect{
+        dependsOn 'jquery'
+        resource url:'js/jquery.multiselect.js'
+        resource url:'css/jquery.multiselect.css'
+    }
+
+    multiselectFilter{
+        dependsOn 'multiselect'
+        resource url:'js/jquery.multiselect.filter.js'
+        resource url :'css/jquery.multiselect.filter.css'
     }
 }
 // log4j configuration
@@ -241,4 +266,8 @@ jqueryValidationUi {
             lettersonly:'true'
     ]
 }
+
+
+
+
 

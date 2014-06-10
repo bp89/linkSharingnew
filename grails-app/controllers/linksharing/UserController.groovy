@@ -150,7 +150,6 @@ class UserController {
         respond new User(params)
     }
 
-    @Transactional
     def save(User userInstance) {
         if (userInstance == null) {
             notFound()
@@ -160,21 +159,24 @@ class UserController {
 
         println ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" +userInstance.errors
 
-        boolean captchaValid = simpleCaptchaService.validateCaptcha(params.captcha)
+        //boolean captchaValid = simpleCaptchaService.validateCaptcha(params.captcha)
+        boolean captchaValid = true;
+
         if (userInstance.hasErrors() || !captchaValid ) {
             respond userInstance.errors, view:'create'
             return
         }
 
         userInstance.save flush:true
+        redirect action:'login',params: ['userName':userInstance.userName,'password':userInstance.password,'loginWith':'uName']
 
-        request.withFormat {
+        /*request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
                 redirect userInstance
             }
             '*' { respond userInstance, [status: CREATED] }
-        }
+        }*/
     }
 
     def edit(User userInstance) {

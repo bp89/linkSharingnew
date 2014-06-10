@@ -10,7 +10,6 @@
 <body>
 <div id="list-invites" class="content scaffold-list" role="main">
     <h1><g:message code="default.list.label" args="[entityName]" />
-
         <span class="button">
             <g:link controller="invites" action="sendInvites">Send Invites</g:link>
         </span>
@@ -22,7 +21,6 @@
         <thead>
         <tr>
             <th><g:message code="invites.sentBy.label" default="Sent By" /></th>
-            <th><g:message code="invites.sentTo.label" default="Sent To" /></th>
             <g:sortableColumn property="sentOn" title="${message(code: 'invites.sentOn.label', default: 'Sent On')}" />
             <g:sortableColumn property="acceptedOn" title="${message(code: 'invites.acceptedOn.label', default: 'Accepted On')}" />
             <th>Actions</th>
@@ -32,17 +30,14 @@
         <g:each in="${invitesInstanceList}" status="i" var="invitesInstance">
             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                 <td>${fieldValue(bean: invitesInstance, field: "sentBy.firstName")} ${fieldValue(bean: invitesInstance, field: "sentBy.lastName")}</td>
-                <td>${fieldValue(bean: invitesInstance, field: "sentBy.firstName")} ${fieldValue(bean: invitesInstance, field: "sentTo.lastName")}</td>
                 <td><g:formatDate date="${invitesInstance.sentOn}" format="EEE, d MMM yyyy HH:mm:ss"/></td>
                 <td>
-                    %{--<g:link action="show" id="${invitesInstance.id}">--}%
                     <g:if test="${fieldValue(bean: invitesInstance, field: "acceptedOn") == ''}">
                         Not accepted Yet
                     </g:if>
                     <g:else>
                         ${fieldValue(bean: invitesInstance, field: "acceptedOn")}
                     </g:else>
-                %{--</g:link>--}%
                 </td>
                 <td>
                     <g:link class="actions" controller="invites" action="show" id="${invitesInstance.id}">
@@ -54,8 +49,6 @@
                     <g:link controller="invites" action="delete" id="${invitesInstance.id}">
                         <img src="${resource(dir: "images",file: "-trash.png")}" height="20px" width="20px" title="Delete"/>
                     </g:link>
-
-
                 </td>
             </tr>
         </g:each>

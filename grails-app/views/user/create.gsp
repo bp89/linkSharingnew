@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
     <g:javascript library="jquery" plugin="jquery"/>
     <g:javascript plugin="jquery-validation-ui"/>
-    <script type="text/javascript" src="${resource(dir: "js", file: "jquery.validate.js")}"></script>
+    <r:require module="jquery"/>
     <style type="text/css">
 
 
@@ -142,7 +142,7 @@
         </td>
     </tr>
 </table>
-<script type="text/javascript">
+<r:script type="text/javascript">
     $(document).ready(function(){
         $('#signUpForm').validate({
 
@@ -161,7 +161,7 @@
      }
      return false;*/
 
-</script>
+</r:script>
 
 </body>
 </html>

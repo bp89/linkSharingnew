@@ -10,12 +10,11 @@
 <html>
 <head>
     <meta name="layout" content="main">
-    <title></title>
-    <link rel="stylesheet" href="../css/jquery.multiselect.css" />
-    <link rel="stylesheet" href="../css/jquery.multiselect.filter.css" />
+    <r:require module="select2"/>
+    %{--<r:require module="multiselectFilter"/>--}%
 </head>
 <body>
-<table style="border: 1px double #117700;background-color: #fff8c1">
+<table class="note">
     <tr>
         <td>
             <b>Note:</b>
@@ -23,61 +22,77 @@
     </tr>
     <tr>
         <td>
-            <ul style="list-style-type: lower-roman;margin-left: 40px">
+            <ul >
                 <li>
-                    <h5>Enter semicolon separated Email Ids to send Invites.</h5>
+                    <h5>Select topics that you want to send invites to.</h5>
+                </li>
+                <li>
+                    <h5>Choose Email IDs that you want to invite.</h5>
+                </li>
+                <li>
+                    <h5>Select <b>Send Mail</b> if you want to send mail to selected Email IDs.</h5>
                 </li>
             </ul>
 
         </td>
     </tr>
-
 </table>
 
 
+<div class="container">
+    <span style="font-size: smaller;color: #116644">${flash.logoutMessage}</span>
+    <span style="font-size: smaller;color: #116644">${flash.invalidLogin}</span>
+    <div class="row">
+        <div class="span4">
+
+            <g:hasErrors bean="${inviteCOInstance}">
+                <g:eachError bean="${inviteCOInstance}" var="error">
+                    <div class="alert">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <strong>Error!</strong> <g:message error="${error}"/>
+                    </div>
+
+                </g:eachError>
+            </g:hasErrors>
+        </div>
+    </div>
+</div>
 
 <g:form  action="invite" >
     <fieldset class="form">
         <div class="fieldcontain  ${hasErrors(bean: userInstance, field: 'streetAddress', 'error')} required">
             <label for="sendInvite">Topic</label>
-            <g:select class="chosen-select" style="width:400px;" data-placeholder="Select Your Options" id="topic" name="topic.id" from="${Topic.list().sort({l1,l2 -> l1.name<=>l2.name})}" optionKey="id" optionValue="name" required="" value="${Topic.list()?.id}" />
+            <g:select class="chosen-select" style="width:400px;" data-placeholder="Select Your Options" id="topic" name="topicId" from="${Topic.list().sort({l1,l2 -> l1.name<=>l2.name})}" optionKey="id" optionValue="name" required="" value="${inviteCOInstance?.topicId}" multiple="5"/>
         </div>
 
         <div class="fieldcontain  ${hasErrors(bean: userInstance, field: 'streetAddress', 'error')} required">
             <label for="sendInvite">Send Invites</label>
-            <g:textField name="sendInvite" id="sendInvite" value="" placeholder="Enter Email Ids." style="width:800px;height: 30px"/>
+            <g:select name="sendInvite" from="${userMailList}" optionValue="emailID" optionKey="emailID" required="" placeholder="Select Email Ids." id="mySel2" class="select2" multiple="multiple" style="width:800px;" value="${inviteCOInstance?.emailID}"/>
         </div>
+
+        <div class="fieldcontain  ${hasErrors(bean: userInstance, field: 'streetAddress', 'error')} required">
+            <label for="sendInvite">Send Email?</label>
+            <g:checkBox name="sendMail" value="yes" />
+        </div>
+
     </fieldset>
     <fieldset class="button" style="float: left">
         <g:submitButton name="send" class="save" value="${message(code: 'default.button.send.label', default: 'Send')}" />
     </fieldset>
 </g:form>
-<script type="text/javascript" src="../js/jquery.multiselect.js"></script>
-<script type="text/javascript" src="../js/jquery.multiselect.filter.js"></script>
-<script>
+<r:script>
     $(document).ready(function (){
-        $(".chosen-select").multiselect({
-            show: ["slide", 100],
-            hide: ["slide", 100],
+        $("#mySel2").select2({
+            closeOnSelect:false
+        });
 
-            click: function(event, ui){
-                // $callback.text(ui.value + ' ' + (ui.checked ? 'checked' : 'unchecked') );
-            }/*,
-            filter: function(event, matches){
-                if( !matches.length ){
-                    alert('Not found');
-                }
-            }*/
+        /*$(".chosen-select").multiselect({
+            includeSelectAllOption: true
         }).multiselectfilter({
 
-                    /*filter: function(event, matches){
-                     if( !matches.length ){
-                     alert('Not found');
-                     }
-                     },*/
 
-                });
-    })
-</script>
+        });*/
+    });
+</r:script>
 </body>
 </html>

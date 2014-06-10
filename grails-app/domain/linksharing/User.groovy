@@ -1,5 +1,6 @@
 package linksharing
 
+import com.sun.org.apache.xpath.internal.operations.Bool
 import linksharing.resource.Resource
 import linksharing.resource.ResourceSettings
 import linksharing.resource.Topic
@@ -20,7 +21,7 @@ class User {
     String emailID;
     String secretKeyToResetPassword;
     String answer
-
+    Boolean isAdmin;
     static transients = ['passwordConfirm']
 
     static hasMany = [userSubscriptionDetails:UserSubscriptionDetails,topics:Topic,resourceSettings:ResourceSettings,resources:Resource]
@@ -44,11 +45,14 @@ class User {
         answer nullable: true
         secretKeyToResetPassword nullable: true
         secretQuestion nullable: true
+        isAdmin nullable: true
+
     }
 
 
     static mapping = {
         secretKeyToResetPassword type: 'text'
+        isAdmin default:false
     }
 
 
