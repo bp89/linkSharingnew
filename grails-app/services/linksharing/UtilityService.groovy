@@ -12,6 +12,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile
 class UtilityService {
     def grailsApplication
     MailService mailService
+    /**
+     * Dependency injection for the springSecurityService.
+     */
+    def springSecurityService
 
     def serviceMethod() {
 
@@ -223,13 +227,7 @@ class UtilityService {
      * @return
      */
     def getCurrentUser(){
-        def webUtils = WebUtils.retrieveGrailsWebRequest()
-        String userID= webUtils.getCurrentRequest().getSession().getAttribute("userID");
-        if(isValidString(userID)){
-            return User.get(Long.parseLong(userID));
-        }else{
-            return null;
-        }
+        springSecurityService.getCurrentUser()
     }
 
     /**
@@ -300,7 +298,7 @@ class UtilityService {
     def fillPublicTopicDetails(){
         def webUtils = WebUtils.retrieveGrailsWebRequest()
         def request = webUtils.getCurrentRequest()
-        User user = getCurrentUser()
+        User user = springSecurityService.getCurrentUser()
         List tempList =   getSubscribedToTopics(user.id)
         List subscribedTo = []
         Map <String,String> seriousnessLevel = [:];

@@ -26,7 +26,7 @@
 					<g:render template="form"/>
                     <g:hiddenField name="user.id" value="${utilityService.getCurrentUser().id}"/>
 				</fieldset>
-				<fieldset class="button" style="float: left">
+                <fieldset class="button_Left">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 				</fieldset>
 			</g:form>

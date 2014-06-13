@@ -16,12 +16,12 @@
     <g:textField name="lastName" required="" value="${userInstance?.lastName}" placeholder="Last Name"/>
 
 </div>
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'userName', 'error')} required">
-    <label for="userName">
-        <g:message code="user.userName.label" default="User ID" />
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'username', 'error')} required">
+    <label for="username">
+        <g:message code="user.username.label" default="User ID" />
         <span class="required-indicator">*</span>
     </label>
-    <g:textField name="userName" required="" value="${userInstance?.userName}"/>
+    <g:textField name="username" required="" value="${userInstance?.username}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'password', 'error')} required">
@@ -102,7 +102,7 @@
    <g:textField name="captcha"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'userName', 'error')} required">
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'username', 'error')} required">
     <g:checkBox name="agree" required="" />
     <label for="agree">I agree to the <g:link >Terms of Service</g:link> and <g:link>Privacy Policy</g:link> of Intelligrape.</label><br/>
 

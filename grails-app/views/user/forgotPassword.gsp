@@ -8,28 +8,26 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <meta name="layout" content="main">
     <title></title>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 </head>
-
-
 <body style="background: #ffffff">
-<div id="create-forgotResource" class="content scaffold-create" role="main">
-    <g:if test="${flash.message}">
-        <div class="message" role="status">${flash.message}</div>
-    </g:if>
+<g:form controller="user" action="sendResetMail">
+    <div id="create-forgotResource" class="content scaffold-create bodyDiv" role="main">
+        <g:if test="${flash.message}">
+            <div class="message" role="status">${flash.message}</div>
+        </g:if>
 
-    <g:hasErrors bean="${forgotPasswordCO}">
-        <ul class="errors" role="alert">
-            <g:eachError bean="${forgotPasswordCO}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-            </g:eachError>
-        </ul>
-    </g:hasErrors>
+        <g:hasErrors bean="${forgotPasswordCO}">
+            <ul class="errors" role="alert">
+                <g:eachError bean="${forgotPasswordCO}" var="error">
+                    <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+                </g:eachError>
+            </ul>
+        </g:hasErrors>
 
-    <span style="text-align: center"> <b>Forgot your password?</b></span>
-    <g:form controller="user" action="sendResetMail">
+        <span style="text-align: center"> <b>Forgot your password?</b></span>
+
 
         <fieldset class="form">
             Enter Your registered :
@@ -51,11 +49,13 @@
             </div>
         </fieldset>
 
-        <fieldset class="button" style="float: left ">
-            <g:submitButton name="create" class="save" value="${message(code: 'default.button.send.label', default: 'Send Email')}" />
-        </fieldset>
-    </g:form>
-</div>
+
+    </div>
+
+    <fieldset class="button" style="float: left ">
+        <g:submitButton name="create" class="save" value="${message(code: 'default.button.send.label', default: 'Send Email')}" />
+    </fieldset>
+</g:form>
 %{-- <img style="float: right    " src="${resource(dir: 'images', file: 'confused-man.jpg')}" alt="Link Image" height="253" width="300"/>--}%
 %{-- <h6> A mail has been sent to your registered Email address.</h6>--}%
 </div>

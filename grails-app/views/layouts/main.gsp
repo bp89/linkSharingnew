@@ -13,22 +13,26 @@
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
     <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
     <link href="${resource(dir: 'css',file: 'bootstrap.css')}" rel="stylesheet">
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
     <g:layoutHead/>
     <g:javascript library="application"/>
     <r:require module="bootstrap"/>
     <r:layoutResources />
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 </head>
 <body>
 <%
+    /**
+     * Dependency injection for the springSecurityService.
+     */
+    def springSecurityService = grailsApplication.mainContext.getBean("springSecurityService");
     def utilityService = grailsApplication.mainContext.getBean("utilityService");
 %>
 <div class="navbar-inverse navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-header">
         <b><a class="navbar-brand" href="#">Link Sharing</a></b>
     </div>
-    <p class="navbar-text">Signed in as <span style="text-transform:capitalize;color: #e5f55e">${utilityService.getCurrentUser().firstName +" "+ utilityService.getCurrentUser().lastName}</span></p>
+    <p class="navbar-text">Signed in as <span style="text-transform:capitalize;color: #e5f55e">${springSecurityService.getCurrentUser()?.firstName +" "+ springSecurityService.getCurrentUser()?.lastName}</span></p>
     <div class="container">
 
         <div class="navbar-collapse collapse">
@@ -62,7 +66,9 @@
                     </div>
                 </li>
                 <li><g:link  controller="user" action="administration">Administration</g:link></li>
-                <li><g:link  controller="user" action="logout">Logout</g:link></li>
+                <sec:ifLoggedIn>
+                    <li><g:link  controller="logout" type="POST">Logout</g:link></li>
+                </sec:ifLoggedIn>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

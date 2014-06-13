@@ -11,6 +11,8 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
+
+
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 
 // The ACCEPT header will not be used for content negotiation for user agents containing the following strings (defaults to the 4 major rendering engines)
@@ -105,6 +107,7 @@ environments {
     development {
         grails.logging.jul.usebridge = true
         builddocs="/home/prajapati/Desktop/project/builddocs/"
+        grails.plugin.springsecurity.debug.useFilter = true
         //grails.serverURL = 'http://bp.pagekite.me/linksharing'
     }
     production {
@@ -118,9 +121,9 @@ grails.resources.modules = {
         resource url:'/js/application.js'
     }
 
-   /* prototype {
-        resource url:'/js/prototype.js'
-    }*/
+    /* prototype {
+         resource url:'/js/prototype.js'
+     }*/
 
     jquery{
         resource url:'/js/jquery-1.11.1.min.js'
@@ -157,38 +160,64 @@ grails.resources.modules = {
         resource url :'css/jquery.multiselect.filter.css'
     }
 }
+
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'linksharing.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'linksharing.UserRole'
+grails.plugin.springsecurity.authority.className = 'linksharing.Role'
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/user/dashboard'
+grails.plugin.springsecurity.rejectIfNoRule = false
+grails.plugin.springsecurity.fii.rejectPublicInvocations = false
+grails.plugin.springsecurity.securityConfigType = 'InterceptUrlMap'
+grails.plugin.springsecurity.logout.postOnly = false
+grails.plugin.springsecurity.interceptUrlMap = [
+        '/':                  ['permitAll'],
+        '/index':             ['permitAll'],
+        '/index.gsp':         ['permitAll'],
+        '/**/js/**':          ['permitAll'],
+        '/**/css/**':         ['permitAll'],
+        '/**/images/**':      ['permitAll'],
+        '/**/favicon.ico':    ['permitAll'],
+        '/login/**':          ['permitAll'],
+        '/logout/**':         ['permitAll']
+//        '/j_spring_security_switch_user': ['ROLE_ADMIN'],
+]
 // log4j configuration
 
 // Added by the JQuery Validation UI plugin:
 log4j = {
 //    Example of changing the log pattern for the default console appender:
-    appenders {
-        console name: "stdout", threshold: org.apache.log4j.Level.INFO
-    }
+    /* appenders {
+         console name: "stdout", threshold: org.apache.log4j.Level.ALL
+     }*/
     /*appenders {
         file name:'file', file:'/var/logs/errorLog.log'
 
     }*/
-    appenders {
+    /*appenders {
         // console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-        /*appender new RollingFileAppender(
+        *//*appender new RollingFileAppender(
                 name: "myAppender",
                 maxFileSize: 1024,
                 file: "/tmp/logs/myApp.log")
+    }*//*
     }*/
-}
-
-error  'org.codehaus.groovy.grails.web.servlet',        // controllers
-        'org.codehaus.groovy.grails.web.pages',          // GSP
-        'org.codehaus.groovy.grails.web.sitemesh',       // layouts
-        'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-        'org.codehaus.groovy.grails.web.mapping',        // URL mapping
-        'org.codehaus.groovy.grails.commons',            // core / classloading
-        'org.codehaus.groovy.grails.plugins',            // plugins
-        'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
-        'org.springframework',
-        'org.hibernate',
-        'net.sf.ehcache.hibernate'
+    debug 'linksharing'
+    debug 'org.springframework.security'
+    error  'org.springframework'
+    debug  'grails.plugin.springsecurity'
+    error  'org.codehaus.groovy.grails.web.servlet',        // controllers
+            'org.codehaus.groovy.grails.web.pages',          // GSP
+            'org.codehaus.groovy.grails.web.sitemesh',       // layouts
+            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+            'org.codehaus.groovy.grails.web.mapping',        // URL mapping
+            'org.codehaus.groovy.grails.commons',            // core / classloading
+            'org.codehaus.groovy.grails.plugins',            // plugins
+            'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
+            'org.springframework',
+            'org.hibernate',
+            'net.sf.ehcache.hibernate'
 }
 
 jqueryValidationUi {
@@ -266,7 +295,6 @@ jqueryValidationUi {
             lettersonly:'true'
     ]
 }
-
 
 
 

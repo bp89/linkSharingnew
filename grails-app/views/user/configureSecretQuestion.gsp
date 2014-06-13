@@ -18,9 +18,9 @@
         <div class="message" role="status">${flash.message}</div>
     </g:if>
 
-    <g:hasErrors bean="${forgotPasswordCO}">
+    <g:hasErrors bean="${secretQuestionCO}">
         <ul class="errors" role="alert">
-            <g:eachError bean="${forgotPasswordCO}" var="error">
+            <g:eachError bean="${secretQuestionCO}" var="error">
                 <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
             </g:eachError>
         </ul>
@@ -29,14 +29,14 @@
     <g:form controller="user" action="submitSecretQuestion">
 
         <fieldset class="form">
-            <div class="fieldcontain ${hasErrors(bean: forgotPasswordCO, field: 'secretQuestion', 'error')} required">
+            <div class="fieldcontain ${hasErrors(bean: secretQuestionCO, field: 'secretQuestion', 'error')} required">
                 <label for="secretQuestion">
                     <g:message code="user.secretQuestion.label" default="Enter your Secret Question" />
                     <span class="required-indicator">*</span>
                 </label>
                 <g:select id="secretQuestion" name="secretQuestion.id" from="${SecretQuestion.list().sort({l1,l2 -> l1.question<=>l2.question})}" optionKey="id" optionValue="question" required="" value="${params.secretQuestionCO.secretQuestion.id}" class="many-to-one"/>
             </div>
-            <div class="fieldcontain ${hasErrors(bean: forgotPasswordCO, field: 'answer', 'error')} required">
+            <div class="fieldcontain ${hasErrors(bean: secretQuestionCO, field: 'answer', 'error')} required">
                 <label for="answer">
                     <g:message code="user.answer.label" default="Answer" />
                     <span class="required-indicator">*</span>

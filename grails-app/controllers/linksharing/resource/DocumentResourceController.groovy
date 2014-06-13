@@ -4,6 +4,7 @@ import grails.transaction.Transactional
 import linksharing.User
 import linksharing.UtilityService
 import org.hibernate.criterion.CriteriaSpecification
+import org.springframework.security.access.annotation.Secured
 
 import javax.management.Query
 import javax.persistence.criteria.JoinType
@@ -15,7 +16,7 @@ class DocumentResourceController {
     def  mailService
     //def grailsApplication
 
-
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def markAsReadUnread(){
         String userID = session.getAttribute('userID');
         println "====userID====="+userID
@@ -47,6 +48,7 @@ class DocumentResourceController {
         }
     }
 
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def index(Integer max) {
         User currentUser = utilityService.getCurrentUser()
         println "==========currentUser.id============="+currentUser.id
@@ -58,9 +60,9 @@ class DocumentResourceController {
                 createAlias('t.userSubscriptionDetails', 'usd', CriteriaSpecification.LEFT_JOIN)
                 'or'{
                     'eq'('usd.user.id',currentUser.id)
-                    if(! currentUser.isAdmin == '1'){
+//                    if(! currentUser.isAdmin == '1'){
                         'eq'('user.id',currentUser.id)
-                    }
+//                    }
                 }
 
             }

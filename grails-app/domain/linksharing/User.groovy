@@ -1,28 +1,32 @@
 package linksharing
 
-import com.sun.org.apache.xpath.internal.operations.Bool
+
 import linksharing.resource.Resource
 import linksharing.resource.ResourceSettings
 import linksharing.resource.Topic
 
 class User {
 
+	transient springSecurityService
+
+	String username
+	String password
+	boolean enabled = true
+	boolean accountExpired
+	boolean accountLocked
+	boolean passwordExpired
     String firstName;
     String lastName;
-    String password;
     String passwordConfirm;
     int age
-
     String country;
     String city;
     String state;
     String streetAddress;
-    String userName;
     String emailID;
     String secretKeyToResetPassword;
     String answer
-    Boolean isAdmin;
-    static transients = ['passwordConfirm']
+	static transients = ['springSecurityService','passwordConfirm']
 
     static hasMany = [userSubscriptionDetails:UserSubscriptionDetails,topics:Topic,resourceSettings:ResourceSettings,resources:Resource]
 
@@ -30,30 +34,46 @@ class User {
 
 
     static constraints = {
-        password   minSize: 8,maxSize: 16,blank:false,nullable: false,validator:{ password, obj ->
+        password   minSize: 8,blank:false,nullable: false
+        /*validator:{ password, obj ->
             def password2 = obj.passwordConfirm
             password2 == password ? true : ['invalid.matchingpasswords']
-        }
+        }*/
         answer nullable: true
         passwordConfirm bindable:true
         emailID(email:true)
         age([min: 18])
-        userName([size:3..20, unique: true])
-        /*userName validator: {userName ->
-            userName.matches(" ^[0-9a-zA-Z,.-]+?[0-9a-zA-Z]+?[0-9a-zA-Z,.-]*$")
+        username([size:3..20, unique: true])
+        /*username validator: {username ->
+            username.matches(" ^[0-9a-zA-Z,.-]+?[0-9a-zA-Z]+?[0-9a-zA-Z,.-]*$")
         }*/
         answer nullable: true
         secretKeyToResetPassword nullable: true
         secretQuestion nullable: true
-        isAdmin nullable: true
-
+        username blank: false, unique: true
     }
 
 
     static mapping = {
         secretKeyToResetPassword type: 'text'
-        isAdmin default:false
+        password column: '`password`',type:'text'
     }
 
+	Set<Role> getAuthorities() {
+		UserRole.findAllByUser(this).collect { it.role }
+	}
 
+	def beforeInsert() {
+		encodePassword()
+	}
+
+	def beforeUpdate() {
+		if (isDirty('password')) {
+			encodePassword()
+		}
+	}
+
+	protected void encodePassword() {
+		password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
+	}
 }

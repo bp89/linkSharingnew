@@ -4,26 +4,36 @@ import com.linksharing.ForgotPasswordCO
 import com.linksharing.LoginCO
 import com.linksharing.SecretQuestionCO
 import com.linksharing.UpdatePasswordCO
-import grails.plugin.mail.MailService
 import grails.plugin.simplecaptcha.SimpleCaptchaService
 import grails.transaction.Transactional
 import linksharing.resource.Resource
 import linksharing.resource.Topic
-import static org.springframework.http.HttpStatus.*
+import org.springframework.security.access.annotation.Secured
+
+import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.OK
 
 //@Transactional(readOnly = true)
+@Secured('permitAll')
 class UserController {
     def SimpleCaptchaService simpleCaptchaService;
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     def mailService
     def utilityService
 
+    /**
+     * Dependency injection for the springSecurityService.
+     */
+    def springSecurityService
+
+
+    @Secured('permitAll')
     def forgotPassword(){
         render (view:"forgotPassword");
     }
 
 
-
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def sendResetMail(ForgotPasswordCO forgotPasswordCO){
         if (forgotPasswordCO.hasErrors()  ) {
             respond forgotPasswordCO.errors, view:'forgotPassword'
@@ -41,46 +51,58 @@ class UserController {
         render (view:"forgotPassword");
     }
 
+
+
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def invalidLogin(){
 
         render view:'/index'
     }
 
+
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond User.list(params), model:[userInstanceCount: User.count()]
     }
 
+
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def dashboard(){
-        String userID = session.getAttribute("userID")
-        if(!utilityService.isValidString(userID)){
+        println "====coming in here========"
+
+        User user = springSecurityService.getCurrentUser()
+
+        if(!user){
             flash.put("invalidLogin","You are not logged in.")
             redirect(controller: 'user',action: 'invalidLogin')
         }else{
-            List subscribedTopics =   Topic.executeQuery("select t from Topic t join t.userSubscriptionDetails usd where usd.user.id=:userID",[userID:Long.parseLong(userID)])
+            List subscribedTopics =   Topic.executeQuery("select t from Topic t join t.userSubscriptionDetails usd where usd.user.id=:userID",[userID:user.id])
             request.setAttribute("subscribedTopics",subscribedTopics)
-           /* List unreadItems = Resource.createCriteria().list {
-                //eq("resourceSettings.readStatus",'unread')
-                //   eq("topic.userSubscriptionDetails.user.id",Long.parseLong(userID))
-            }*/
-            List unreadItems = Resource.executeQuery("select r from Resource r join r.resourceSettings rs  where rs.readStatus='unread'  and rs.user.id=:userID",[userID:Long.parseLong( userID)])
+            /* List unreadItems = Resource.createCriteria().list {
+                 //eq("resourceSettings.readStatus",'unread')
+                 //   eq("topic.userSubscriptionDetails.user.id",Long.parseLong(userID))
+             }*/
+            List unreadItems = Resource.executeQuery("select r from Resource r join r.resourceSettings rs  where rs.readStatus='unread'  and rs.user.id=:userID",[userID:user.id])
             request.setAttribute("unreadItems",unreadItems)
 
 
             List top15Topics = Topic.createCriteria().list(max: 15) {
                 eq("visibility",'public')
             }
-
             request.setAttribute("top15Topics",top15Topics)
-
         }
         render (view:"dashboard")
     }
 
 
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def topics(){
         render (controllerName:"topic",view:"dashboard")
     }
+
+
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def logout(){
 
         /* Cookie loginCookie = null;
@@ -110,15 +132,18 @@ class UserController {
         //        redirect "/index.gsp"
     }
 
+
     def login(LoginCO loginCO){
 
+
+        println "in here====="
         if(loginCO.hasErrors()){
             respond loginCO.errors, view: '/index'
             return
         }else{
             User user = User.createCriteria().get(){
                 if(loginCO.loginWith=='uName'){
-                    eq("userName",loginCO.userName)
+                    eq("username",loginCO.username)
                 }else{
                     eq("emailID",loginCO.emailID)
                 }
@@ -139,6 +164,8 @@ class UserController {
             }
         }
     }
+
+
     def show(User userInstance) {
         respond userInstance
     }
@@ -149,7 +176,7 @@ class UserController {
         flash.put("skipLogout",'skip');
         respond new User(params)
     }
-
+    @Secured('permitAll')
     def save(User userInstance) {
         if (userInstance == null) {
             notFound()
@@ -168,7 +195,7 @@ class UserController {
         }
 
         userInstance.save flush:true
-        redirect action:'login',params: ['userName':userInstance.userName,'password':userInstance.password,'loginWith':'uName']
+        redirect action:'login',params: ['username':userInstance.username,'password':userInstance.password,'loginWith':'uName']
 
         /*request.withFormat {
             form multipartForm {
@@ -247,7 +274,7 @@ class UserController {
     }
 
     def configureSecretQuestion(SecretQuestionCO secretQuestionCO){
-        User user =utilityService.getCurrentUser()
+        User user = springSecurityService.getCurrentUser();
         secretQuestionCO.answer= user.answer
         secretQuestionCO.secretQuestion=user.secretQuestion
         params.put('secretQuestionCO',secretQuestionCO)

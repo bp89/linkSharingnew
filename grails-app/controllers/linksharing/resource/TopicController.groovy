@@ -4,18 +4,23 @@ import com.linksharing.SeriousnessLevel
 import linksharing.User
 import linksharing.UserSubscriptionDetails
 import linksharing.UtilityService
+import org.springframework.security.access.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 class TopicController {
     UtilityService utilityService
-
+    /**
+     * Dependency injection for the springSecurityService.
+     */
+    def springSecurityService
+    
     def toggleSubscription(){
 
         String topicID = params.topicID;
         Topic topic = Topic.get(Long.parseLong(topicID))
-        User user = utilityService.getCurrentUser()
+        User user = springSecurityService.getCurrentUser()
         UserSubscriptionDetails userSubscriptionDetails= UserSubscriptionDetails.createCriteria().get {
             'eq'('user.id',user.id)
             'eq'('topic.id',Long.parseLong(topicID))
@@ -43,7 +48,7 @@ class TopicController {
         String seriousnessLevel = params.seriousnessLevel;
         Topic topic =  Topic.get(Long.parseLong(params.topicId));
 
-        User user = utilityService.getCurrentUser();
+        User user = springSecurityService.getCurrentUser();
 
         UserSubscriptionDetails usd = UserSubscriptionDetails.createCriteria().get {
             eq('user',user)
@@ -63,6 +68,7 @@ class TopicController {
      * @param max
      * @return
      */
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         utilityService.fillPublicTopicDetails()
@@ -75,19 +81,21 @@ class TopicController {
      * @param max
      * @return
      */
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def publicTopic(Integer max){
         utilityService.fillPublicTopicDetails()
         List list = utilityService.getPublicTopics()
         respond list, model:[topicInstanceCount: Topic.count()],view: '_public'
     }
 
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def privateTopic(Integer max){
         params.max = Math.min(max ?: 10, 100)
-        String userID = session.getAttribute("userID");
+        User user = springSecurityService.getCurrentUser();
         List list = null;
         if(utilityService.isValidString(userID)){
             String query = "select t from Topic t join t.userSubscriptionDetails usd where usd.user.id=:userID and t.visibility='Private'";
-            list = Topic.executeQuery(query,[userID:Long.parseLong(userID)])
+            list = Topic.executeQuery(query,[userID:user.id])
         }
         respond list, model:[topicInstanceCount: Topic.count()],view: '_private'
     }
@@ -105,8 +113,7 @@ class TopicController {
 
         UserSubscriptionDetails userSubscriptionDetails = new UserSubscriptionDetails();
         // topicInstance.properties=params
-        String userID = session.getAttribute('userID')
-        User user = User.get(Long.parseLong(userID))
+        User user = springSecurityService.getCurrentUser();
         userSubscriptionDetails.comments = 'Owner of the topic';
         userSubscriptionDetails.user=user;
         userSubscriptionDetails.seriousnessLevel = '1'
@@ -167,7 +174,6 @@ class TopicController {
     def delete() {
 
         Topic topicInstance =  Topic.get(Long.parseLong(params.topicId))
-        println "========topicInstance====="+topicInstance
         if (topicInstance == null) {
             notFound()
             return
@@ -187,7 +193,7 @@ class TopicController {
     def confirmation(){
         String fromWhere = params.fromWhere;
         String message = "";
-        println "=====fromWhere========="+fromWhere
+        log.info "=====fromWhere========="+fromWhere
         if(fromWhere  == 'topicDelete'){
             message = "Topic has been deleted successfully."
         }else{

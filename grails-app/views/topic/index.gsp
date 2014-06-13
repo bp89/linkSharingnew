@@ -7,9 +7,7 @@
     <g:set var="entityName" value="${message(code: 'topic.label', default: 'Topic')}" />
     <title><g:message code="default.list.label" args="[entityName]" /></title>
     <g:javascript library="jquery" plugin="jquery"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
     <r:require modules="colorbox"/>
-
 </head>
 <body>
 

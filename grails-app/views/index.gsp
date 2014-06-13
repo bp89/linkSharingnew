@@ -25,7 +25,7 @@
 <div class="jumbotron">
     <div class="container-fluid">
         <h2>Link Share</h2>
-        <p>Share what you want to.</p>
+        <h6>Share what you want to.</h6>
     </div>
 </div>
 <!--login modal-->
@@ -58,33 +58,33 @@
                 </div>
             </div>
             <div class="modal-body">
-                <g:form controller="user" action="login" method="post" class="form col-md-12 center-block">
+                <form action="${postUrl}" method="post" class="form col-md-12 center-block">
                     <g:if test="${loginCOInstance?.loginWith == 'emailID'}">
-                        <g:radio name="loginWith" value="uName" id="uName"  onchange="updateField('userName')"/><label for="uName">User Name</label>
+                        <g:radio name="loginWith" value="uName" id="uName"  onchange="updateField('username')"/><label for="uName">User Name</label>
                         <g:radio name="loginWith" value="emailID" id="mailID" checked="checked" onchange="updateField('emailID')"/><label for="mailID" required="">Email Id</label>
                     </g:if>
                     <g:else>
-                        <g:radio name="loginWith" value="uName" id="uName"  checked="checked" onchange="updateField('userName')"/><label for="uName">User Name</label>
+                        <g:radio name="loginWith" value="uName" id="uName"  checked="checked" onchange="updateField('username')"/><label for="uName">User Name</label>
                         <g:radio name="loginWith" value="emailID" id="mailID"  onchange="updateField('emailID')"/><label for="mailID" required="">Email Id</label>
                     </g:else>
                     <div class="form-group">
-                        <g:textField name="userName" id="userName" placeholder="User Name" class="form-control input-lg" title="Please enter User Name." required=""/>
+                        <g:textField name="j_username" id="username" placeholder="User Name" class="form-control input-lg" title="Please enter User Name." required=""/>
                     </div>
                     <div class="form-group">
-                        <g:passwordField name="password"  id="password"  placeholder="Password" class="form-control input-lg" title="Please enter Password." />
+                        <g:passwordField name="j_password"  id="password"  placeholder="Password" class="form-control input-lg" title="Please enter Password." />
                     </div>
                     <div class="form-group">
-                        <g:checkBox name="rememberMe" value="remember"/><label for="rememberMe">Remember Me?</label>
+                        <input type="checkbox" name="${rememberMeParameter}" value="remember"/>
+                        <label for="rememberMe">Remember Me?</label>
                     </div>
                     <div class="form-group">
                         <g:submitButton name="submit" value="Sign In" class="btn btn-primary btn-lg btn-block" />
-
                         <span class="pull-right">
                             <g:link controller="user" action="create">New User? Sign Up</g:link>
                         </span>
                         <span><g:link style='text-decoration:no-underline;font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif' controller="user" action="forgotPassword">Forgot Password?</g:link></span>%{--Need to access Forgot Password Links--}%
                     </div>
-                </g:form>
+                </form>
             </div>
             <div class="modal-footer">
                 %{--<div class="col-md-12">
@@ -94,20 +94,18 @@
         </div>
     </div>
 </div>
-<g:javascript  plugin="jquery"/>
-<g:javascript plugin="jquery-validation-ui"/>
 <script type='text/javascript' src="${resource(dir: 'js',file: 'bootstrap.min.js')}"></script>
 <script type='text/javascript' src="${resource(dir: 'js',file: 'bootstrap-alert.js')}"></script>
-<script>
+<r:script>
     $(document).ready(function(){
         updateField('${loginCOInstance?.loginWith}');
     });
     function updateField(field){
         if(field == 'uName'){
-            field = 'userName';
+            field = 'username';
         }
         if(field == 'emailID'){
-            $('#userName').attr('id',field);
+            $('#username').attr('id',field);
             $('#'+field).attr('name',field);
             $('#'+field).attr('title','Please enter Email ID.');
             $('#'+field).attr('placeholder','Email ID');
@@ -118,9 +116,10 @@
             $('#'+field).attr('name',field);
             $('#'+field).attr('title','Please enter User Name.');
             $('#'+field).attr('placeholder','User Name');
-            $('#'+field).val('${loginCOInstance?.userName}');
+            $('#'+field).val('${loginCOInstance?.username}');
         }
     }
-</script>
+</r:script>
+<r:layoutResources />
 </body>
 </html>
