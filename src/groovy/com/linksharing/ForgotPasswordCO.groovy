@@ -25,8 +25,6 @@ class ForgotPasswordCO {
         }
         userName nullable: true, validator: {userNameTemp,obj ->
 
-            println "=============="+obj.emailID
-            println "=============="+userNameTemp
             if(!(obj.emailID == '' || obj.emailID == null) && !(userNameTemp == '' ||userNameTemp == null)){
                 println "Jai shree Ram"
                 return ['invalid.allowedOnlyOne']

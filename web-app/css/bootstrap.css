@@ -2396,7 +2396,7 @@ input[type="button"].btn-block {
     font-family: 'Glyphicons Halflings';
     -webkit-font-smoothing: antialiased;
     font-style: normal;
-    font-weight: normal;
+    font-weight: bold;
     line-height: 1;
 }
 
@@ -3802,6 +3802,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav > li {
     position: relative;
     display: block;
+    font-weight: bold;
 }
 
 .nav > li > a {

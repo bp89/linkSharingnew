@@ -10,17 +10,17 @@ import linksharing.UtilityService
 @Validateable
 class LoginCO {
 
-    String userName;
+    String username;
     String password;
     String emailID;
     String loginWith;
     String rememberMe;
 
     static  constraints={
-        userName  nullable: true, validator:{userName,obj->
-            println "=========="+userName
+        username  nullable: true, validator:{username,obj->
+            println "=========="+username
             println "=========obj.loginWith="+obj.loginWith
-            if( (userName==null || userName=='') && obj.loginWith=='uName'){
+            if( (username==null || username=='') && obj.loginWith=='uName'){
                 return "Invalid.user.name.value"
             }else if((obj.emailID == null || obj.emailID == '') && obj.loginWith == 'emailID'){
                 return 'Invalid.user.mailID.value'
@@ -30,7 +30,7 @@ class LoginCO {
             else{
                 User user = User.createCriteria().get(){
                     if(obj.loginWith=='uName'){
-                        eq("userName",obj.userName)
+                        eq("username",obj.username)
                     }else{
                         eq("emailID",obj.emailID)
                     }

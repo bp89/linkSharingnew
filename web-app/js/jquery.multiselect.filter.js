@@ -21,7 +21,7 @@
     options: {
       label: 'Filter:',
       width: null, /* override default width set in css file (px). null will inherit */
-      placeholder: 'Enter keywords',
+      placeholder: 'Enter Topic keywords',
       autoReset: false
     },
 
