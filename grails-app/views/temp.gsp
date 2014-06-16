@@ -56,6 +56,11 @@
 %{--Done--}%
 
 
+15. Apply SHA algorithm for password encryption.
+
+16.
+
+
 GRANT SELECT, INSERT,UPDATE, DELETE, INDEX, ALTER, CREATE, LOCK TABLES,CREATE TEMPORARY TABLES, DROP, REFERENCES ON bugzilla.*
 TO bugzilla@localhost IDENTIFIED BY 'Bugs4All';
 
@@ -67,3 +72,8 @@ TO bugzilla@localhost IDENTIFIED BY 'Bugs4All';
     create table resource_settings (id bigint not null auto_increment, version bigint not null, read_status varchar(255) default 'unread' not null, resource_id bigint not null, user_id bigint not null, primary key (id)) ENGINE=InnoDB;
     alter table resource_settings add index FKF63CD9344A9348C6 (user_id), add constraint FKF63CD9344A9348C6 foreign key (user_id) references user (id);
     alter table resource_settings add index FKF63CD9349D8F81AE (resource_id), add constraint FKF63CD9349D8F81AE foreign key (resource_id) references resource (id);
+
+
+
+
+

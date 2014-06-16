@@ -1,3 +1,10 @@
+<%
+    /**
+     * Dependency injection for the springSecurityService.
+     */
+    def springSecurityService = grailsApplication.mainContext.getBean("springSecurityService");
+    def utilityService = grailsApplication.mainContext.getBean("utilityService");
+%>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
@@ -21,13 +28,7 @@
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 </head>
 <body>
-<%
-    /**
-     * Dependency injection for the springSecurityService.
-     */
-    def springSecurityService = grailsApplication.mainContext.getBean("springSecurityService");
-    def utilityService = grailsApplication.mainContext.getBean("utilityService");
-%>
+
 <div class="navbar-inverse navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-header">
         <b><a class="navbar-brand" href="#">Link Sharing</a></b>
@@ -37,7 +38,7 @@
 
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><g:link class="home" controller="user" action="dashboard"><g:message code="default.home.label"/></g:link></li>
+                <li><g:link class="home" controller="user" action="dashboard"><img height="20px" width="20px" src="${resource(dir: 'images',file: 'home-icon.png')}"/></g:link></li>
                 <li><g:link class="list" controller="topic" action="index">Topics</g:link></li>
 
                 <li>
@@ -65,7 +66,20 @@
 
                     </div>
                 </li>
-                <li><g:link  controller="user" action="administration">Administration</g:link></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header"><img height="15px" width="15px" src="${resource(dir: 'images',file: 'home-icon.png')}"/> Administration</li>
+                        <li><g:link class="list" controller="user" action="administration">User Settings</g:link></li>
+                        <li><g:link class="list" controller="invites" action="sent">Change Options</g:link></li>
+                        <li><g:link class="list" controller="invites" action="sent">Change Theme</g:link></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header"> Configuration</li>
+                        <li><a href="#"><img height="15px" width="15px" src="${resource(dir: 'images',file: 'home-icon.png')}"/> Home</a></li>
+                        <li><a href="#">Pending</a></li>
+                    </ul>
+
+                </li>
                 <sec:ifLoggedIn>
                     <li><g:link  controller="logout" type="POST">Logout</g:link></li>
                 </sec:ifLoggedIn>

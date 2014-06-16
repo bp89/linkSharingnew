@@ -166,9 +166,9 @@ grails.resources.modules = {
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'linksharing.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'linksharing.UserRole'
 grails.plugin.springsecurity.authority.className = 'linksharing.Role'
-grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/user/dashboard'
-grails.plugin.springsecurity.rejectIfNoRule = false
-grails.plugin.springsecurity.fii.rejectPublicInvocations = false
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/topic'
+grails.plugin.springsecurity.rejectIfNoRule = true
+grails.plugin.springsecurity.fii.rejectPublicInvocations = true
 grails.plugin.springsecurity.securityConfigType = 'InterceptUrlMap'
 grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.interceptUrlMap = [
@@ -180,7 +180,8 @@ grails.plugin.springsecurity.interceptUrlMap = [
         '/**/images/**':      ['permitAll'],
         '/**/favicon.ico':    ['permitAll'],
         '/login/**':          ['permitAll'],
-        '/logout/**':         ['permitAll']
+        '/logout/**':         ['permitAll'],
+        '/topic/**':          ['ROLE_ADMIN','ROLE_USER']
 //        '/j_spring_security_switch_user': ['ROLE_ADMIN'],
 ]
 // log4j configuration
