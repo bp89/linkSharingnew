@@ -15,8 +15,8 @@
 
 </head>
 <body>
-<span class="button" style="padding: 1px 8px 2px 0px">
-    <g:link class="group1" controller="documentResource" action="create"><span class="glyphicon glyphicon-plus"></span>Add Document</g:link>
+<span class="button" >
+    <g:link class="group1" controller="documentResource" action="create"><span class="glyphicon glyphicon-plus"></span>Add Document</g:link>&nbsp;
     <g:link class="group1" controller="linkResource" action="create"><span class="glyphicon glyphicon-plus"></span>Add Link</g:link>
 </span>
 
@@ -86,7 +86,7 @@
 
     </ol>
     <g:form url="[resource:topicInstance, action:'delete']" method="DELETE">
-        <fieldset class="button_Left" style="float: left;">
+        <fieldset class="button_Left" >
             <g:link class="edit" action="edit" resource="${topicInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
             <g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
         </fieldset>

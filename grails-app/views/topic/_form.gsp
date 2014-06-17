@@ -39,9 +39,9 @@
 <div class="fieldcontain ${hasErrors(bean: topicInstance, field: 'resources', 'error')} ">
 	<label for="resources">
 		<g:message code="topic.resources.label" default="Resources" />
-		
+
 	</label>
-	
+
 <ul class="one-to-many">
 <g:each in="${topicInstance?.resources?}" var="r">
     <li><g:link controller="resource" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></li>

@@ -28,13 +28,13 @@ class User {
     String answer
 	static transients = ['springSecurityService','passwordConfirm']
 
-    static hasMany = [userSubscriptionDetails:UserSubscriptionDetails,topics:Topic,resourceSettings:ResourceSettings,resources:Resource]
+    static hasMany = [userSubscriptionDetails:UserSubscriptionDetails,topics:Topic,resourceSettings:ResourceSettings,resources:Resource,role:Role]
 
     static  belongsTo = [secretQuestion:SecretQuestion]
 
 
     static constraints = {
-        password   minSize: 8,blank:false,nullable: false
+        password   minSize: 7,blank:false,nullable: false
         /*validator:{ password, obj ->
             def password2 = obj.passwordConfirm
             password2 == password ? true : ['invalid.matchingpasswords']

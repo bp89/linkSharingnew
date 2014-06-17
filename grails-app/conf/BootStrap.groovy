@@ -2,17 +2,19 @@ import com.linksharing.HttpRequestMetaClassEnhancer
 import linksharing.Role
 import linksharing.User
 import linksharing.UserRole
+import linksharing.UtilityService
+import org.codehaus.groovy.grails.commons.GrailsApplication
 
 class BootStrap {
-    def grailsApplication
-
+    GrailsApplication grailsApplication
+    UtilityService utilityService
     def init = { servletContext ->
         def mailService
         User defaultUser = null;
         try{
 
-            def userRole = getOrCreateRole("ROLE_USER")
-            def adminRole = getOrCreateRole("ROLE_ADMIN")
+            def userRole = utilityService.getOrCreateRole("ROLE_USER")
+            def adminRole = utilityService.getOrCreateRole("ROLE_ADMIN")
 
             HttpRequestMetaClassEnhancer.enhanceRequest()
             if(!User.findByUsername('admin')){//Fail-Safe insertion
@@ -51,10 +53,5 @@ class BootStrap {
 
     }
 
-    private getOrCreateRole(name) {
-        def role = Role.findByAuthority(name)
-        if (!role) role = new Role(authority: name).save()
-        if (!role)  println "Unable to save role ${name}"
-        return role
-    }
+
 }

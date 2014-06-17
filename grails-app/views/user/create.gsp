@@ -142,6 +142,9 @@
         </td>
     </tr>
 </table>
+
+
+<g:render template="/templates/footer"/>
 <r:script type="text/javascript">
     $(document).ready(function(){
         $('#signUpForm').validate({

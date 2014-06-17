@@ -1,5 +1,6 @@
 package linksharing
 
+import com.linksharing.CustomUserCO
 import com.linksharing.ForgotPasswordCO
 import grails.plugin.mail.MailService
 import grails.transaction.Transactional
@@ -309,5 +310,25 @@ class UtilityService {
         }
         request.setAttribute('subscribedTo',subscribedTo)
         request.setAttribute('seriousnessLevel',seriousnessLevel)
+    }
+
+    def getOrCreateRole(name) {
+        def role = Role.findByAuthority(name)
+        if (!role) role = new Role(authority: name).save()
+        if (!role)  println "Unable to save role ${name}"
+        return role
+    }
+
+
+
+    def getAllUsersByRole(String roles){
+        String query = "select concat(u.firstName,' ',u.lastName) as name,u.id  as  id from User u"
+        List list = []
+        User.executeQuery(query).each {
+            list.add(new CustomUserCO(it[1],it[0]))
+         }
+        println "----------------"+list
+        return list
+
     }
 }

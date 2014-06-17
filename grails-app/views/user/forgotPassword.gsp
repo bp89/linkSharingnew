@@ -10,6 +10,8 @@
 <head>
     <title></title>
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
+    <r:require module="bootstrap"/>
+    <r:layoutResources />
 </head>
 <body style="background: #ffffff">
 <g:form controller="user" action="sendResetMail">
@@ -59,5 +61,7 @@
 %{-- <img style="float: right    " src="${resource(dir: 'images', file: 'confused-man.jpg')}" alt="Link Image" height="253" width="300"/>--}%
 %{-- <h6> A mail has been sent to your registered Email address.</h6>--}%
 </div>
+<g:render template="/templates/footer"/>
+<r:layoutResources />
 </body>
 </html>

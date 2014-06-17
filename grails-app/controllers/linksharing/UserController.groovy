@@ -14,7 +14,6 @@ import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.OK
 
 //@Transactional(readOnly = true)
-@Secured('permitAll')
 class UserController {
     def SimpleCaptchaService simpleCaptchaService;
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -182,8 +181,6 @@ class UserController {
             notFound()
             return
         }
-
-
         println ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" +userInstance.errors
 
         //boolean captchaValid = simpleCaptchaService.validateCaptcha(params.captcha)
@@ -195,6 +192,8 @@ class UserController {
         }
 
         userInstance.save flush:true
+        def userRole =utilityService.getOrCreateRole("ROLE_USER")
+        def rel = UserRole.create(userInstance, userRole)
         redirect action:'login',params: ['username':userInstance.username,'password':userInstance.password,'loginWith':'uName']
 
         /*request.withFormat {
@@ -235,9 +234,6 @@ class UserController {
 
 
 
-
-
-
     def resetPassword(){
         String secretKeyToResetPassword = params.confirmCode
 
@@ -249,7 +245,6 @@ class UserController {
         if(user!=null && user.secretKeyToResetPassword.equals(secretKeyToResetPassword)  ){
             render view: 'resetPassword'
         }else{
-
             render view: 'error'
         }
     }

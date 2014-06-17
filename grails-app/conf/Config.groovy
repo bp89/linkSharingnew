@@ -181,7 +181,15 @@ grails.plugin.springsecurity.interceptUrlMap = [
         '/**/favicon.ico':    ['permitAll'],
         '/login/**':          ['permitAll'],
         '/logout/**':         ['permitAll'],
-        '/topic/**':          ['ROLE_ADMIN','ROLE_USER']
+        '/topic/**':          ['ROLE_ADMIN','ROLE_USER'],
+        '/invites/**':         ['ROLE_ADMIN','ROLE_USER'],
+        '/documentResource/**': ['ROLE_ADMIN','ROLE_USER'],
+        '/linkResource/**':     ['ROLE_ADMIN','ROLE_USER'],
+        '/user/forgotPassword':         ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/user/create':         ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/user/save':         ['IS_AUTHENTICATED_ANONYMOUSLY'],
+        '/user/dashboard':      ['ROLE_ADMIN','ROLE_USER'],
+        '/user/administration':      ['ROLE_ADMIN','ROLE_USER'],
 //        '/j_spring_security_switch_user': ['ROLE_ADMIN'],
 ]
 // log4j configuration
@@ -204,6 +212,7 @@ log4j = {
                 file: "/tmp/logs/myApp.log")
     }*//*
     }*/
+
     debug 'linksharing'
     debug 'org.springframework.security'
     error  'org.springframework'

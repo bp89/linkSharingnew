@@ -56,10 +56,11 @@
 %{--Done--}%
 
 
-15. Apply SHA algorithm for password encryption.
+15. Apply SHA/md5 algorithm for password encryption.
 
-16.
+16. For admin user, add a combo box to select User for which data must be visible
 
+17.
 
 GRANT SELECT, INSERT,UPDATE, DELETE, INDEX, ALTER, CREATE, LOCK TABLES,CREATE TEMPORARY TABLES, DROP, REFERENCES ON bugzilla.*
 TO bugzilla@localhost IDENTIFIED BY 'Bugs4All';

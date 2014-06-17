@@ -40,16 +40,21 @@ class UserFilters {
               }
           }*/
 
-        all(controller: 'login|logout', action:'*',invert:true) {
+        all(controller: 'user', action:'create|invalidLogin|login|forgotPassword|sendResetMail|resetPassword',invert:true) {
             before = {
-                log.debug("====================Issue before Filter================")
-                if (!springSecurityService.isLoggedIn()) {
+                log.info "====================Controller================"+controllerName
+                log.info "====================Action Name================"+actionName
+                /*if(!controllerName || controllerName.equals("") || "login".equals(controllerName) || "logout".equals(controllerName)) {
+                    return true
+                }
+                else if (!springSecurityService.isLoggedIn()) {
                     redirect controller: 'login', action: 'auth', params: params
                     return false;
                 }
                 else {
                     return true
-                }
+                }*/
+                return true
             }
         }
     }

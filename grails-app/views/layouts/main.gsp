@@ -38,7 +38,7 @@
 
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><g:link class="home" controller="user" action="dashboard"><img height="20px" width="20px" src="${resource(dir: 'images',file: 'home-icon.png')}"/></g:link></li>
+                <li><g:link class="home" controller="user" action="dashboard"><img height="20px" width="20px" src="${resource(dir: 'images',file: 'home-icon.png')}" title="Dashboard"/></g:link></li>
                 <li><g:link class="list" controller="topic" action="index">Topics</g:link></li>
 
                 <li>
@@ -67,12 +67,12 @@
                     </div>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img height="25px" width="25px" src="${resource(dir: 'images',file: 'Settings-icon.png')}" title="Settings"/>Settings<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li class="dropdown-header"><img height="15px" width="15px" src="${resource(dir: 'images',file: 'home-icon.png')}"/> Administration</li>
-                        <li><g:link class="list" controller="user" action="administration">User Settings</g:link></li>
-                        <li><g:link class="list" controller="invites" action="sent">Change Options</g:link></li>
-                        <li><g:link class="list" controller="invites" action="sent">Change Theme</g:link></li>
+                        <li class="dropdown-header"><img height="15px" width="15px" src="${resource(dir: 'images',file: 'securitySetting.png')}"/>&nbsp;Administration</li>
+                        <li><g:link class="list" controller="user" action="administration"><img height="15px" width="15px" src="${resource(dir: 'images',file: 'user-settings-icon.png')}"/>&nbsp;User Settings</g:link></li>
+                        <li><g:link class="list" controller="invites" action="sent"><img height="15px" width="15px" src="${resource(dir: 'images',file: 'color_settings.png')}"/>&nbsp;Change Options</g:link></li>
+                        <li><g:link class="list" controller="invites" action="sent"><img height="15px" width="15px" src="${resource(dir: 'images',file: 'options.png')}"/>&nbsp;Change Theme</g:link></li>
                         <li class="divider"></li>
                         <li class="dropdown-header"> Configuration</li>
                         <li><a href="#"><img height="15px" width="15px" src="${resource(dir: 'images',file: 'home-icon.png')}"/> Home</a></li>
@@ -88,24 +88,19 @@
     </div>
 </div>
 
+
+<hr style="margin-top: 5px;">
+<span class="styleSelect" style="float:right;border-bottom: 1px groove;width: 100%;">
+    <span>Admin > Change Password</span>
+    <g:select style="float:right" id="userID" name="userID" from="${utilityService.getAllUsersByRole('ROLE_USER').sort({l1,l2 -> l1.name <=> l2.name})}" optionKey="id" optionValue="name" required="" value="-1" />
+</span>
+<br>
 <div class="${(actionName =='index' && controllerName == 'topic')?'':'bodyDiv'} container-fluid" id="mainDivImp">
     <g:layoutBody />
 </div>
 
 
-
-<div class="socialMedia">
-    <a class="fbhead" href="https://www.facebook.com/pages/SoftIVenture/267927196554975?ref=hl" target="_blank"></a>
-    <a class="tweethead" href="http://twitter.com/softiventure" target="_blank"></a>
-    <a class="linkedhead" href="http://www.linkedin.com/profile/view?id=127104334&amp;trk=nav_responsive_tab_profile_pic" target="_blank"></a>
-    <a class="googleHead" href="http://www.linkedin.com/profile/view?id=127104334&amp;trk=nav_responsive_tab_profile_pic" target="_blank"></a>
-</div>
-
-<div class="footer" role="contentinfo" style="text-align: center">
-    <hr>
-    <div>All rights reserved &copy;2003-2013 .&VerticalLine; An Intelligrape proprietry.<br/>Informatics Patent</div>
-</div >
-<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
+<g:render template="/templates/footer"/>
 <r:layoutResources />
 </body>
 </html>

@@ -72,6 +72,7 @@ class TopicController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         utilityService.fillPublicTopicDetails()
+
         List list = utilityService.getPublicTopics()
         respond list, model:[topicInstanceCount: Topic.count()]
     }
