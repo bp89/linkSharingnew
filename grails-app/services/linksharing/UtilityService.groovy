@@ -323,6 +323,7 @@ class UtilityService {
 
     def getAllUsersByRole(String roles){
         String query = "select concat(u.firstName,' ',u.lastName) as name,u.id  as  id from User u"
+       // String query = "select concat(u.firstName,' ',u.lastName) as name,u.id  as  id from UserRole ur join ur.user u join ur.role r where role."
         List list = []
         User.executeQuery(query).each {
             list.add(new CustomUserCO(it[1],it[0]))

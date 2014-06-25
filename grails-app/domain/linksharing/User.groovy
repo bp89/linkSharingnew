@@ -1,6 +1,6 @@
 package linksharing
 
-
+import linksharing.resource.Answer
 import linksharing.resource.Resource
 import linksharing.resource.ResourceSettings
 import linksharing.resource.Topic
@@ -28,7 +28,7 @@ class User {
     String answer
 	static transients = ['springSecurityService','passwordConfirm']
 
-    static hasMany = [userSubscriptionDetails:UserSubscriptionDetails,topics:Topic,resourceSettings:ResourceSettings,resources:Resource,role:Role]
+    static hasMany = [userSubscriptionDetails:UserSubscriptionDetails,topics:Topic,resourceSettings:ResourceSettings,resources:Resource,role:Role,answers:Answer]
 
     static  belongsTo = [secretQuestion:SecretQuestion]
 

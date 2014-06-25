@@ -24,11 +24,11 @@
     <g:layoutHead/>
     <g:javascript library="application"/>
     <r:require module="bootstrap"/>
+    %{--<r:require module="grayscale"/>--}%
     <r:layoutResources />
     <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 </head>
 <body>
-
 <div class="navbar-inverse navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-header">
         <b><a class="navbar-brand" href="#">Link Sharing</a></b>
@@ -46,6 +46,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><g:link class="list" controller="documentResource" action="index">Documents</g:link></li>
                         <li><g:link class="list" controller="linkResource" action="index">Links</g:link></li>
+                        <li><g:link class="list" controller="question" action="index">Questions</g:link></li>
                     </ul>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Invites <span class="caret"></span></a>
@@ -88,16 +89,29 @@
     </div>
 </div>
 
-
-<hr style="margin-top: 5px;">
-<span class="styleSelect" style="float:right;border-bottom: 1px groove;width: 100%;">
-    <span>Admin > Change Password</span>
-    <g:select style="float:right" id="userID" name="userID" from="${utilityService.getAllUsersByRole('ROLE_USER').sort({l1,l2 -> l1.name <=> l2.name})}" optionKey="id" optionValue="name" required="" value="-1" />
-</span>
-<br>
-<div class="${(actionName =='index' && controllerName == 'topic')?'':'bodyDiv'} container-fluid" id="mainDivImp">
-    <g:layoutBody />
+<section class="intro">
+    <div class="container" style="padding-top: 30px;">
+        <div class="row">
+            <div class="col-md-12" >
+            <span class="styleSelect" style="float:right;border-bottom: 1px groove;width: 100%;">
+                <span>Admin > Change Password</span>
+                <g:select style="float:right" id="userID" name="userID" from="${utilityService.getAllUsersByRole('ROLE_USER').sort({l1,l2 -> l1.name <=> l2.name})}" optionKey="id" optionValue="name" required="" value="-1" />
+            </span>
+        </div>
+    </div>
 </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ${(actionName =='index' && controllerName == 'topic')?'':'bodyDiv'} container-fluid" id="mainDivImp">
+                <g:layoutBody/>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 
 <g:render template="/templates/footer"/>

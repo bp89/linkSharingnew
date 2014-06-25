@@ -65,7 +65,6 @@
 GRANT SELECT, INSERT,UPDATE, DELETE, INDEX, ALTER, CREATE, LOCK TABLES,CREATE TEMPORARY TABLES, DROP, REFERENCES ON bugzilla.*
 TO bugzilla@localhost IDENTIFIED BY 'Bugs4All';
 
-
 1) ./deploy.sh./restartServer.sh;catalina.out
 2)
 
@@ -76,5 +75,30 @@ TO bugzilla@localhost IDENTIFIED BY 'Bugs4All';
 
 
 
+
+
+
+
+
+
+
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDctH89t/R4n7mXPfiy0/DMNveRlUrft9LZEePwHbZbzJ6yg+2JIb6RY5Cqid/Nufa8XKBkCGAAPpTvPJPaJoOMCQ1t+HpElw5iKoEKmdluj0qz2reAQCNCcFHOcbumc8A/qPD+hYck7EyTqmMhxDj8jw571/eO+zaK7eX8+kpvr41XdiX01kjV3P29qf4B6MRHDPBiaTWdwTAJ6LcdyKwaRYK/HMZgQYHSUDO4ptQdpK4gCGuPXx5UdasjkImN3Wyk3YbtSfDr20NAwmwiTGNIY3Lu+9YO68WpvbzzYmuwAH+ouw4eyDQhmnLTFG42S0H0L9t1zEappp5J6x21UjB5 prajapati@prajapati
+
+
+
+
+
+
+
+
+
+
+
+-======================================================================================FB TV========================================================================================================
+- FB Graph  API
+-
+
+-======================================================================================FB TV========================================================================================================
 
 

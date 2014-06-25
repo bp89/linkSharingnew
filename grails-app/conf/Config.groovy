@@ -116,52 +116,6 @@ environments {
     }
 }
 
-grails.resources.modules = {
-    application {
-        resource url:'/js/application.js'
-    }
-
-    /* prototype {
-         resource url:'/js/prototype.js'
-     }*/
-
-    jquery{
-        resource url:'/js/jquery-1.11.1.min.js'
-    }
-
-    colorbox{
-        dependsOn 'jquery'
-        resource url: '/js/jquery.colorbox.js'
-        resource url: '/css/colorbox.css'
-    }
-
-    bootstrap{
-        dependsOn 'jquery'
-        resource url: 'js/bootstrap.min.js'
-        resource url: 'css/bootstrap.css'
-        resource url: 'js/bootstrap-alert.js'
-    }
-
-    select2{
-        dependsOn 'jquery'
-        resource url :'js/select2.js'
-        resource url :'css/select2.css'
-    }
-
-    multiselect{
-        dependsOn 'jquery'
-        resource url:'js/jquery.multiselect.js'
-        resource url:'css/jquery.multiselect.css'
-    }
-
-    multiselectFilter{
-        dependsOn 'multiselect'
-        resource url:'js/jquery.multiselect.filter.js'
-        resource url :'css/jquery.multiselect.filter.css'
-    }
-}
-
-
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'linksharing.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'linksharing.UserRole'
@@ -190,6 +144,7 @@ grails.plugin.springsecurity.interceptUrlMap = [
         '/user/save':         ['IS_AUTHENTICATED_ANONYMOUSLY'],
         '/user/dashboard':      ['ROLE_ADMIN','ROLE_USER'],
         '/user/administration':      ['ROLE_ADMIN','ROLE_USER'],
+        '/question/**':      ['ROLE_ADMIN','ROLE_USER'],
 //        '/j_spring_security_switch_user': ['ROLE_ADMIN'],
 ]
 // log4j configuration
@@ -235,6 +190,7 @@ jqueryValidationUi {
     validClass = 'valid'
     onsubmit = true
     renderErrorsOnTop = false
+
 
     qTip {
         packed = true
@@ -307,5 +263,61 @@ jqueryValidationUi {
 }
 
 
+grails.resources.modules = {
+    application {
+        resource url:'/js/application.js'
+    }
 
+    /* prototype {
+         resource url:'/js/prototype.js'
+     }*/
+
+    jquery{
+        resource url:'/js/jquery-1.11.1.min.js'
+    }
+
+    colorbox{
+        dependsOn 'jquery'
+        resource url: '/js/jquery.colorbox.js'
+        resource url: '/css/colorbox.css'
+    }
+
+    bootstrap{
+        dependsOn 'jquery'
+        resource url: 'js/bootstrap.min.js'
+        resource url: 'css/bootstrap.css'
+        resource url: 'js/bootstrap-alert.js'
+    }
+
+    select2{
+        dependsOn 'jquery'
+        resource url :'js/select2.js'
+        resource url :'css/select2.css'
+    }
+
+    multiselect{
+        dependsOn 'jquery'
+        resource url:'js/jquery.multiselect.js'
+        resource url:'css/jquery.multiselect.css'
+    }
+
+    multiselectFilter{
+        dependsOn 'multiselect'
+        resource url:'js/jquery.multiselect.filter.js'
+        resource url :'css/jquery.multiselect.filter.css'
+    }
+
+    grayscale{
+        resource url:'css/font-awesome.min.css'
+        resource url: 'js/grayscale.js'
+        resource url: 'css/grayscale.css'
+    }
+
+}
+
+
+
+jqueryValidation.minified = true
+jqueryValidation.cdn = false // false or "microsoft"
+jqueryValidation.additionalMethods = false
 

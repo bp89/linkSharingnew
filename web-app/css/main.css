@@ -462,11 +462,9 @@
 
     a.hover.googleHead {
         background-position: -252px -54px
+
     }
 
-    a.fbhead span,a.tweethead span,a.linkedhead span,a.googleHead span {
-        display: none
-    }
 
 
     /*=========================Standard Buttons==================================*/
@@ -483,7 +481,29 @@
     .button_Left{
         float:left
     }
-    .button,.button_Left a,button,input[type=submit]{
+    .button a,button,input[type=submit]{
+        background-image: -moz-linear-gradient(center top, #F4F219, #f4f219);
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #678), color-stop(1, #ddd));
+        background-image: linear-gradient(top, #a23,#14a);
+        -moz-box-shadow: 0 0 0.3em #ccc;;
+        -webkit-box-shadow: 0 0 0.3em #ccc;;
+        box-shadow: 0 0 0.3em #ccc;;
+        -moz-border-radius: 0.2em;
+        -webkit-border-radius: 0.2em;
+        border-radius: 0.2em;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-left: 10px;
+        padding-right: 10px;
+        text-decoration: none;
+        color: #000000;
+        border: 1px solid #998a3e;
+        font-weight: bold;
+        min-width: 60px;
+
+    }
+
+    .button_Left a,button,input[type=submit]{
         background-image: -moz-linear-gradient(center top, #F4F219, #f4f219);
         background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #678), color-stop(1, #ddd));
         background-image: linear-gradient(top, #a23,#14a);
@@ -502,17 +522,20 @@
         border: 1px solid #998a3e;
 
     }
-    .button,.button_Left button,input[type=submit]{
-        padding:2px;
-        font-weight: bold;
-        min-width: 60px;
 
-    }
-    .button,.button_Left a:hover,button:hover,input[type=submit]:hover{
+
+    .button a:hover,button:hover,input[type=submit]:hover{
         background-image: -moz-linear-gradient(center top, #F4F219, #f49722);
         background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #678), color-stop(1, #94dda4));
         background-image: linear-gradient(top, #a23,#14a);
     }
+
+    .button_Left a:hover,button:hover,input[type=submit]:hover{
+        background-image: -moz-linear-gradient(center top, #F4F219, #f49722);
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #678), color-stop(1, #94dda4));
+        background-image: linear-gradient(top, #a23,#14a);
+    }
+
 
     .actions:hover{
         padding: 7px 0px 1px 2px;
@@ -526,7 +549,7 @@
     .bodyDiv{
         padding:10px;
         border-radius:5px;
-        box-shadow:1px 3px 1px 3px rgba(243, 210, 197, 0.63);
+        box-shadow:3px 2px 2px 5px rgba(243, 210, 197, 0.63);
         background:#fff;
     }
 
@@ -543,4 +566,46 @@
 
     .note li h5{
         font-size: x-small;
+    }
+
+
+
+    .styleSelect select {
+        background: transparent;
+        line-height: 1;
+        height: 28px;
+        color: #000;
+        background: transparent;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-indent: 1px;
+        text-overflow: '';
+        width:250px;
+        border-color: #0092ef;border-radius: 0.3em;
+        text-shadow: #00ff00;border: double;-moz-box-shadow: #430ba4 ;
+        font-size: smaller;color: #e128a2;
+        font-weight: bolder;
+        text-transform: capitalize;
+        font-family: "Trebuchet MS", Verdana, Geneva, Arial, Helvetica, sans-serif;
+        box-sizing: border-box;
+        -webkit-border-radius: 4px 4px 4px 4px;
+        -moz-border-radius: 4px 4px 4px 4px;
+        border-radius: 4px 4px 4px 4px;
+        box-shadow: inset 0 0 5px rgba(167, 151, 255, 0.50);
+        -webkit-box-shadow: inset 0 2px 4px rgba(107, 105, 105, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+        -moz-box-shadow: inset 0 2px 4px rgba(107, 105, 105, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+        background: url('../images/dropdown_arrow.JPG')  no-repeat right #fff;
+    }
+
+    .styleSelect {
+        height: 31px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+    .styleSelect span{
+        float: left;
+        margin-top: 10px;
+        font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-size: small;
+        color: #0092ef;
     }
